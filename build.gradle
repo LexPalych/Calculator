@@ -1,0 +1,36 @@
+plugins {
+    id 'groovy'
+    id 'idea'
+}
+
+group 'Calculate'
+version '1.0'
+
+sourceCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    jupiterVersion = '5.5.0'
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+
+
+    dependencies {
+        compile "org.junit.jupiter:junit-jupiter-api:${jupiterVersion}"
+        compile "org.junit.jupiter:junit-jupiter-params:${jupiterVersion}"
+        compile "org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+
