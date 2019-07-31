@@ -1,10 +1,12 @@
 import java.util.List;
+import java.util.logging.Logger;
 
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 
 public class ExpressionValidation {
     private String expression;
+    private static Logger log = Logger.getLogger(ExpressionValidation.class.getName());
 
     private char getChar(int index) {
         return expression.charAt(index);
@@ -29,6 +31,7 @@ public class ExpressionValidation {
                 .checkNoSpace()
                 .checkNoComma()
                 .checkNoOnlyLetter();
+
 
         return true;
     }
