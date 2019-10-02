@@ -30,6 +30,62 @@ public class CalculateString {
         return signList.get(index);
     }
 
+    private SymbolType getSymbolType(final String symbol) {
+        List<String> signList = List.of("+", "-", "*", "/", "^");
+
+        if (signList.contains(symbol)) {
+            return SymbolType.SIGN;
+
+        } else if (isDigit(symbol.charAt(0))) {
+            return SymbolType.DIGIT;
+
+        } else if (isLetter(symbol.charAt(0))) {
+            return SymbolType.LETTER;
+
+        } else if (symbol.equals("(")) {
+            return SymbolType.BRACKET;
+        } else {
+            throw new SecurityException("Неизестный сивол " + symbol);
+        }
+    }
+
+    private ExpressionElement recognizeExpression(final String expressionElement) {
+        return null;
+    }
+
+    private ExpressionElement recognizeSymbol(final ExpressionElement expressionElement) {
+        SymbolType symbolType = getSymbolType(expressionElement.getFirstSymbol());
+        ExpressionElement element = new ExpressionElement();
+
+        switch (symbolType) {
+            case SIGN:
+                element.setSign(expressionElement.getFirstSymbol());
+                break;
+
+            case DIGIT:
+                element.setDigit(null);
+                break;
+
+            case LETTER:
+                element.setFunction(null);
+                break;
+
+            case BRACKET:
+                break;
+        }
+
+        return element;
+
+    }
+
+
+
+
+
+
+
+
+
     /**
      * Проверяет выражение на правильность записи и, если оно без ошибок, рассчитывает его значение
      * @return - возвращает значение выражения
