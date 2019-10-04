@@ -1,4 +1,17 @@
 public class ExpressionElement {
+    private String expression;
+    private int length;
+
+    private String firstSymbol;
+    private String lastSymbol;
+
+    private int firstSymbolIndex;
+    private int lastSymbolIndex;
+
+    private Character sign;
+    private Double number;
+    private Double function;
+
     public String getExpression() {
         return expression;
     }
@@ -47,57 +60,27 @@ public class ExpressionElement {
         this.lastSymbolIndex = lastSymbolIndex;
     }
 
-    public String getNextSymbol() {
-        return nextSymbol;
-    }
-
-    public void setNextSymbol(String nextSymbol) {
-        this.nextSymbol = nextSymbol;
-    }
-
-    public String getSign() {
+    public Character getSign() {
         return sign;
     }
 
-    public void setSign(String sign) {
+    public void setSign(Character sign) {
         this.sign = sign;
     }
 
-    public String getDigit() {
-        return digit;
+    public Double getNumber() {
+        return number;
     }
 
-    public void setDigit(String digit) {
-        this.digit = digit;
+    public void setNumber(Double number) {
+        this.number = number;
     }
 
-    public String getFunction() {
+    public Double getFunction() {
         return function;
     }
 
-    public void setFunction(String function) {
+    public void setFunction(Double function) {
         this.function = function;
     }
-
-    private String expression;
-    private int length;
-
-    private String firstSymbol;
-    private String lastSymbol;
-
-    private int firstSymbolIndex;
-    private int lastSymbolIndex;
-    private String nextSymbol;
-
-    private String sign;
-    private String digit;
-    private String function;
-
-
-
-
-
-
-
-
 }

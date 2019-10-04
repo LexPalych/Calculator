@@ -22,65 +22,163 @@ public class CalculateString {
         return expression.charAt(index);
     }
 
-    private Double getNumber(int index) {
-        return numberList.get(index);
-    }
-
     private Character getSign(int index) {
         return signList.get(index);
     }
 
-    private SymbolType getSymbolType(final String symbol) {
-        List<String> signList = List.of("+", "-", "*", "/", "^");
+    private SymbolType checkSymbolType(final char symbol) {
+        List<Character> signList = List.of('+', '-', '*', '/', '^');
 
         if (signList.contains(symbol)) {
             return SymbolType.SIGN;
 
-        } else if (isDigit(symbol.charAt(0))) {
+        } else if (isDigit(symbol) || symbol == '.') {
             return SymbolType.DIGIT;
 
-        } else if (isLetter(symbol.charAt(0))) {
+        } else if (isLetter(symbol)) {
             return SymbolType.LETTER;
 
-        } else if (symbol.equals("(")) {
+        } else if (symbol == '(') {
             return SymbolType.BRACKET;
+
         } else {
             throw new SecurityException("Неизестный сивол " + symbol);
         }
     }
 
-    private ExpressionElement recognizeExpression(final String expressionElement) {
-        return null;
+    private SymbolType getSymbolType(final int index) {
+        return checkSymbolType(getChar(index));
     }
 
-    private ExpressionElement recognizeSymbol(final ExpressionElement expressionElement) {
-        SymbolType symbolType = getSymbolType(expressionElement.getFirstSymbol());
-        ExpressionElement element = new ExpressionElement();
+    private ExpressionElement setNumberInExpressionElement(final int index) {
+        int i = index;
+        StringBuilder numberAsString = new StringBuilder();
+        ExpressionElement expressionElement = new ExpressionElement();
 
-        switch (symbolType) {
-            case SIGN:
-                element.setSign(expressionElement.getFirstSymbol());
-                break;
-
-            case DIGIT:
-                element.setDigit(null);
-                break;
-
-            case LETTER:
-                element.setFunction(null);
-                break;
-
-            case BRACKET:
-                break;
+        while (getSymbolType(i) == SymbolType.DIGIT && i < expression.length()) {
+            numberAsString.append(getChar(i));
+            i++;
         }
 
-        return element;
+        expressionElement.setNumber(Double.parseDouble(numberAsString.toString()));
+        expressionElement.setLastSymbolIndex(i-1);
 
+        return expressionElement;
     }
 
+    private ExpressionElement setFunctionInExpressionElement(final int index) {
+        int i = index;
+        String functionName = getFunctionName(index);
+        String functionArgument = expression.substring(functionName.length()+1, expression.length()-1);
 
 
 
+        StringBuilder numberAsString = new StringBuilder();
+        ExpressionElement expressionElement = new ExpressionElement();
+
+        while (getSymbolType(i) == SymbolType.DIGIT && i < expression.length()) {
+            numberAsString.append(getChar(i));
+            i++;
+        }
+
+        expressionElement.setNumber(Double.parseDouble(numberAsString.toString()));
+        expressionElement.setLastSymbolIndex(i-1);
+
+        return expressionElement;
+    }
+
+    private ExpressionElement recognizeExpression() {
+        var numberList = new HashMap<Integer, Double>();
+        var number = new StringBuilder();
+        var numberListSize = 0;
+        var i = 0;
+        var value = 0.0;
+
+        var signList = new HashMap<Integer, Character>();
+        var signListSize = 0;
+//        var i = 0;
+//        String subExpression;
+
+        String subExpression;
+        int closeBracketIndex;
+
+        while (i <= expression.length()) {
+            char symbol = getChar(i);
+            SymbolType symbolType = checkSymbolType(symbol);
+            ExpressionElement expressionElement;
+
+            if (symbolType == SymbolType.SIGN) {
+                signListSize++;
+                signList.put(signListSize, symbol);
+
+            } else if (symbolType == SymbolType.BRACKET) {
+                closeBracketIndex = getClosingBracketIndex(i);
+
+
+            } else if (symbolType == SymbolType.DIGIT) {
+                expressionElement = setNumberInExpressionElement(i);
+                numberListSize++;
+                numberList.put(numberListSize, expressionElement.getNumber());
+
+            }else if (symbolType == SymbolType.LETTER) {
+
+
+            }
+
+            if (symbol == '-' && (i == 0 || getChar(i-1, expression) == '(')) {
+                numberListSize++;
+                numberList.put(0, 0.0);
+
+            } else if (checkCharIsSign(symbol)) {
+                numberListSize++;
+                number.delete(0, number.length());
+
+            } else if (isDigit(symbol) || symbol == '.') {
+                number.append(symbol);
+                value = Double.parseDouble(number.toString());
+
+            } else if (symbol == '(') {
+                subExpression = expression.substring(i);
+                closeBracketIndex = getClosingBracketIndex(subExpression);
+
+                value = calculate(subExpression.substring(1, closeBracketIndex));
+                i = i + closeBracketIndex - 1;
+
+            } else if (symbol == '!') {
+                value = factorial(numberList.get(numberListSize));
+                number.delete(0, number.length());
+
+            } else if (symbol == 'e') {
+                value = Math.exp(1);
+
+            } else if (isLetter(symbol)) {
+                subExpression = expression.substring(i);
+                closeBracketIndex = getClosingBracketIndex(subExpression);
+
+                value = getFunctionValue(subExpression.substring(0, closeBracketIndex+1));
+                i = i + closeBracketIndex - 1;
+            }
+
+            numberList.put(numberListSize, value);
+            i++;
+        }
+
+        while (i < expression.length()) {
+            char symbol = getChar(i, expression);
+            SymbolType symbolType = checkSymbolType(symbol);
+
+            if (symbolType == SymbolType.SIGN) {
+                signListSize++;
+                signList.put(signListSize, symbol);
+
+            } else if (symbolType == SymbolType.BRACKET) {
+                subExpression = expression.substring(i);
+                i = i + getClosingBracketIndex(subExpression) - 1;
+            }
+
+            i++;
+        }
+    }
 
 
 
@@ -124,13 +222,14 @@ public class CalculateString {
         String subExpression;
 
         while (i < expression.length()) {
-            var symbol = getChar(i, expression);
+            char symbol = getChar(i, expression);
+            SymbolType symbolType = checkSymbolType(symbol);
 
-            if (checkCharIsSign(symbol)) {
+            if (symbolType == SymbolType.SIGN) {
                 signListSize++;
                 signList.put(signListSize, symbol);
 
-            } else if (symbol == '(') {
+            } else if (symbolType == SymbolType.BRACKET) {
                 subExpression = expression.substring(i);
                 i = i + getClosingBracketIndex(subExpression) - 1;
             }
@@ -156,7 +255,14 @@ public class CalculateString {
         int closeBracketIndex;
 
         while (i < expression.length()) {
-            var symbol = getChar(i, expression);
+            char symbol = getChar(i, expression);
+            SymbolType symbolType = checkSymbolType(symbol);
+
+            if (symbolType == SymbolType.SIGN && i == 0) {
+
+            } else if (symbolType == SymbolType.BRACKET && i == 0) {
+
+            }
 
             if (symbol == '-' && (i == 0 || getChar(i-1, expression) == '(')) {
                 numberListSize++;
@@ -216,10 +322,10 @@ public class CalculateString {
      */
     private double getExpressionValue(int firstElement, int lastElement) {
         var i = firstElement;
-        var value = getNumber(i-1);
+        var value = setNumberInExpressionElement(i-1);
 
         while (i <= lastElement) {
-            var number = getNumber(i);
+            var number = setNumberInExpressionElement(i);
 
             if (checkSignInList(i, '+', "+-")) {
                 value += number;
@@ -262,7 +368,7 @@ public class CalculateString {
                     throw new ArithmeticException("Деление на ноль");
 
             } else if (getSign(i) == '^') {
-                value = Math.pow(value, getNumber(i));
+                value = Math.pow(value, setNumberInExpressionElement(i));
             }
             i++;
         }
@@ -342,71 +448,84 @@ public class CalculateString {
         return (getSign(index) == currentSign);
     }
 
-    /**
-     * Составляет имя первой функции в выражении
-     * @param expression - выражение
-     * @return - возвращает имя функции
-     */
-    private String getFunctionName(final String expression) {
-        var functionName = new StringBuilder();
+//    /**
+//     * Составляет имя первой функции в выражении
+//     * @param expression - выражение
+//     * @return - возвращает имя функции
+//     */
+//    private String getFunctionName(final String expression) {
+//        var functionName = new StringBuilder();
+//
+//        for (int i=0; getChar(i, expression) != '('; i++) {
+//            functionName.append(getChar(i, expression));
+//        }
+//
+//        return functionName.toString();
+//    }
 
-        for (int i=0; getChar(i, expression) != '('; i++) {
-            functionName.append(getChar(i, expression));
+    private String getFunctionName(final int index) {
+        int functionNameLength = index;
+
+        while (getSymbolType(functionNameLength) == SymbolType.LETTER) {
+            functionNameLength++;
         }
 
-        return functionName.toString();
+        return expression.substring(index, functionNameLength-1);
     }
 
     /**
      * Нахождит значение тригонометрической функции
-     * @param expression - выражение
      * @return - возвращает значение тригонометрической функции
      */
-    private double getFunctionValue(final String expression) {
-        var rad = Math.acos(-1)/180;
-        var functionName = getFunctionName(expression);
-        var subExpression = expression.substring(functionName.length());
+    private double getFunctionValue(final int index) {
+        double rad = Math.acos(-1)/180;
+        String functionName = getFunctionName(index);
+
+        int openBracketIndex = index + functionName.length();
+        int closeBracketIndex = getClosingBracketIndex(openBracketIndex);
+
+        String functionArgument = expression.substring(openBracketIndex+1, closeBracketIndex-1);
 
         switch (functionName) {
             case "sin":
-                return Math.sin(calculate(subExpression) * rad);
+                return Math.sin(calculate(functionArgument) * rad);
 
             case "cos":
-                return Math.cos(calculate(subExpression) * rad);
+                return Math.cos(calculate(functionArgument) * rad);
 
             case "tan":
-                return Math.tan(calculate(subExpression) * rad);
+                return Math.tan(calculate(functionArgument) * rad);
 
             case "ln":
-                var value = calculate(subExpression);
+                var value = calculate(functionArgument);
                 if (value > 0)
                     return Math.log(value);
                 else
                     throw new ArithmeticException("Аргумент логарифма должен быть положительным");
 
             case "abs":
-                return Math.abs(calculate(subExpression));
+                return Math.abs(calculate(functionArgument));
 
             case "asin":
-                return Math.asin(calculate(subExpression)) / rad;
+                return Math.asin(calculate(functionArgument)) / rad;
 
             case "acos":
-                return Math.acos(calculate(subExpression)) / rad;
+                return Math.acos(calculate(functionArgument)) / rad;
 
             case "atan":
-                return Math.atan(calculate(subExpression)) / rad;
+                return Math.atan(calculate(functionArgument)) / rad;
 
             case "sinh":
-                return Math.sinh(calculate(subExpression) * rad);
+                return Math.sinh(calculate(functionArgument) * rad);
 
             case "cosh":
-                return Math.cosh(calculate(subExpression) * rad);
+                return Math.cosh(calculate(functionArgument) * rad);
 
             case "tanh":
-                return Math.tanh(calculate(subExpression) * rad);
+                return Math.tanh(calculate(functionArgument) * rad);
 
             case "sqrt":
-                return Math.sqrt(calculate(subExpression));
+                return Math.sqrt(calculate(functionArgument));
 
             default:
                 throw new StringException("Неизвестная функция");
@@ -418,21 +537,40 @@ public class CalculateString {
      * @param expression - выражение
      * @return - возвращает индекс закрывающей скобки
      */
-    private int getClosingBracketIndex(final String expression) {
-        var bracketAmount = 0;
-        var i = 0;
-        var currentChar = getChar(i, expression);
+//    private int getClosingBracketIndex(final String expression) {
+//        var bracketAmount = 0;
+//        var i = 0;
+//        var currentChar = getChar(i, expression);
+//
+//        if (currentChar == '(')
+//            bracketAmount = 1;
+//
+//        while (!(bracketAmount == 0 && currentChar == ')')) {
+//            currentChar = getChar(++i, expression);
+//
+//            if (getChar(i, expression) == ')') {
+//                bracketAmount--;
+//
+//            } else if (getChar(i, expression) == '(') {
+//                bracketAmount++;
+//            }
+//        }
+//
+//        return i;
+//    }
 
-        if (currentChar == '(')
-            bracketAmount = 1;
+    private int getClosingBracketIndex(final int index) {
+        int bracketAmount = 1;
+        int i = index;
+        char currentChar = getChar(i);
 
         while (!(bracketAmount == 0 && currentChar == ')')) {
-            currentChar = getChar(++i, expression);
+            currentChar = getChar(++i);
 
-            if (getChar(i, expression) == ')') {
+            if (getChar(i) == ')') {
                 bracketAmount--;
 
-            } else if (getChar(i, expression) == '(') {
+            } else if (getChar(i) == '(') {
                 bracketAmount++;
             }
         }
