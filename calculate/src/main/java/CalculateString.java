@@ -6,27 +6,27 @@ import java.util.stream.Collectors;
 import static java.lang.Character.*;
 
 public class CalculateString {
-    private String expression;
-    private Map<Integer, Character> signList;
-    private Map<Integer, Double> numberList;
+    private static String expression;
+    private static Map<Integer, Character> signList;
+    private static Map<Integer, Double> numberList;
 
     public CalculateString(String expression) {
         this.expression = expression;
     }
 
-    private char getChar(int index) {
+    private static char getChar(int index) {
         return expression.charAt(index);
     }
 
-    private char getChar(int index, String expression) {
+    private static char getChar(int index, String expression) {
         return expression.charAt(index);
     }
 
-    private Character getSign(int index) {
+    private static Character getSign(int index) {
         return signList.get(index);
     }
 
-    private SymbolType checkSymbolType(final char symbol) {
+    private static SymbolType checkSymbolType(final char symbol) {
         List<Character> signList = List.of('+', '-', '*', '/', '^');
 
         if (signList.contains(symbol)) {
@@ -46,48 +46,39 @@ public class CalculateString {
         }
     }
 
-    private SymbolType getSymbolType(final int index) {
+    private static SymbolType getSymbolType(final int index) {
         return checkSymbolType(getChar(index));
     }
 
-    private ExpressionElement setNumberInExpressionElement(final int index) {
-        int i = index;
-        StringBuilder numberAsString = new StringBuilder();
+    private static ExpressionElement setNumberInExpressionElement(final int firstNumberIndex) {
+        int lastNumberIndex = firstNumberIndex;
+        String numberAsString;
         ExpressionElement expressionElement = new ExpressionElement();
 
-        while (getSymbolType(i) == SymbolType.DIGIT && i < expression.length()) {
-            numberAsString.append(getChar(i));
-            i++;
+        while (getSymbolType(lastNumberIndex) == SymbolType.DIGIT && lastNumberIndex < expression.length()) {
+            lastNumberIndex++;
         }
-
-        expressionElement.setNumber(Double.parseDouble(numberAsString.toString()));
-        expressionElement.setLastSymbolIndex(i-1);
+        lastNumberIndex--;
+        numberAsString = expression.substring(firstNumberIndex, lastNumberIndex);
+        expressionElement.setNumber(Double.parseDouble(numberAsString));
+        expressionElement.setLastSymbolIndex(lastNumberIndex);
 
         return expressionElement;
     }
 
-    private ExpressionElement setFunctionInExpressionElement(final int index) {
-        int i = index;
-        String functionName = getFunctionName(index);
-        String functionArgument = expression.substring(functionName.length()+1, expression.length()-1);
-
-
-
-        StringBuilder numberAsString = new StringBuilder();
+    private static ExpressionElement setFunctionInExpressionElement(final int firstFunctionIndex) {
         ExpressionElement expressionElement = new ExpressionElement();
 
-        while (getSymbolType(i) == SymbolType.DIGIT && i < expression.length()) {
-            numberAsString.append(getChar(i));
-            i++;
-        }
+        int lastFunctionIndex = getClosingBracketIndex(firstFunctionIndex);
+        double functionValue = CalculateFunction.getFunctionValue(expression.substring(firstFunctionIndex, lastFunctionIndex));
 
-        expressionElement.setNumber(Double.parseDouble(numberAsString.toString()));
-        expressionElement.setLastSymbolIndex(i-1);
+        expressionElement.setNumber(functionValue);
+        expressionElement.setLastSymbolIndex(lastFunctionIndex);
 
         return expressionElement;
     }
 
-    private ExpressionElement recognizeExpression() {
+    private static ExpressionElement recognizeExpression() {
         var numberList = new HashMap<Integer, Double>();
         var number = new StringBuilder();
         var numberListSize = 0;
@@ -188,7 +179,7 @@ public class CalculateString {
      * Проверяет выражение на правильность записи и, если оно без ошибок, рассчитывает его значение
      * @return - возвращает значение выражения
      */
-    public double calculateString() {
+    public static double calculateString() {
         var check = new ExpressionValidation();
 
         if (check.checkExpression(expression))
@@ -203,7 +194,7 @@ public class CalculateString {
      * @param expression - выражение
      * @return - возвращает значение выражения
      */
-    private double calculate(final String expression) {
+    static double calculate(final String expression) {
         numberList = createNumberList(expression);
         signList = createSignList(expression);
 
@@ -215,7 +206,7 @@ public class CalculateString {
      * @param expression - выражение
      * @return - возвращает мапу со знаками действий в выражении
      */
-    private Map<Integer, Character> createSignList(final String expression) {
+    private static Map<Integer, Character> createSignList(final String expression) {
         var signList = new HashMap<Integer, Character>();
         var signListSize = 0;
         var i = 0;
@@ -244,7 +235,7 @@ public class CalculateString {
      * @param expression - выражение
      * @return - возвращает мапу с числами в выражении
      */
-    private Map<Integer, Double> createNumberList(final String expression) {
+    private static Map<Integer, Double> createNumberList(final String expression) {
         var numberList = new HashMap<Integer, Double>();
         var number = new StringBuilder();
         var numberListSize = 0;
@@ -309,7 +300,7 @@ public class CalculateString {
      * @param symbol - символ
      * @return - возвращает true, если символ является одним из знаков арифметических действий
      */
-    private boolean checkCharIsSign(final char symbol) {
+    private static boolean checkCharIsSign(final char symbol) {
         var signList = List.of('+', '-', '*', '/', '^');
         return signList.contains(symbol);
     }
@@ -320,7 +311,7 @@ public class CalculateString {
      * @param lastElement - индекс последних элементов из списков чисел и знаков
      * @return - возвращает значение выражения
      */
-    private double getExpressionValue(int firstElement, int lastElement) {
+    private static double getExpressionValue(int firstElement, int lastElement) {
         var i = firstElement;
         var value = setNumberInExpressionElement(i-1);
 
@@ -382,7 +373,7 @@ public class CalculateString {
      * @param lastIndex
      * @return
      */
-    private int getLastIndex(final int firstIndex, final int lastIndex) {
+    private static int getLastIndex(final int firstIndex, final int lastIndex) {
         var i = firstIndex;
 
         while (true) {
@@ -433,7 +424,7 @@ public class CalculateString {
      * @return - возвращает true, если по определённому индексу находитс определённый знак
      *          и следующий за ним знак находится в определённом списке знаков, либо если этот знак является последним
      */
-    private boolean checkSignInList(final int index, final char currentSign, final String signList) {
+    private static boolean checkSignInList(final int index, final char currentSign, final String signList) {
         var nextSign = getSign(index+1);
         if (nextSign != null) {
             var signInList =  signList
@@ -463,21 +454,22 @@ public class CalculateString {
 //        return functionName.toString();
 //    }
 
-    private String getFunctionName(final int index) {
-        int functionNameLength = index;
+    private static String getFunctionName(final int firstFunctionIndex) {
+        int lastFunctionIndex = firstFunctionIndex;
 
-        while (getSymbolType(functionNameLength) == SymbolType.LETTER) {
-            functionNameLength++;
+        while (getSymbolType(lastFunctionIndex) == SymbolType.LETTER) {
+            lastFunctionIndex++;
         }
+        lastFunctionIndex--;
 
-        return expression.substring(index, functionNameLength-1);
+        return expression.substring(firstFunctionIndex, lastFunctionIndex);
     }
 
     /**
      * Нахождит значение тригонометрической функции
      * @return - возвращает значение тригонометрической функции
      */
-    private double getFunctionValue(final int index) {
+    private static double getFunctionValue(final int index) {
         double rad = Math.acos(-1)/180;
         String functionName = getFunctionName(index);
 
@@ -532,11 +524,11 @@ public class CalculateString {
         }
     }
 
-    /**
-     * Находит индекс последней закрывающей скобки в выражении
-     * @param expression - выражение
-     * @return - возвращает индекс закрывающей скобки
-     */
+//    /**
+//     * Находит индекс последней закрывающей скобки в выражении
+//     * @param expression - выражение
+//     * @return - возвращает индекс закрывающей скобки
+//     */
 //    private int getClosingBracketIndex(final String expression) {
 //        var bracketAmount = 0;
 //        var i = 0;
@@ -559,23 +551,23 @@ public class CalculateString {
 //        return i;
 //    }
 
-    private int getClosingBracketIndex(final int index) {
-        int bracketAmount = 1;
-        int i = index;
-        char currentChar = getChar(i);
+    static int getClosingBracketIndex(final int firstBracketIndex) {
+        int bracketAmount = 0;
+        int lastBracketIndex = firstBracketIndex;
+        char currentChar;
 
-        while (!(bracketAmount == 0 && currentChar == ')')) {
-            currentChar = getChar(++i);
+        do {
+            currentChar = getChar(lastBracketIndex++);
 
-            if (getChar(i) == ')') {
-                bracketAmount--;
-
-            } else if (getChar(i) == '(') {
+            if (currentChar == '(') {
                 bracketAmount++;
-            }
-        }
 
-        return i;
+            } else if (currentChar == ')') {
+                bracketAmount--;
+            }
+        } while (!(bracketAmount == 0 && currentChar == ')'));
+
+        return lastBracketIndex;
     }
 
     /**
@@ -583,7 +575,7 @@ public class CalculateString {
      * @param number - число
      * @return - возвращает факториал числа типом Double
      */
-    private double factorial(double number) {
+    private static double factorial(double number) {
         if (number < 0)
             throw new ArithmeticException("Отрицательный аргумент факториала");
 
