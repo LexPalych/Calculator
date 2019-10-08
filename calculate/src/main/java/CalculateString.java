@@ -180,7 +180,7 @@ public class CalculateString {
                 else
                     throw new ArithmeticException("Деление на ноль");
 
-            } else if (checkSignInList(i, '+', "*/")) {
+            } else if (checkSignInList(i, '+', "*/^")) {
                 value += getExpressionValue(++i, lastElement);
                 break;
 
@@ -190,10 +190,6 @@ public class CalculateString {
                 value -= getExpressionValue(++i, closeIndex);
                 i = closeIndex + 1;
                 continue;
-
-            } else if (checkSignInList(i, '+', "^")) {
-                value += getExpressionValue(++i, lastElement);
-                break;
 
             } else if (checkSignInList(i, '*', "^")) {
                 value *= getExpressionValue(++i, i);
