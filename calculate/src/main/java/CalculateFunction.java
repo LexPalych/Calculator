@@ -1,12 +1,16 @@
 public class CalculateFunction {
+    private static String functionExpression;
+
     /**
      * Нахождит значение тригонометрической функции
      * @return - возвращает значение тригонометрической функции
      */
     public static double getFunctionValue(final String expression) {
-        String functionArgument = getFunctionArgument(expression);
+        functionExpression = expression;
+
+        String functionName = getFunctionName();
+        String functionArgument = getFunctionArgument();
         double functionArgumentValue = CalculateString.calculate(functionArgument);
-        String functionName = getFunctionName(expression);
 
         return getArgumentValue(functionName, functionArgumentValue);
     }
@@ -61,19 +65,19 @@ public class CalculateFunction {
 
     }
 
-    private static String getFunctionName(final String expression) {
+    private static String getFunctionName() {
         int nameFunctionLastIndex = 0;
 
-        while (expression.charAt(nameFunctionLastIndex) != '(') {
+        while (functionExpression.charAt(nameFunctionLastIndex) != '(') {
             nameFunctionLastIndex++;
         }
         nameFunctionLastIndex--;
 
-        return expression.substring(0, nameFunctionLastIndex);
+        return functionExpression.substring(0, nameFunctionLastIndex);
     }
 
-    private static String getFunctionArgument(final String expression) {
-        String functionName = getFunctionName(expression);
-        return expression.substring(functionName.length()+1, expression.length()-1);
+    private static String getFunctionArgument() {
+        String functionName = getFunctionName();
+        return functionExpression.substring(functionName.length()+1, functionExpression.length()-1);
     }
 }
