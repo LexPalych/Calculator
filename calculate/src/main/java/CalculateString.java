@@ -192,7 +192,7 @@ public class CalculateString {
                 continue;
 
             } else if (checkSignInList(i, '+', "^")) {
-                value += getExpressionValue(i, lastElement);
+                value += getExpressionValue(++i, lastElement);
                 break;
 
             } else if (checkSignInList(i, '*', "^")) {
