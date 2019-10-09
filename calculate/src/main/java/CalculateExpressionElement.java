@@ -28,13 +28,61 @@ public class CalculateExpressionElement {
         char currentSign;
         char nextSign;
         int lastIndex = numberList.size()-1;
+        int closingSingInex;
 
         while (i <= lastIndex) {
             currentNumber = numberList.get(i);
             currentSign = signList.get(i);
             nextSign = signList.get(i+1);
 
-            if (currentSign == '+' && (nextSign == '+' || nextSign == '-' || i == lastIndex)) {
+            switch (currentSign) {
+                case '+': {
+                    if (i == lastIndex) {
+                        totalValue += currentNumber;
+
+                    } else if (signList.get(i+1) == '+' || signList.get(i+1) == '-') {
+                        totalValue += currentNumber;
+
+                    } else if (signList.get(i+1) == '*' || signList.get(i+1) == '/' || signList.get(i+1) == '^') {
+                        totalValue += calculateExpressionValue(numberList.subList(i+1, lastIndex), signList.subList(i+1, lastIndex));
+                    }
+                    i++;
+                    break;
+                }
+
+                case '-': {
+                    if (i == lastIndex) {
+                        totalValue -= currentNumber;
+
+                    } else if (signList.get(i+1) == '+' || signList.get(i+1) == '-') {
+                        totalValue -= currentNumber;
+
+                    } else if (signList.get(i+1) == '*' || signList.get(i+1) == '/' || signList.get(i+1) == '^') {
+                        closingSingInex = getLastIndex(i, lastElement);
+
+                        totalValue -= calculateExpressionValue(++i, closingSingInex);
+                    }
+                    i = closingSingInex + 1;
+                    break;
+                }
+
+                case '*': {
+
+                }
+
+                case '/': {
+
+                }
+
+                case '^': {
+
+                }
+
+
+
+            }
+
+            if (currentSign == '+' && (i == lastIndex || signList.get(i+1) == '+' || signList.get(i+1) == '-')) {
                 totalValue += currentNumber;
             }
 
