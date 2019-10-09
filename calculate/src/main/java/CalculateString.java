@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,11 +37,18 @@ public class CalculateString {
             throw new StringException("Какая-то неведомая ошибка");
     }
 
-    static double calculate(final String expression) {
-        numberList = createNumberList(expression);
-        signList = createSignList(expression);
+//    static double calculate(final String expression) {
+//        numberList = createNumberList(expression);
+//        signList = createSignList(expression);
+//
+//        return getExpressionValue(1, signList.size());
+//    }
 
-        return getExpressionValue(1, signList.size());
+    static double calculate(final String expression) {
+        Map<Integer, Double> numberList = createNumberList(expression);
+        Map<Integer, Character> signList = createSignList(expression);
+
+        return getExpressionValue(numberList, signList);
     }
 
     private static SymbolType checkSymbolType(final char symbol) {
@@ -95,11 +103,11 @@ public class CalculateString {
         return expressionElement;
     }
 
-    private static Map<Integer, Character> createSignList(final String subExpression) {
-        Map<Integer, Character> signList = new HashMap<Integer, Character>();
-        int signListSize = 0;
+    private static List<Character> createSignList(final String subExpression) {
+        List<Character> signList = new LinkedList<>();
         int i = 0;
         char symbol;
+        signList.add('!');
 
         while (i < subExpression.length()) {
             symbol = subExpression.charAt(i);
@@ -107,8 +115,7 @@ public class CalculateString {
             SymbolType symbolType = getSymbolType(i);
 
             if (symbolType == SymbolType.SIGN) {
-                signListSize++;
-                signList.put(signListSize, symbol);
+                signList.add(symbol);
 
             } else if (symbolType == SymbolType.BRACKET) {
                 i = getClosingBracketIndex(i);
@@ -119,9 +126,9 @@ public class CalculateString {
         return signList;
     }
 
-    private static Map<Integer, Double> createNumberList(final String subExpression) {
-        Map<Integer, Double> numberList = new HashMap<>();
-        int numberListSize = 0;
+    private static List<Double> createNumberList(final String subExpression) {
+        List<Double> numberList = new LinkedList<>();
+//        int numberListSize = 0;
         int i = 0;
 
         int closeBracketIndex;
@@ -134,7 +141,7 @@ public class CalculateString {
 
             if (symbolType == SymbolType.DIGIT) {
                 expressionElement = setNumberInExpressionElement(i);
-                numberListSize++;
+//                numberListSize++;
 
             } else if (symbolType == SymbolType.SIGN && i == 0) {
                 expressionElement.setNumber(0.0);
@@ -142,35 +149,29 @@ public class CalculateString {
 
             } else if (symbolType == SymbolType.LETTER) {
                 expressionElement = setFunctionInExpressionElement(i);
-                numberListSize++;
+//                numberListSize++;
 
             } else if (symbolType == SymbolType.BRACKET) {
                 closeBracketIndex = getClosingBracketIndex(i);
                 expressionElement.setNumber(calculate(subExpression.substring(i+1, closeBracketIndex-1)));
                 expressionElement.setLastSymbolIndex(closeBracketIndex);
-                numberListSize++;
+//                numberListSize++;
 
             } else if (symbol == '!') {
-                expressionElement.setNumber(factorial(numberList.get(numberListSize)));
+                expressionElement.setNumber(factorial(numberList.get(numberList.size()-1)));
             }
 
-            numberList.put(numberListSize, expressionElement.getNumber());
+            numberList.add(expressionElement.getNumber());
             i = expressionElement.getLastSymbolIndex() + 1;
         }
         return numberList;
     }
 
-    /**
-     * Расчитывает значение выражения в указанном интервале чисел и знаков
-     * @param firstElement - индекс первых элементов из списков чисел и знаков
-     * @param lastElement - индекс последних элементов из списков чисел и знаков
-     * @return - возвращает значение выражения
-     */
-    private static double getExpressionValue(int firstElement, int lastElement) {
-        var i = firstElement;
-        var value = numberList.get(i-1);
+    private static double getExpressionValue(List<Double> numberList, List<Character> signList) {
+        int i = 1;
+        double value = numberList.get(0);
 
-        while (i <= lastElement) {
+        while (i < numberList.size()) {
             var number = numberList.get(i);
 
             if (checkSignInList(i, '+', "+-")) {
@@ -188,7 +189,7 @@ public class CalculateString {
                 else
                     throw new ArithmeticException("Деление на ноль");
 
-            } else if (checkSignInList(i, '+', "*/")) {
+            } else if (checkSignInList(i, '+', "*/^")) {
                 value += getExpressionValue(++i, lastElement);
                 break;
 
@@ -198,10 +199,6 @@ public class CalculateString {
                 value -= getExpressionValue(++i, closeIndex);
                 i = closeIndex + 1;
                 continue;
-
-            } else if (checkSignInList(i, '+', "^")) {
-                value += getExpressionValue(i, lastElement);
-                break;
 
             } else if (checkSignInList(i, '*', "^")) {
                 value *= getExpressionValue(++i, i);
@@ -221,6 +218,64 @@ public class CalculateString {
 
         return value;
     }
+
+//    /**
+//     * Расчитывает значение выражения в указанном интервале чисел и знаков
+//     * @param firstElement - индекс первых элементов из списков чисел и знаков
+//     * @param lastElement - индекс последних элементов из списков чисел и знаков
+//     * @return - возвращает значение выражения
+//     */
+//    private static double getExpressionValue(int firstElement, int lastElement) {
+//        var i = firstElement;
+//        var value = numberList.get(i-1);
+//
+//        while (i <= lastElement) {
+//            var number = numberList.get(i);
+//
+//            if (checkSignInList(i, '+', "+-")) {
+//                value += number;
+//
+//            } else if (checkSignInList(i, '-', "+-")) {
+//                value -= number;
+//
+//            } else if (checkSignInList(i, '*', "+-*/")) {
+//                value *= number;
+//
+//            } else if (checkSignInList(i, '/', "+-*/")) {
+//                if (number != 0)
+//                    value /= number;
+//                else
+//                    throw new ArithmeticException("Деление на ноль");
+//
+//            } else if (checkSignInList(i, '+', "*/^")) {
+//                value += getExpressionValue(++i, lastElement);
+//                break;
+//
+//            } else if (checkSignInList(i, '-', "*/^")) {
+//                var closeIndex = getLastIndex(i, lastElement);
+//
+//                value -= getExpressionValue(++i, closeIndex);
+//                i = closeIndex + 1;
+//                continue;
+//
+//            } else if (checkSignInList(i, '*', "^")) {
+//                value *= getExpressionValue(++i, i);
+//
+//            } else if (checkSignInList(i, '/', "^")) {
+//                var denominator = getExpressionValue(++i, i);
+//                if (denominator != 0)
+//                    value /= denominator;
+//                else
+//                    throw new ArithmeticException("Деление на ноль");
+//
+//            } else if (getSign(i) == '^') {
+//                value = Math.pow(value, numberList.get(i));
+//            }
+//            i++;
+//        }
+//
+//        return value;
+//    }
 
     /**
      * Находит индекс последнего знака, до которого нужно производить расчёт
