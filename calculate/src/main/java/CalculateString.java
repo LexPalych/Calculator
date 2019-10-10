@@ -45,10 +45,10 @@ public class CalculateString {
 //    }
 
     static double calculate(final String expression) {
-        Map<Integer, Double> numberList = createNumberList(expression);
-        Map<Integer, Character> signList = createSignList(expression);
+        List<Double> numberList = createNumberList(expression);
+        List<Character> signList = createSignList(expression);
 
-        return getExpressionValue(numberList, signList);
+        return CalculateExpressionElement.calculateExpressionValue(numberList, signList);
     }
 
     private static SymbolType checkSymbolType(final char symbol) {
@@ -71,8 +71,8 @@ public class CalculateString {
         }
     }
 
-    private static SymbolType getSymbolType(final int index) {
-        return checkSymbolType(getChar(index));
+    private static SymbolType getSymbolType(final int index, final String expression) {
+        return checkSymbolType(expression.charAt(index));
     }
 
     private static ExpressionElement setNumberInExpressionElement(final int firstNumberIndex) {
@@ -167,57 +167,57 @@ public class CalculateString {
         return numberList;
     }
 
-    private static double getExpressionValue(List<Double> numberList, List<Character> signList) {
-        int i = 1;
-        double value = numberList.get(0);
-
-        while (i < numberList.size()) {
-            var number = numberList.get(i);
-
-            if (checkSignInList(i, '+', "+-")) {
-                value += number;
-
-            } else if (checkSignInList(i, '-', "+-")) {
-                value -= number;
-
-            } else if (checkSignInList(i, '*', "+-*/")) {
-                value *= number;
-
-            } else if (checkSignInList(i, '/', "+-*/")) {
-                if (number != 0)
-                    value /= number;
-                else
-                    throw new ArithmeticException("Деление на ноль");
-
-            } else if (checkSignInList(i, '+', "*/^")) {
-                value += getExpressionValue(++i, lastElement);
-                break;
-
-            } else if (checkSignInList(i, '-', "*/^")) {
-                var closeIndex = getLastIndex(i, lastElement);
-
-                value -= getExpressionValue(++i, closeIndex);
-                i = closeIndex + 1;
-                continue;
-
-            } else if (checkSignInList(i, '*', "^")) {
-                value *= getExpressionValue(++i, i);
-
-            } else if (checkSignInList(i, '/', "^")) {
-                var denominator = getExpressionValue(++i, i);
-                if (denominator != 0)
-                    value /= denominator;
-                else
-                    throw new ArithmeticException("Деление на ноль");
-
-            } else if (getSign(i) == '^') {
-                value = Math.pow(value, numberList.get(i));
-            }
-            i++;
-        }
-
-        return value;
-    }
+//    private static double getExpressionValue(List<Double> numberList, List<Character> signList) {
+//        int i = 1;
+//        double value = numberList.get(0);
+//
+//        while (i < numberList.size()) {
+//            var number = numberList.get(i);
+//
+//            if (checkSignInList(i, '+', "+-")) {
+//                value += number;
+//
+//            } else if (checkSignInList(i, '-', "+-")) {
+//                value -= number;
+//
+//            } else if (checkSignInList(i, '*', "+-*/")) {
+//                value *= number;
+//
+//            } else if (checkSignInList(i, '/', "+-*/")) {
+//                if (number != 0)
+//                    value /= number;
+//                else
+//                    throw new ArithmeticException("Деление на ноль");
+//
+//            } else if (checkSignInList(i, '+', "*/^")) {
+//                value += getExpressionValue(++i, lastElement);
+//                break;
+//
+//            } else if (checkSignInList(i, '-', "*/^")) {
+//                var closeIndex = getLastIndex(i, lastElement);
+//
+//                value -= getExpressionValue(++i, closeIndex);
+//                i = closeIndex + 1;
+//                continue;
+//
+//            } else if (checkSignInList(i, '*', "^")) {
+//                value *= getExpressionValue(++i, i);
+//
+//            } else if (checkSignInList(i, '/', "^")) {
+//                var denominator = getExpressionValue(++i, i);
+//                if (denominator != 0)
+//                    value /= denominator;
+//                else
+//                    throw new ArithmeticException("Деление на ноль");
+//
+//            } else if (getSign(i) == '^') {
+//                value = Math.pow(value, numberList.get(i));
+//            }
+//            i++;
+//        }
+//
+//        return value;
+//    }
 
 //    /**
 //     * Расчитывает значение выражения в указанном интервале чисел и знаков
@@ -277,52 +277,52 @@ public class CalculateString {
 //        return value;
 //    }
 
-    /**
-     * Находит индекс последнего знака, до которого нужно производить расчёт
-     * @param firstIndex
-     * @param lastIndex
-     * @return
-     */
-    private static int getLastIndex(final int firstIndex, final int lastIndex) {
-        var i = firstIndex;
+//    /**
+//     * Находит индекс последнего знака, до которого нужно производить расчёт
+//     * @param firstIndex
+//     * @param lastIndex
+//     * @return
+//     */
+//    private static int getLastIndex(final int firstIndex, final int lastIndex) {
+//        var i = firstIndex;
+//
+//        while (true) {
+//            i++;
+//            var currentSign = getSign(i);
+//
+//            if (currentSign == '+' || currentSign == '-')
+//                return i-1;
+//
+//            else if (i == lastIndex)
+//                return i;
+//        }
+//
+//    }
 
-        while (true) {
-            i++;
-            var currentSign = getSign(i);
-
-            if (currentSign == '+' || currentSign == '-')
-                return i-1;
-
-            else if (i == lastIndex)
-                return i;
-        }
-
-    }
-
-    /**
-     * Проверяет, что по определённому индексу находится определённый знак;
-     * Проверяет, является ли этот знак последним;
-     * Если нет, проверяет, содержится ли следующий за ним знак в определённом списке
-     * @param index - индекс знака
-     * @param currentSign - знак
-     * @param signList - список знаков
-     * @return - возвращает true, если по определённому индексу находитс определённый знак
-     *          и следующий за ним знак находится в определённом списке знаков, либо если этот знак является последним
-     */
-    private static boolean checkSignInList(final int index, final char currentSign, final String signList) {
-        var nextSign = getSign(index+1);
-        if (nextSign != null) {
-            var signInList =  signList
-                    .chars()
-                    .mapToObj(i -> (char) i)
-                    .collect(Collectors.toList())
-                    .contains(nextSign);
-
-            return (getSign(index) == currentSign) && signInList;
-        }
-
-        return (getSign(index) == currentSign);
-    }
+//    /**
+//     * Проверяет, что по определённому индексу находится определённый знак;
+//     * Проверяет, является ли этот знак последним;
+//     * Если нет, проверяет, содержится ли следующий за ним знак в определённом списке
+//     * @param index - индекс знака
+//     * @param currentSign - знак
+//     * @param signList - список знаков
+//     * @return - возвращает true, если по определённому индексу находитс определённый знак
+//     *          и следующий за ним знак находится в определённом списке знаков, либо если этот знак является последним
+//     */
+//    private static boolean checkSignInList(final int index, final char currentSign, final String signList) {
+//        var nextSign = getSign(index+1);
+//        if (nextSign != null) {
+//            var signInList =  signList
+//                    .chars()
+//                    .mapToObj(i -> (char) i)
+//                    .collect(Collectors.toList())
+//                    .contains(nextSign);
+//
+//            return (getSign(index) == currentSign) && signInList;
+//        }
+//
+//        return (getSign(index) == currentSign);
+//    }
 
     private static int getClosingBracketIndex(final int firstBracketIndex) {
         int bracketAmount = 0;

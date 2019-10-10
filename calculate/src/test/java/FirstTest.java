@@ -56,4 +56,11 @@ public class FirstTest {
         }
     }
 
+    @Test
+    void four() {
+        String expression = "1+2";
+        Double value = CalculateString.calculate(expression);
+        assertTrue(value == 3);
+    }
+
 }
