@@ -30,102 +30,22 @@ public class CalculateExpressionElement {
         int lastIndex = numberList.size()-1;
         int closingSingInex;
 
+        List<Double> newNumberList = numberList;
+        List<Character> newSignList = signList;
+
         while (i <= lastIndex) {
             currentNumber = numberList.get(i);
             currentSign = signList.get(i);
-            nextSign = signList.get(i+1);
 
-            switch (currentSign) {
-                case '+': {
-                    if (i == lastIndex) {
-                        totalValue += currentNumber;
-
-                    } else if (signList.get(i+1) == '+' || signList.get(i+1) == '-') {
-                        totalValue += currentNumber;
-
-                    } else if (signList.get(i+1) == '*' || signList.get(i+1) == '/' || signList.get(i+1) == '^') {
-                        totalValue += calculateExpressionValue(numberList.subList(i+1, lastIndex), signList.subList(i+1, lastIndex));
-                    }
-                    i++;
-                    break;
-                }
-
-                case '-': {
-                    if (i == lastIndex) {
-                        totalValue -= currentNumber;
-
-                    } else if (signList.get(i+1) == '+' || signList.get(i+1) == '-') {
-                        totalValue -= currentNumber;
-
-                    } else if (signList.get(i+1) == '*' || signList.get(i+1) == '/' || signList.get(i+1) == '^') {
-                        closingSingInex = getLastIndex(i, lastElement);
-
-                        totalValue -= calculateExpressionValue(++i, closingSingInex);
-                    }
-                    i = closingSingInex + 1;
-                    break;
-                }
-
-                case '*': {
-
-                }
-
-                case '/': {
-
-                }
-
-                case '^': {
-
-                }
-
-
-
+            if (currentSign == '^') {
+                newNumberList.removeAll(numberList.subList(i, i+1));
             }
 
-            if (currentSign == '+' && (i == lastIndex || signList.get(i+1) == '+' || signList.get(i+1) == '-')) {
-                totalValue += currentNumber;
-            }
 
-            if (checkSignInList(i, '+', "+-")) {
-                value += number;
 
-            } else if (checkSignInList(i, '-', "+-")) {
-                value -= number;
 
-            } else if (checkSignInList(i, '*', "+-*/")) {
-                value *= number;
 
-            } else if (checkSignInList(i, '/', "+-*/")) {
-                if (number != 0)
-                    value /= number;
-                else
-                    throw new ArithmeticException("Деление на ноль");
 
-            } else if (checkSignInList(i, '+', "*/^")) {
-                value += getExpressionValue(++i, lastElement);
-                break;
-
-            } else if (checkSignInList(i, '-', "*/^")) {
-                var closeIndex = getLastIndex(i, lastElement);
-
-                value -= getExpressionValue(++i, closeIndex);
-                i = closeIndex + 1;
-                continue;
-
-            } else if (checkSignInList(i, '*', "^")) {
-                value *= getExpressionValue(++i, i);
-
-            } else if (checkSignInList(i, '/', "^")) {
-                var denominator = getExpressionValue(++i, i);
-                if (denominator != 0)
-                    value /= denominator;
-                else
-                    throw new ArithmeticException("Деление на ноль");
-
-            } else if (getSign(i) == '^') {
-                value = Math.pow(value, numberList.get(i));
-            }
-            i++;
         }
 
         return value;
