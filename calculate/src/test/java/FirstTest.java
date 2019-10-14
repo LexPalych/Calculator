@@ -38,9 +38,9 @@ public class FirstTest {
 
     @Test
     void addition() {
-        String expression = "10+20";
+        String expression = "1+2";
         double value = new CalculateString(expression).calculateString();
-        assertTrue(value == 30);
+        assertTrue(value == 3);
     }
 
     @Test
@@ -59,16 +59,16 @@ public class FirstTest {
 
     @Test
     void division() {
-        String expression = "9-5";
+        String expression = "18/3";
         double value = new CalculateString(expression).calculateString();
-        assertTrue(value == 4);
+        assertTrue(value == 6);
     }
 
     @Test
     void exponentiation() {
-        String expression = "9-5";
+        String expression = "2^3";
         double value = new CalculateString(expression).calculateString();
-        assertTrue(value == 4);
+        assertTrue(value == 8);
     }
 
 }
