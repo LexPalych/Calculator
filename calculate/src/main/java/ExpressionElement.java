@@ -1,5 +1,10 @@
+import java.util.List;
+
+import static java.lang.Character.isDigit;
+import static java.lang.Character.isLetter;
+
 public class ExpressionElement {
-    private String expression;
+    private static String expression;
     private int length;
 
     private String firstSymbol;
@@ -11,6 +16,10 @@ public class ExpressionElement {
     private Character sign;
     private Double number;
     private Double function;
+
+    private static char getChar(int index) {
+        return expression.charAt(index);
+    }
 
     public String getExpression() {
         return expression;
@@ -82,5 +91,29 @@ public class ExpressionElement {
 
     public void setFunction(Double function) {
         this.function = function;
+    }
+
+    public static SymbolType checkSymbolType(final char symbol) {
+        List<Character> signList = List.of('+', '-', '*', '/', '^', '!');
+
+        if (signList.contains(symbol)) {
+            return SymbolType.SIGN;
+
+        } else if (isDigit(symbol) || symbol == '.') {
+            return SymbolType.DIGIT;
+
+        } else if (isLetter(symbol)) {
+            return SymbolType.LETTER;
+
+        } else if (symbol == '(') {
+            return SymbolType.BRACKET;
+
+        } else {
+            throw new SecurityException("Неизестный сивол " + symbol);
+        }
+    }
+
+    public static SymbolType getSymbolType(final int index) {
+        return checkSymbolType(getChar(index));
     }
 }

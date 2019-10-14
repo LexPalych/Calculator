@@ -7,19 +7,30 @@ import static java.lang.Character.isLetter;
 public class CalculateString {
     private static String expression;
 
+//    public static String getExpression() {
+//        return expression;
+//    }
+//
+//    public static void setExpression(String expression) {
+//        CalculateString.expression = expression;
+//    }
+
     public CalculateString(String expression) {
         this.expression = expression;
     }
 
-    private static char getChar(int index) {
-        return expression.charAt(index);
-    }
+//    private static char getChar(int index) {
+//        return expression.charAt(index);
+//    }
 
     public double calculateString() {
-        var check = new ExpressionValidation();
+        ExpressionValidation check = new ExpressionValidation();
+        ExpressionElement expressionElement = new ExpressionElement();
 
-        if (check.checkExpression(expression))
-            return calculate(expression);
+        expressionElement.setExpression(expression);
+
+        if (check.checkExpression(expressionElement.getExpression()))
+            return calculate(expressionElement.getExpression());
 
         else
             throw new StringException("Какая-то неведомая ошибка");
@@ -52,8 +63,8 @@ public class CalculateString {
         }
     }
 
-    private static SymbolType getSymbolType(final int index) {
-        return checkSymbolType(getChar(index));
+    private static SymbolType getSymbolType(final int index, final String expression) {
+        return checkSymbolType(expression.charAt(index));
     }
 
     private static ExpressionElement setNumberInExpressionElement(final int firstNumberIndex) {
@@ -61,7 +72,7 @@ public class CalculateString {
         String numberAsString;
         ExpressionElement expressionElement = new ExpressionElement();
 
-        while (lastNumberIndex < expression.length() && getSymbolType(lastNumberIndex) == SymbolType.DIGIT) {
+        while (lastNumberIndex < expression.length() && getSymbolType(lastNumberIndex, expression) == SymbolType.DIGIT) {
             lastNumberIndex++;
         }
 
@@ -93,7 +104,7 @@ public class CalculateString {
         while (i < subExpression.length()) {
             symbol = subExpression.charAt(i);
 
-            SymbolType symbolType = getSymbolType(i);
+            SymbolType symbolType = getSymbolType(i, subExpression);
 
             if (symbolType == SymbolType.SIGN) {
                 signList.add(symbol);
@@ -115,7 +126,7 @@ public class CalculateString {
 
         while (i < subExpression.length()) {
 //            char symbol = subExpression.charAt(i);
-            SymbolType symbolType = getSymbolType(i);
+            SymbolType symbolType = getSymbolType(i, subExpression);
 
             if (symbolType == SymbolType.DIGIT) {
                 expressionElement = setNumberInExpressionElement(i);
@@ -152,7 +163,8 @@ public class CalculateString {
         char currentChar;
 
         do {
-            currentChar = getChar(lastBracketIndex++);
+//            currentChar = getChar(lastBracketIndex++);
+            currentChar = expression.charAt(lastBracketIndex++);
 
             if (currentChar == '(') {
                 bracketAmount++;
