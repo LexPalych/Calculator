@@ -8,8 +8,8 @@ import static java.lang.Character.*;
 
 public class CalculateString {
     private static String expression;
-    private static Map<Integer, Character> signList;
-    private static Map<Integer, Double> numberList;
+//    private static Map<Integer, Character> signList;
+//    private static Map<Integer, Double> numberList;
 
     public CalculateString(String expression) {
         this.expression = expression;
@@ -19,15 +19,15 @@ public class CalculateString {
         return expression.charAt(index);
     }
 
-    private static char getChar(int index, String expression) {
-        return expression.charAt(index);
-    }
+//    private static char getChar(int index, String expression) {
+//        return expression.charAt(index);
+//    }
+//
+//    private static Character getSign(int index) {
+//        return signList.get(index);
+//    }
 
-    private static Character getSign(int index) {
-        return signList.get(index);
-    }
-
-    public static double calculateString() {
+    public double calculateString() {
         var check = new ExpressionValidation();
 
         if (check.checkExpression(expression))
@@ -71,8 +71,8 @@ public class CalculateString {
         }
     }
 
-    private static SymbolType getSymbolType(final int index, final String expression) {
-        return checkSymbolType(expression.charAt(index));
+    private static SymbolType getSymbolType(final int index) {
+        return checkSymbolType(getChar(index));
     }
 
     private static ExpressionElement setNumberInExpressionElement(final int firstNumberIndex) {
@@ -80,13 +80,13 @@ public class CalculateString {
         String numberAsString;
         ExpressionElement expressionElement = new ExpressionElement();
 
-        while (getSymbolType(lastNumberIndex) == SymbolType.DIGIT && lastNumberIndex < expression.length()) {
+        while (lastNumberIndex < expression.length() && getSymbolType(lastNumberIndex) == SymbolType.DIGIT) {
             lastNumberIndex++;
         }
-        lastNumberIndex--;
+//        lastNumberIndex--;
         numberAsString = expression.substring(firstNumberIndex, lastNumberIndex);
         expressionElement.setNumber(Double.parseDouble(numberAsString));
-        expressionElement.setLastSymbolIndex(lastNumberIndex);
+        expressionElement.setLastSymbolIndex(lastNumberIndex-1);
 
         return expressionElement;
     }
@@ -128,11 +128,8 @@ public class CalculateString {
 
     private static List<Double> createNumberList(final String subExpression) {
         List<Double> numberList = new LinkedList<>();
-//        int numberListSize = 0;
         int i = 0;
-
         int closeBracketIndex;
-
         ExpressionElement expressionElement = new ExpressionElement();
 
         while (i < subExpression.length()) {
@@ -146,6 +143,10 @@ public class CalculateString {
             } else if (symbolType == SymbolType.SIGN && i == 0) {
                 expressionElement.setNumber(0.0);
                 expressionElement.setLastSymbolIndex(i);
+
+            } else if (symbolType == SymbolType.SIGN && i != 0) {
+                i++;
+                continue;
 
             } else if (symbolType == SymbolType.LETTER) {
                 expressionElement = setFunctionInExpressionElement(i);
