@@ -37,42 +37,80 @@ public class FirstTest {
     void addition() {
         String expression = "1+2";
         double value = new CalculateString(expression).calculateString();
-        assertTrue(value == 3);
+        double result = 3;
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
     void subtraction() {
         String expression = "9-3";
         double value = new CalculateString(expression).calculateString();
-        assertTrue(value == 6);
+        double result = 6;
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
     void multiplication() {
         String expression = "7*8";
         double value = new CalculateString(expression).calculateString();
-        assertTrue(value == 56);
+        double result = 56;
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
     void division() {
         String expression = "18/3";
         double value = new CalculateString(expression).calculateString();
-        assertTrue(value == 6);
+        double result = 6;
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
     void exponentiation() {
         String expression = "2^3";
         double value = new CalculateString(expression).calculateString();
-        assertTrue(value == 8);
+        double result = 8;
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
     void factorial() {
         String expression = "3!";
         double value = new CalculateString(expression).calculateString();
-        assertTrue(value == 6);
+        double result = 6;
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+    }
+
+    @Test
+    void firstMinus() {
+        String expression = "-5+3";
+        double value = new CalculateString(expression).calculateString();
+        double result = -2;
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+    }
+
+    @Test
+    void firstBracket() {
+        String expression = "(2+3)";
+        double value = new CalculateString(expression).calculateString();
+        double result = 5;
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+    }
+
+    @Test
+    void function() {
+        String expression = "sin(30)";
+        double value = new CalculateString(expression).calculateString();
+        double result = 0.5;
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+    }
+
+    @Test
+    void multiExample() {
+        String expression = "7+8+3*5-30/3+2^3";
+        double value = new CalculateString(expression).calculateString();
+        double result = 28;
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
 }

@@ -35,20 +35,6 @@ public class CalculateExpressionElement {
         i = 1;
 
         while (i < newSignList.size()) {
-            if (newSignList.get(i) == '*') {
-                value = newNumberList.get(i-1) * newNumberList.get(i);
-                newNumberList.set(i-1, value);
-
-                newNumberList.remove(i);
-                newSignList.remove(i);
-
-            } else {
-                i++;
-            }
-        }
-        i = 1;
-
-        while (i < newSignList.size()) {
             if (newSignList.get(i) == '/') {
                 value = newNumberList.get(i-1) / newNumberList.get(i);
                 newNumberList.set(i-1, value);
@@ -63,8 +49,8 @@ public class CalculateExpressionElement {
         i = 1;
 
         while (i < newSignList.size()) {
-            if (newSignList.get(i) == '+') {
-                value = newNumberList.get(i-1) + newNumberList.get(i);
+            if (newSignList.get(i) == '*') {
+                value = newNumberList.get(i-1) * newNumberList.get(i);
                 newNumberList.set(i-1, value);
 
                 newNumberList.remove(i);
@@ -79,6 +65,20 @@ public class CalculateExpressionElement {
         while (i < newSignList.size()) {
             if (newSignList.get(i) == '-') {
                 value = newNumberList.get(i-1) - newNumberList.get(i);
+                newNumberList.set(i-1, value);
+
+                newNumberList.remove(i);
+                newSignList.remove(i);
+
+            } else {
+                i++;
+            }
+        }
+        i = 1;
+
+        while (i < newSignList.size()) {
+            if (newSignList.get(i) == '+') {
+                value = newNumberList.get(i-1) + newNumberList.get(i);
                 newNumberList.set(i-1, value);
 
                 newNumberList.remove(i);
