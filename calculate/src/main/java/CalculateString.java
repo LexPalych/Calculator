@@ -33,7 +33,7 @@ public class CalculateString {
     }
 
     private static SymbolType checkSymbolType(final char symbol) {
-        List<Character> signList = List.of('+', '-', '*', '/', '^');
+        List<Character> signList = List.of('+', '-', '*', '/', '^', '!');
 
         if (signList.contains(symbol)) {
             return SymbolType.SIGN;
@@ -114,7 +114,7 @@ public class CalculateString {
         ExpressionElement expressionElement = new ExpressionElement();
 
         while (i < subExpression.length()) {
-            char symbol = subExpression.charAt(i);
+//            char symbol = subExpression.charAt(i);
             SymbolType symbolType = getSymbolType(i);
 
             if (symbolType == SymbolType.DIGIT) {
@@ -136,9 +136,9 @@ public class CalculateString {
                 expressionElement.setNumber(calculate(subExpression.substring(i+1, closeBracketIndex-1)));
                 expressionElement.setLastSymbolIndex(closeBracketIndex);
 
-            } else if (symbol == '!') {
+            } /*else if (symbol == '!') {
                 expressionElement.setNumber(factorial(numberList.get(numberList.size()-1)));
-            }
+            }*/
 
             numberList.add(expressionElement.getNumber());
             i = expressionElement.getLastSymbolIndex() + 1;
@@ -170,7 +170,7 @@ public class CalculateString {
      * @param number - число
      * @return - возвращает факториал числа типом Double
      */
-    private static double factorial(double number) {
+    public static double factorial(double number) {
         if (number < 0)
             throw new ArithmeticException("Отрицательный аргумент факториала");
 

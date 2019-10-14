@@ -68,4 +68,11 @@ public class FirstTest {
         assertTrue(value == 8);
     }
 
+    @Test
+    void factorial() {
+        String expression = "3!";
+        double value = new CalculateString(expression).calculateString();
+        assertTrue(value == 6);
+    }
+
 }
