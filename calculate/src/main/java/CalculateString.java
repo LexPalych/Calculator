@@ -5,24 +5,6 @@ import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 
 public class CalculateString {
-//    private static String expression;
-
-//    public static String getExpression() {
-//        return expression;
-//    }
-//
-//    public static void setExpression(String expression) {
-//        CalculateString.expression = expression;
-//    }
-
-//    public CalculateString(String expression) {
-//        this.expression = expression;
-//    }
-
-//    private static char getChar(int index) {
-//        return expression.charAt(index);
-//    }
-
     public static double calculateString(final String expression) {
         ExpressionValidation check = new ExpressionValidation();
         ExpressionElement expressionElement = new ExpressionElement();
@@ -62,10 +44,6 @@ public class CalculateString {
             throw new SecurityException("Неизестный сивол " + symbol);
         }
     }
-
-//    private static SymbolType getSymbolType(final int index, final String expression) {
-//        return checkSymbolType(expression.charAt(index));
-//    }
 
     private static ExpressionElement setNumberInExpressionElement(final String subExpression) {
         int lastNumberIndex = 0;
@@ -122,6 +100,7 @@ public class CalculateString {
         List<Double> numberList = new LinkedList<>();
         int i = 0;
         int closeBracketIndex;
+        int lastElementSymbolIndex = 0;
         ExpressionElement expressionElement = new ExpressionElement();
 
         while (i < subExpression.length()) {
@@ -130,11 +109,11 @@ public class CalculateString {
 
             if (symbolType == SymbolType.DIGIT) {
                 expressionElement = setNumberInExpressionElement(subExpression.substring(i));
-                expressionElement.setLastSymbolIndex(i + expressionElement.getLastSymbolIndex());
+                lastElementSymbolIndex = i + expressionElement.getLastSymbolIndex();
 
             } else if (symbolType == SymbolType.SIGN && i == 0) {
                 expressionElement.setNumber(0.0);
-                expressionElement.setLastSymbolIndex(i);
+                lastElementSymbolIndex = i;
 
             } else if (symbolType == SymbolType.SIGN && i != 0) {
                 i++;
@@ -142,16 +121,16 @@ public class CalculateString {
 
             } else if (symbolType == SymbolType.LETTER) {
                 expressionElement = setFunctionInExpressionElement(subExpression.substring(i));
-                expressionElement.setLastSymbolIndex(i + expressionElement.getLastSymbolIndex());
+                lastElementSymbolIndex = i + expressionElement.getLastSymbolIndex();
 
             } else if (symbolType == SymbolType.BRACKET) {
                 closeBracketIndex = i + getClosingBracketIndex(subExpression.substring(i));
                 expressionElement.setNumber(calculate(subExpression.substring(i+1, closeBracketIndex)));
-                expressionElement.setLastSymbolIndex(closeBracketIndex);
+                lastElementSymbolIndex = closeBracketIndex;
             }
 
             numberList.add(expressionElement.getNumber());
-            i = expressionElement.getLastSymbolIndex() + 1;
+            i = lastElementSymbolIndex + 1;
         }
         return numberList;
     }
