@@ -15,7 +15,7 @@ class BracketChecks {
     void bracket2() {
         String expression = "1-(2+5)";
         double value = CalculateString.calculate(expression);
-        double result = 6;
+        double result = -6;
         assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
@@ -23,7 +23,7 @@ class BracketChecks {
     void bracket3() {
         String expression = "1-(2+5)-4";
         double value = CalculateString.calculate(expression);
-        double result = 56;
+        double result = -10;
         assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
@@ -31,7 +31,7 @@ class BracketChecks {
     void bracket4() {
         String expression = "1-(2+5)+4";
         double value = CalculateString.calculate(expression);
-        double result = 6;
+        double result = -2;
         assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
@@ -39,7 +39,7 @@ class BracketChecks {
     void bracket5() {
         String expression = "2*(-2+5)-4";
         double value = CalculateString.calculate(expression);
-        double result = 8;
+        double result = 2;
         assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
@@ -55,7 +55,7 @@ class BracketChecks {
     void bracket7() {
         String expression = "(1+2)-(3-4)";
         double value = CalculateString.calculate(expression);
-        double result = -2;
+        double result = 4;
         assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
@@ -63,7 +63,7 @@ class BracketChecks {
     void bracket18() {
         String expression = "-(1+2)*(3-4)+5";
         double value = CalculateString.calculate(expression);
-        double result = 5;
+        double result = 8;
         assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 

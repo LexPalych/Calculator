@@ -130,6 +130,7 @@ public class CalculateString {
 
             if (symbolType == SymbolType.DIGIT) {
                 expressionElement = setNumberInExpressionElement(subExpression.substring(i));
+                expressionElement.setLastSymbolIndex(i + expressionElement.getLastSymbolIndex());
 
             } else if (symbolType == SymbolType.SIGN && i == 0) {
                 expressionElement.setNumber(0.0);
@@ -141,15 +142,16 @@ public class CalculateString {
 
             } else if (symbolType == SymbolType.LETTER) {
                 expressionElement = setFunctionInExpressionElement(subExpression.substring(i));
+                expressionElement.setLastSymbolIndex(i + expressionElement.getLastSymbolIndex());
 
             } else if (symbolType == SymbolType.BRACKET) {
-                closeBracketIndex = getClosingBracketIndex(subExpression.substring(i));
-                expressionElement.setNumber(calculate(subExpression.substring(i+1, closeBracketIndex-1)));
+                closeBracketIndex = i + getClosingBracketIndex(subExpression.substring(i));
+                expressionElement.setNumber(calculate(subExpression.substring(i+1, closeBracketIndex)));
                 expressionElement.setLastSymbolIndex(closeBracketIndex);
             }
 
             numberList.add(expressionElement.getNumber());
-            i += expressionElement.getLastSymbolIndex() + 1;
+            i = expressionElement.getLastSymbolIndex() + 1;
         }
         return numberList;
     }
