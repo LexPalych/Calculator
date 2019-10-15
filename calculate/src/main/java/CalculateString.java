@@ -5,7 +5,7 @@ import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 
 public class CalculateString {
-    private static String expression;
+//    private static String expression;
 
 //    public static String getExpression() {
 //        return expression;
@@ -15,22 +15,22 @@ public class CalculateString {
 //        CalculateString.expression = expression;
 //    }
 
-    public CalculateString(String expression) {
-        this.expression = expression;
-    }
+//    public CalculateString(String expression) {
+//        this.expression = expression;
+//    }
 
 //    private static char getChar(int index) {
 //        return expression.charAt(index);
 //    }
 
-    public double calculateString() {
+    public double calculateString(final String expression) {
         ExpressionValidation check = new ExpressionValidation();
         ExpressionElement expressionElement = new ExpressionElement();
 
         expressionElement.setExpression(expression);
 
-        if (check.checkExpression(expressionElement.getExpression()))
-            return calculate(expressionElement.getExpression());
+        if (check.checkExpression(expression))
+            return calculate(expression);
 
         else
             throw new StringException("Какая-то неведомая ошибка");
@@ -146,10 +146,7 @@ public class CalculateString {
                 closeBracketIndex = getClosingBracketIndex(subExpression.substring(i));
                 expressionElement.setNumber(calculate(subExpression.substring(i+1, closeBracketIndex-1)));
                 expressionElement.setLastSymbolIndex(closeBracketIndex);
-
-            } /*else if (symbol == '!') {
-                expressionElement.setNumber(factorial(numberList.get(numberList.size()-1)));
-            }*/
+            }
 
             numberList.add(expressionElement.getNumber());
             i += expressionElement.getLastSymbolIndex() + 1;
@@ -163,7 +160,6 @@ public class CalculateString {
         char currentChar;
 
         do {
-//            currentChar = getChar(lastBracketIndex++);
             currentChar = subExpression.charAt(lastBracketIndex++);
 
             if (currentChar == '(') {

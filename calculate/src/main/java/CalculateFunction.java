@@ -59,6 +59,9 @@ public class CalculateFunction {
             case "sqrt":
                 return Math.sqrt(functionArgument);
 
+            case "exp":
+                return Math.exp(functionArgument);
+
             default:
                 throw new StringException("Неизвестная функция");
         }
