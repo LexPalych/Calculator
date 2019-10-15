@@ -23,7 +23,7 @@ public class CalculateString {
 //        return expression.charAt(index);
 //    }
 
-    public double calculateString(final String expression) {
+    public static double calculateString(final String expression) {
         ExpressionValidation check = new ExpressionValidation();
         ExpressionElement expressionElement = new ExpressionElement();
 
@@ -87,7 +87,7 @@ public class CalculateString {
         ExpressionElement expressionElement = new ExpressionElement();
 
         int lastFunctionIndex = getClosingBracketIndex(subExpression);
-        double functionValue = CalculateFunction.getFunctionValue(subExpression.substring(0, lastFunctionIndex));
+        double functionValue = CalculateFunction.getFunctionValue(subExpression.substring(0, lastFunctionIndex+1));
 
         expressionElement.setNumber(functionValue);
         expressionElement.setLastSymbolIndex(lastFunctionIndex);
@@ -169,6 +169,7 @@ public class CalculateString {
                 bracketAmount--;
             }
         } while (!(bracketAmount == 0 && currentChar == ')'));
+        lastBracketIndex--;
 
         return lastBracketIndex;
     }

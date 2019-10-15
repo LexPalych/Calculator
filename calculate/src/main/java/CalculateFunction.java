@@ -74,7 +74,7 @@ public class CalculateFunction {
         while (functionExpression.charAt(nameFunctionLastIndex) != '(') {
             nameFunctionLastIndex++;
         }
-        nameFunctionLastIndex--;
+//        nameFunctionLastIndex--;
 
         return functionExpression.substring(0, nameFunctionLastIndex);
     }

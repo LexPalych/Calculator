@@ -29,8 +29,8 @@ public class ExpressionValidation {
                 .checkFirstSymbol()
                 .checkLastSymbol()
                 .checkNoSpace()
-                .checkNoComma()
-                .checkNoOnlyLetter();
+                .checkNoComma();
+//                .checkNoOnlyLetter();
 
 
         return true;
@@ -229,19 +229,19 @@ public class ExpressionValidation {
         return this;
     }
 
-    /**
-     * Проверить, что в выражении присутствуют числа или константы
-     * @return - возвращает true, если в выражении присутствуют числа или константы
-     */
-    private ExpressionValidation checkNoOnlyLetter() {
-        for (int i = 0; i < expression.length(); i++) {
-            var symbol = getChar(i);
-
-            if (isDigit(symbol) || (symbol == 'e' && !(isLetter(getChar(i-1)) || isLetter(getChar(i+1)))))
-                return this;
-        }
-
-        throw new StringException("В выражении отсутствуют числа");
-    }
+//    /**
+//     * Проверить, что в выражении присутствуют числа или константы
+//     * @return - возвращает true, если в выражении присутствуют числа или константы
+//     */
+//    private ExpressionValidation checkNoOnlyLetter() {
+//        for (int i = 0; i < expression.length(); i++) {
+//            var symbol = getChar(i);
+//
+//            if (isDigit(symbol) || (symbol == 'e' && !(isLetter(getChar(i-1)) || isLetter(getChar(i+1)))))
+//                return this;
+//        }
+//
+//        throw new StringException("В выражении отсутствуют числа");
+//    }
 
 }
