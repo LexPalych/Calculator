@@ -63,31 +63,31 @@ public class CalculateString {
         }
     }
 
-    private static SymbolType getSymbolType(final int index, final String expression) {
-        return checkSymbolType(expression.charAt(index));
-    }
+//    private static SymbolType getSymbolType(final int index, final String expression) {
+//        return checkSymbolType(expression.charAt(index));
+//    }
 
-    private static ExpressionElement setNumberInExpressionElement(final int firstNumberIndex) {
-        int lastNumberIndex = firstNumberIndex;
+    private static ExpressionElement setNumberInExpressionElement(final String subExpression) {
+        int lastNumberIndex = 0;
         String numberAsString;
         ExpressionElement expressionElement = new ExpressionElement();
 
-        while (lastNumberIndex < expression.length() && getSymbolType(lastNumberIndex, expression) == SymbolType.DIGIT) {
+        while (lastNumberIndex < subExpression.length() && checkSymbolType(subExpression.charAt(lastNumberIndex)) == SymbolType.DIGIT) {
             lastNumberIndex++;
         }
 
-        numberAsString = expression.substring(firstNumberIndex, lastNumberIndex);
+        numberAsString = subExpression.substring(0, lastNumberIndex);
         expressionElement.setNumber(Double.parseDouble(numberAsString));
         expressionElement.setLastSymbolIndex(lastNumberIndex-1);
 
         return expressionElement;
     }
 
-    private static ExpressionElement setFunctionInExpressionElement(final int firstFunctionIndex) {
+    private static ExpressionElement setFunctionInExpressionElement(final String subExpression) {
         ExpressionElement expressionElement = new ExpressionElement();
 
-        int lastFunctionIndex = getClosingBracketIndex(firstFunctionIndex);
-        double functionValue = CalculateFunction.getFunctionValue(expression.substring(firstFunctionIndex, lastFunctionIndex));
+        int lastFunctionIndex = getClosingBracketIndex(subExpression);
+        double functionValue = CalculateFunction.getFunctionValue(subExpression.substring(0, lastFunctionIndex));
 
         expressionElement.setNumber(functionValue);
         expressionElement.setLastSymbolIndex(lastFunctionIndex);
@@ -99,18 +99,18 @@ public class CalculateString {
         List<Character> signList = new LinkedList<>();
         int i = 0;
         char symbol;
-        signList.add('!');
+        signList.add(null);
 
         while (i < subExpression.length()) {
             symbol = subExpression.charAt(i);
 
-            SymbolType symbolType = getSymbolType(i, subExpression);
+            SymbolType symbolType = checkSymbolType(symbol);
 
             if (symbolType == SymbolType.SIGN) {
                 signList.add(symbol);
 
             } else if (symbolType == SymbolType.BRACKET) {
-                i = getClosingBracketIndex(i);
+                i += getClosingBracketIndex(subExpression.substring(i));
             }
 
             i++;
@@ -125,11 +125,11 @@ public class CalculateString {
         ExpressionElement expressionElement = new ExpressionElement();
 
         while (i < subExpression.length()) {
-//            char symbol = subExpression.charAt(i);
-            SymbolType symbolType = getSymbolType(i, subExpression);
+            char symbol = subExpression.charAt(i);
+            SymbolType symbolType = checkSymbolType(symbol);
 
             if (symbolType == SymbolType.DIGIT) {
-                expressionElement = setNumberInExpressionElement(i);
+                expressionElement = setNumberInExpressionElement(subExpression.substring(i));
 
             } else if (symbolType == SymbolType.SIGN && i == 0) {
                 expressionElement.setNumber(0.0);
@@ -140,10 +140,10 @@ public class CalculateString {
                 continue;
 
             } else if (symbolType == SymbolType.LETTER) {
-                expressionElement = setFunctionInExpressionElement(i);
+                expressionElement = setFunctionInExpressionElement(subExpression.substring(i));
 
             } else if (symbolType == SymbolType.BRACKET) {
-                closeBracketIndex = getClosingBracketIndex(i);
+                closeBracketIndex = getClosingBracketIndex(subExpression.substring(i));
                 expressionElement.setNumber(calculate(subExpression.substring(i+1, closeBracketIndex-1)));
                 expressionElement.setLastSymbolIndex(closeBracketIndex);
 
@@ -152,19 +152,19 @@ public class CalculateString {
             }*/
 
             numberList.add(expressionElement.getNumber());
-            i = expressionElement.getLastSymbolIndex() + 1;
+            i += expressionElement.getLastSymbolIndex() + 1;
         }
         return numberList;
     }
 
-    private static int getClosingBracketIndex(final int firstBracketIndex) {
+    private static int getClosingBracketIndex(final String subExpression) {
         int bracketAmount = 0;
-        int lastBracketIndex = firstBracketIndex;
+        int lastBracketIndex = 0;
         char currentChar;
 
         do {
 //            currentChar = getChar(lastBracketIndex++);
-            currentChar = expression.charAt(lastBracketIndex++);
+            currentChar = subExpression.charAt(lastBracketIndex++);
 
             if (currentChar == '(') {
                 bracketAmount++;
