@@ -6,7 +6,7 @@ import static java.lang.Character.isLetter;
 
 public class CalculateString {
     public static double calculateString(final String expression) {
-        ExpressionValidation check = new ExpressionValidation();
+        ExampleValidation check = new ExampleValidation();
         ExpressionElement expressionElement = new ExpressionElement();
 
         expressionElement.setExpression(expression);
@@ -160,7 +160,7 @@ public class CalculateString {
      * @param number - число
      * @return - возвращает факториал числа типом Double
      */
-    public static double factorial(double number) {
+    static double factorial(double number) {
         if (number < 0)
             throw new ArithmeticException("Отрицательный аргумент факториала");
 
