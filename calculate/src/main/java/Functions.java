@@ -20,11 +20,32 @@ class Functions {
     private static final Function<Double, Double> ABS = Math::abs;
     private static final Function<Double, Double> SQRT = Math::sqrt;
 
+    static final Function<Double, Double> FACTORIAL = Functions::getFactorial;
+
     private static Double getLogarithm(final Double argument) {
         if (argument > 0)
             return Math.log(argument);
         else
             throw new ArithmeticException("Аргумент логарифма должен быть положительным");
+    }
+
+    /**
+     * Находит факториал числа
+     * @param number - число
+     * @return - возвращает факториал числа типом Double
+     */
+    private static double getFactorial(double number) {
+        if (number < 0)
+            throw new ArithmeticException("Отрицательный аргумент факториала");
+
+        if (number % 1 !=0)
+            throw new ArithmeticException("Аргумент факториала не является целым числом");
+
+        if (number == 0 || number == 1)
+            return 1.0;
+
+        else
+            return number * getFactorial(number-1);
     }
 
     static Function<Double, Double> getFunctions(final String functionName) {

@@ -9,7 +9,8 @@ public class CalculateExpressionElement {
 
         while (i < newSignList.size()) {
             if (newSignList.get(i) == '!') {
-                value = CalculateString.factorial(newNumberList.get(i-1));
+//                value = CalculateString.factorial(newNumberList.get(i-1));
+                value = Functions.FACTORIAL.apply(newNumberList.get(i-1));
                 newNumberList.set(i-1, value);
 
                 newSignList.remove(i);

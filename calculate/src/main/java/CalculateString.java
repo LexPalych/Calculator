@@ -155,23 +155,23 @@ public class CalculateString {
         return lastBracketIndex;
     }
 
-    /**
-     * Находит факториал числа
-     * @param number - число
-     * @return - возвращает факториал числа типом Double
-     */
-    static double factorial(double number) {
-        if (number < 0)
-            throw new ArithmeticException("Отрицательный аргумент факториала");
-
-        if (number % 1 !=0)
-            throw new ArithmeticException("Аргумент факториала не является целым числом");
-
-        if (number == 0 || number == 1)
-            return 1.0;
-
-        else
-            return number * factorial(number-1);
-    }
+//    /**
+//     * Находит факториал числа
+//     * @param number - число
+//     * @return - возвращает факториал числа типом Double
+//     */
+//    static double factorial(double number) {
+//        if (number < 0)
+//            throw new ArithmeticException("Отрицательный аргумент факториала");
+//
+//        if (number % 1 !=0)
+//            throw new ArithmeticException("Аргумент факториала не является целым числом");
+//
+//        if (number == 0 || number == 1)
+//            return 1.0;
+//
+//        else
+//            return number * factorial(number-1);
+//    }
 
 }
