@@ -23,7 +23,8 @@ public class CalculateExpressionElement {
 
         while (i < newSignList.size()) {
             if (newSignList.get(i) == '^') {
-                value = Math.pow(newNumberList.get(i-1), newNumberList.get(i));
+//                value = Math.pow(newNumberList.get(i-1), newNumberList.get(i));
+                value = Functions.EXPONENTIATION.apply(newNumberList.get(i-1), newNumberList.get(i));
                 newNumberList.set(i-1, value);
 
                 newNumberList.remove(i);
@@ -37,7 +38,8 @@ public class CalculateExpressionElement {
 
         while (i < newSignList.size()) {
             if (newSignList.get(i) == '/') {
-                value = newNumberList.get(i-1) / newNumberList.get(i);
+//                value = newNumberList.get(i-1) / newNumberList.get(i);
+                value = Functions.DIVISION.apply(newNumberList.get(i-1), newNumberList.get(i));
                 newNumberList.set(i-1, value);
 
                 newNumberList.remove(i);
@@ -51,7 +53,8 @@ public class CalculateExpressionElement {
 
         while (i < newSignList.size()) {
             if (newSignList.get(i) == '*') {
-                value = newNumberList.get(i-1) * newNumberList.get(i);
+//                value = newNumberList.get(i-1) * newNumberList.get(i);
+                value = Functions.MULTIPLICATION.apply(newNumberList.get(i-1), newNumberList.get(i));
                 newNumberList.set(i-1, value);
 
                 newNumberList.remove(i);
@@ -65,7 +68,8 @@ public class CalculateExpressionElement {
 
         while (i < newSignList.size()) {
             if (newSignList.get(i) == '-') {
-                value = newNumberList.get(i-1) - newNumberList.get(i);
+//                value = newNumberList.get(i-1) - newNumberList.get(i);
+                value = Functions.SUBTRACTION.apply(newNumberList.get(i-1), newNumberList.get(i));
                 newNumberList.set(i-1, value);
 
                 newNumberList.remove(i);
@@ -79,7 +83,8 @@ public class CalculateExpressionElement {
 
         while (i < newSignList.size()) {
             if (newSignList.get(i) == '+') {
-                value = newNumberList.get(i-1) + newNumberList.get(i);
+//                value = newNumberList.get(i-1) + newNumberList.get(i);
+                value = Functions.ADDITIONAL.apply(newNumberList.get(i-1), newNumberList.get(i));
                 newNumberList.set(i-1, value);
 
                 newNumberList.remove(i);
