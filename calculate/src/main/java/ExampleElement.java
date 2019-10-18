@@ -5,6 +5,7 @@ public class ExampleElement {
     private Character sign;
     private Double number;
     private Double function;
+    private Double bracket;
 
     public void setExpression(String expression) {
         this.example = expression;
@@ -42,4 +43,11 @@ public class ExampleElement {
         this.function = function;
     }
 
+    public Double getBracket() {
+        return bracket;
+    }
+
+    public void setBracket(Double bracket) {
+        this.bracket = bracket;
+    }
 }

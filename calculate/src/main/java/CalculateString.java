@@ -74,16 +74,27 @@ public class CalculateString {
         return exampleElement;
     }
 
-//    private static List<Character> getSignExampleElement(final Character signChar) {
-//        ExampleElement exampleElement = new ExampleElement();
-//        exampleElement.setSign(signChar);
-//        exampleElement.se
-//
-//
-//
-//
-//        return signList;
-//    }
+    private static ExampleElement getSignExampleElement(final Character signChar) {
+        ExampleElement exampleElement = new ExampleElement();
+
+        exampleElement.setSign(signChar);
+        exampleElement.setLengthExample(1);
+
+        return exampleElement;
+    }
+
+    private static ExampleElement getBracketExampleElement(final String subExpression) {
+        ExampleElement exampleElement = new ExampleElement();
+
+        int lastFunctionIndex = getClosingBracketIndex(subExpression);
+        String exampleBracket = subExpression.substring(0, lastFunctionIndex+1);
+        double bracketValue = calculate(exampleBracket);
+
+        exampleElement.setBracket(bracketValue);
+        exampleElement.setLengthExample(exampleBracket.length());
+
+        return exampleElement;
+    }
 
     private static List<Character> getSignList(final String subExpression) {
         List<Character> signList = new LinkedList<>();
