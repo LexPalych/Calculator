@@ -7,9 +7,9 @@ import static java.lang.Character.isLetter;
 public class CalculateString {
     public static double calculateString(final String expression) {
         ExampleValidation check = new ExampleValidation();
-        ExpressionElement expressionElement = new ExpressionElement();
+        ExampleElement exampleElement = new ExampleElement();
 
-        expressionElement.setExpression(expression);
+        exampleElement.setExpression(expression);
 
         if (check.checkExpression(expression))
             return calculate(expression);
@@ -19,10 +19,10 @@ public class CalculateString {
     }
 
     static double calculate(final String expression) {
-        List<Double> numberList = createNumberList(expression);
-        List<Character> signList = createSignList(expression);
+        List<Double> numberList = getNumberList(expression);
+        List<Character> signList = getSignList(expression);
 
-        return CalculateExpressionElement.calculateExpressionValue(numberList, signList);
+        return CalculateExampleElement.calculateExpressionValue(numberList, signList);
     }
 
     private static SymbolType checkSymbolType(final char symbol) {
@@ -45,35 +45,47 @@ public class CalculateString {
         }
     }
 
-    private static ExpressionElement setNumberInExpressionElement(final String subExpression) {
+    private static ExampleElement getNumberExampleElement(final String subExpression) {
         int lastNumberIndex = 0;
-        String numberAsString;
-        ExpressionElement expressionElement = new ExpressionElement();
+        String number;
+        ExampleElement exampleElement = new ExampleElement();
 
         while (lastNumberIndex < subExpression.length() && checkSymbolType(subExpression.charAt(lastNumberIndex)) == SymbolType.DIGIT) {
             lastNumberIndex++;
         }
 
-        numberAsString = subExpression.substring(0, lastNumberIndex);
-        expressionElement.setNumber(Double.parseDouble(numberAsString));
-        expressionElement.setLastSymbolIndex(lastNumberIndex-1);
+        number = subExpression.substring(0, lastNumberIndex);
+        exampleElement.setNumber(Double.parseDouble(number));
+        exampleElement.setLengthExample(number.length());
 
-        return expressionElement;
+        return exampleElement;
     }
 
-    private static ExpressionElement setFunctionInExpressionElement(final String subExpression) {
-        ExpressionElement expressionElement = new ExpressionElement();
+    private static ExampleElement getFunctionExampleElement(final String subExpression) {
+        ExampleElement exampleElement = new ExampleElement();
 
         int lastFunctionIndex = getClosingBracketIndex(subExpression);
-        double functionValue = CalculateFunction.getFunctionValue(subExpression.substring(0, lastFunctionIndex+1));
+        String exampleFunction = subExpression.substring(0, lastFunctionIndex+1);
+        double functionValue = CalculateFunction.getFunctionValue(exampleFunction);
 
-        expressionElement.setNumber(functionValue);
-        expressionElement.setLastSymbolIndex(lastFunctionIndex);
+        exampleElement.setNumber(functionValue);
+        exampleElement.setLengthExample(exampleFunction.length());
 
-        return expressionElement;
+        return exampleElement;
     }
 
-    private static List<Character> createSignList(final String subExpression) {
+//    private static List<Character> getSignExampleElement(final Character signChar) {
+//        ExampleElement exampleElement = new ExampleElement();
+//        exampleElement.setSign(signChar);
+//        exampleElement.se
+//
+//
+//
+//
+//        return signList;
+//    }
+
+    private static List<Character> getSignList(final String subExpression) {
         List<Character> signList = new LinkedList<>();
         int i = 0;
         char symbol;
@@ -96,23 +108,23 @@ public class CalculateString {
         return signList;
     }
 
-    private static List<Double> createNumberList(final String subExpression) {
+    private static List<Double> getNumberList(final String subExpression) {
         List<Double> numberList = new LinkedList<>();
         int i = 0;
         int closeBracketIndex;
         int lastElementSymbolIndex = 0;
-        ExpressionElement expressionElement = new ExpressionElement();
+        ExampleElement exampleElement = new ExampleElement();
 
         while (i < subExpression.length()) {
             char symbol = subExpression.charAt(i);
             SymbolType symbolType = checkSymbolType(symbol);
 
             if (symbolType == SymbolType.DIGIT) {
-                expressionElement = setNumberInExpressionElement(subExpression.substring(i));
-                lastElementSymbolIndex = i + expressionElement.getLastSymbolIndex();
+                exampleElement = getNumberExampleElement(subExpression.substring(i));
+                lastElementSymbolIndex = i + exampleElement.getLengthExample() - 1;
 
             } else if (symbolType == SymbolType.SIGN && i == 0) {
-                expressionElement.setNumber(0.0);
+                exampleElement.setNumber(0.0);
                 lastElementSymbolIndex = i;
 
             } else if (symbolType == SymbolType.SIGN && i != 0) {
@@ -120,16 +132,16 @@ public class CalculateString {
                 continue;
 
             } else if (symbolType == SymbolType.LETTER) {
-                expressionElement = setFunctionInExpressionElement(subExpression.substring(i));
-                lastElementSymbolIndex = i + expressionElement.getLastSymbolIndex();
+                exampleElement = getFunctionExampleElement(subExpression.substring(i));
+                lastElementSymbolIndex = i + exampleElement.getLengthExample() - 1;
 
             } else if (symbolType == SymbolType.BRACKET) {
                 closeBracketIndex = i + getClosingBracketIndex(subExpression.substring(i));
-                expressionElement.setNumber(calculate(subExpression.substring(i+1, closeBracketIndex)));
+                exampleElement.setNumber(calculate(subExpression.substring(i+1, closeBracketIndex)));
                 lastElementSymbolIndex = closeBracketIndex;
             }
 
-            numberList.add(expressionElement.getNumber());
+            numberList.add(exampleElement.getNumber());
             i = lastElementSymbolIndex + 1;
         }
         return numberList;

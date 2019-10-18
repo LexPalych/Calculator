@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class CalculateExpressionElement {
+public class CalculateExampleElement {
     static double calculateExpressionValue(List<Double> numberList, List<Character> signList) {
         List<Double> newNumberList = numberList;
         List<Character> newSignList = signList;
