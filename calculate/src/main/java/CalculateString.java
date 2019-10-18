@@ -87,11 +87,11 @@ public class CalculateString {
         ExampleElement exampleElement = new ExampleElement();
 
         int lastFunctionIndex = getClosingBracketIndex(subExpression);
-        String exampleBracket = subExpression.substring(0, lastFunctionIndex+1);
+        String exampleBracket = subExpression.substring(1, lastFunctionIndex);
         double bracketValue = calculate(exampleBracket);
 
-        exampleElement.setBracket(bracketValue);
-        exampleElement.setLengthExample(exampleBracket.length());
+        exampleElement.setNumber(bracketValue);
+        exampleElement.setLengthExample(exampleBracket.length() + 2);
 
         return exampleElement;
     }
@@ -147,9 +147,8 @@ public class CalculateString {
                 lastElementSymbolIndex = i + exampleElement.getLengthExample() - 1;
 
             } else if (symbolType == SymbolType.BRACKET) {
-                closeBracketIndex = i + getClosingBracketIndex(subExpression.substring(i));
-                exampleElement.setNumber(calculate(subExpression.substring(i+1, closeBracketIndex)));
-                lastElementSymbolIndex = closeBracketIndex;
+                exampleElement = getBracketExampleElement(subExpression.substring(i));
+                lastElementSymbolIndex = i + exampleElement.getLengthExample() - 1;
             }
 
             numberList.add(exampleElement.getNumber());
