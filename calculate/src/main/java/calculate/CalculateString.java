@@ -60,13 +60,13 @@ public class CalculateString {
             SymbolType symbolType = getSymbolType(symbol);
 
             if (symbolType == DIGIT) {
-                exampleElement = getNumberFromExample(subExample.substring(i));
+                exampleElement = getExampleNumber(subExample.substring(i));
 
             } else if (symbolType == LETTER) {
-                exampleElement = getFunctionFromExample(subExample.substring(i));
+                exampleElement = getExampleFunction(subExample.substring(i));
 
             } else if (symbolType == BRACKET) {
-                exampleElement = getBracketFromExample(subExample.substring(i));
+                exampleElement = getExampleBracket(subExample.substring(i));
 
             } else if (symbolType == SIGN) {
                 if (i == 0) {

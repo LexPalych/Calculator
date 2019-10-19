@@ -2,6 +2,7 @@ package calculate;
 
 import java.util.List;
 
+import static calculate.SymbolType.*;
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 
@@ -10,16 +11,16 @@ public class SymbolValidation {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '!');
 
         if (signList.contains(symbol)) {
-            return SymbolType.SIGN;
+            return SIGN;
 
         } else if (isDigit(symbol) || symbol == '.') {
-            return SymbolType.DIGIT;
+            return DIGIT;
 
         } else if (isLetter(symbol)) {
-            return SymbolType.LETTER;
+            return LETTER;
 
         } else if (symbol == '(') {
-            return SymbolType.BRACKET;
+            return BRACKET;
 
         } else {
             throw new SecurityException("Неизестный сивол " + symbol);

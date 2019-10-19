@@ -6,7 +6,7 @@ import static calculate.CalculateString.getClosingBracketIndex;
 import static calculate.SymbolValidation.getSymbolType;
 
 public class Example {
-    public static ExampleElement getNumberFromExample(final String subExample) {
+    public static ExampleElement getExampleNumber(final String subExample) {
         int lastNumberIndex = 0;
         String number;
         ExampleElement exampleElement = new ExampleElement();
@@ -22,7 +22,7 @@ public class Example {
         return exampleElement;
     }
 
-    public static ExampleElement getFunctionFromExample(final String subExample) {
+    public static ExampleElement getExampleFunction(final String subExample) {
         ExampleElement exampleElement = new ExampleElement();
 
         int lastFunctionIndex = getClosingBracketIndex(subExample);
@@ -35,7 +35,7 @@ public class Example {
         return exampleElement;
     }
 
-    public static ExampleElement getSignFromExample(final Character signChar) {
+    public static ExampleElement getExampleSign(final Character signChar) {
         ExampleElement exampleElement = new ExampleElement();
 
         exampleElement.setSign(signChar);
@@ -44,7 +44,7 @@ public class Example {
         return exampleElement;
     }
 
-    public static ExampleElement getBracketFromExample(final String subExample) {
+    public static ExampleElement getExampleBracket(final String subExample) {
         ExampleElement exampleElement = new ExampleElement();
 
         int lastFunctionIndex = getClosingBracketIndex(subExample);

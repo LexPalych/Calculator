@@ -3,6 +3,7 @@ package calculate;
 import java.util.function.Function;
 
 import static calculate.CalculateString.calculate;
+import static calculate.MathFunctions.getFunctions;
 
 class CalculateFunction {
     /**
@@ -11,7 +12,7 @@ class CalculateFunction {
      */
     static double getFunctionValue(final String expression) {
         String functionName = getFunctionName(expression);
-        Function<Double, Double> function = MathFunctions.getFunctions(functionName);
+        Function<Double, Double> function = getFunctions(functionName);
 
         String functionArgument = getFunctionArgument(expression);
         double functionArgumentValue = calculate(functionArgument);
