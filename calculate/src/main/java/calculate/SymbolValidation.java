@@ -1,10 +1,12 @@
+package calculate;
+
 import java.util.List;
 
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 
-class SymbolValidation {
-    static SymbolType getSymbolType(final char symbol) {
+public class SymbolValidation {
+    public static SymbolType getSymbolType(final char symbol) {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '!');
 
         if (signList.contains(symbol)) {

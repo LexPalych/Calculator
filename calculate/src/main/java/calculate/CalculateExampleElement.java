@@ -1,4 +1,8 @@
+package calculate;
+
 import java.util.List;
+
+import static calculate.MathFunctions.*;
 
 public class CalculateExampleElement {
     static double calculateExpressionValue(List<Double> numberList, List<Character> signList) {
@@ -9,7 +13,7 @@ public class CalculateExampleElement {
 
         while (i < newSignList.size()) {
             if (newSignList.get(i) == '!') {
-                value = MathFunctions.FACTORIAL.apply(newNumberList.get(i-1));
+                value = FACTORIAL.apply(newNumberList.get(i-1));
                 newNumberList.set(i-1, value);
 
                 newSignList.remove(i);
@@ -22,7 +26,7 @@ public class CalculateExampleElement {
 
         while (i < newSignList.size()) {
             if (newSignList.get(i) == '^') {
-                value = MathFunctions.EXPONENTIATION.apply(newNumberList.get(i-1), newNumberList.get(i));
+                value = EXPONENTIATION.apply(newNumberList.get(i-1), newNumberList.get(i));
                 newNumberList.set(i-1, value);
 
                 newNumberList.remove(i);
@@ -36,7 +40,7 @@ public class CalculateExampleElement {
 
         while (i < newSignList.size()) {
             if (newSignList.get(i) == '/') {
-                value = MathFunctions.DIVISION.apply(newNumberList.get(i-1), newNumberList.get(i));
+                value = DIVISION.apply(newNumberList.get(i-1), newNumberList.get(i));
                 newNumberList.set(i-1, value);
 
                 newNumberList.remove(i);
@@ -50,7 +54,7 @@ public class CalculateExampleElement {
 
         while (i < newSignList.size()) {
             if (newSignList.get(i) == '*') {
-                value = MathFunctions.MULTIPLICATION.apply(newNumberList.get(i-1), newNumberList.get(i));
+                value = MULTIPLICATION.apply(newNumberList.get(i-1), newNumberList.get(i));
                 newNumberList.set(i-1, value);
 
                 newNumberList.remove(i);
@@ -64,7 +68,7 @@ public class CalculateExampleElement {
 
         while (i < newSignList.size()) {
             if (newSignList.get(i) == '-') {
-                value = MathFunctions.SUBTRACTION.apply(newNumberList.get(i-1), newNumberList.get(i));
+                value = SUBTRACTION.apply(newNumberList.get(i-1), newNumberList.get(i));
                 newNumberList.set(i-1, value);
 
                 newNumberList.remove(i);
@@ -78,7 +82,7 @@ public class CalculateExampleElement {
 
         while (i < newSignList.size()) {
             if (newSignList.get(i) == '+') {
-                value = MathFunctions.ADDITIONAL.apply(newNumberList.get(i-1), newNumberList.get(i));
+                value = ADDITIONAL.apply(newNumberList.get(i-1), newNumberList.get(i));
                 newNumberList.set(i-1, value);
 
                 newNumberList.remove(i);

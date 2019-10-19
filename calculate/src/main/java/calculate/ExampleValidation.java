@@ -1,5 +1,6 @@
+package calculate;
+
 import java.util.List;
-import java.util.logging.Logger;
 
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
@@ -225,7 +226,7 @@ class ExampleValidation {
 //     * Проверить, что в выражении присутствуют числа или константы
 //     * @return - возвращает true, если в выражении присутствуют числа или константы
 //     */
-//    private ExampleValidation checkNoOnlyLetter(final String expression) {
+//    private calculate.ExampleValidation checkNoOnlyLetter(final String expression) {
 //        for (int i = 0; i < expression.length(); i++) {
 //            var symbol = expression.charAt(i);
 //
@@ -233,7 +234,7 @@ class ExampleValidation {
 //                return this;
 //        }
 //
-//        throw new StringException("В выражении отсутствуют числа");
+//        throw new calculate.StringException("В выражении отсутствуют числа");
 //    }
 
 }

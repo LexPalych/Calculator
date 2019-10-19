@@ -1,5 +1,12 @@
+package calculate;
+
 import java.util.LinkedList;
 import java.util.List;
+
+import static calculate.CalculateExampleElement.calculateExpressionValue;
+import static calculate.Example.*;
+import static calculate.SymbolType.*;
+import static calculate.SymbolValidation.getSymbolType;
 
 public class CalculateString {
     public static double calculateString(final String example) {
@@ -12,11 +19,11 @@ public class CalculateString {
             throw new StringException("Какая-то неведомая ошибка");
     }
 
-    static double calculate(final String example) {
+    public static double calculate(final String example) {
         List<Double> numberList = getNumberList(example);
         List<Character> signList = getSignList(example);
 
-        return CalculateExampleElement.calculateExpressionValue(numberList, signList);
+        return calculateExpressionValue(numberList, signList);
     }
 
     private static List<Character> getSignList(final String subExample) {
@@ -29,12 +36,12 @@ public class CalculateString {
         while (i < subExample.length()) {
             symbol = subExample.charAt(i);
 
-            SymbolType symbolType = SymbolValidation.getSymbolType(symbol);
+            SymbolType symbolType = getSymbolType(symbol);
 
-            if (symbolType == SymbolType.SIGN) {
+            if (symbolType == SIGN) {
                 signList.add(symbol);
 
-            } else if (symbolType == SymbolType.BRACKET) {
+            } else if (symbolType == BRACKET) {
                 i += getClosingBracketIndex(subExample.substring(i));
             }
 
@@ -50,18 +57,18 @@ public class CalculateString {
 
         while (i < subExample.length()) {
             char symbol = subExample.charAt(i);
-            SymbolType symbolType = SymbolValidation.getSymbolType(symbol);
+            SymbolType symbolType = getSymbolType(symbol);
 
-            if (symbolType == SymbolType.DIGIT) {
-                exampleElement = Example.getNumberFromExample(subExample.substring(i));
+            if (symbolType == DIGIT) {
+                exampleElement = getNumberFromExample(subExample.substring(i));
 
-            } else if (symbolType == SymbolType.LETTER) {
-                exampleElement = Example.getFunctionFromExample(subExample.substring(i));
+            } else if (symbolType == LETTER) {
+                exampleElement = getFunctionFromExample(subExample.substring(i));
 
-            } else if (symbolType == SymbolType.BRACKET) {
-                exampleElement = Example.getBracketFromExample(subExample.substring(i));
+            } else if (symbolType == BRACKET) {
+                exampleElement = getBracketFromExample(subExample.substring(i));
 
-            } else if (symbolType == SymbolType.SIGN) {
+            } else if (symbolType == SIGN) {
                 if (i == 0) {
                     numberList.add(0.0);
                 }

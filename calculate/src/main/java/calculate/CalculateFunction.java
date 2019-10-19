@@ -1,4 +1,8 @@
+package calculate;
+
 import java.util.function.Function;
+
+import static calculate.CalculateString.calculate;
 
 class CalculateFunction {
     /**
@@ -10,7 +14,7 @@ class CalculateFunction {
         Function<Double, Double> function = MathFunctions.getFunctions(functionName);
 
         String functionArgument = getFunctionArgument(expression);
-        double functionArgumentValue = CalculateString.calculate(functionArgument);
+        double functionArgumentValue = calculate(functionArgument);
 
         return function.apply(functionArgumentValue);
     }

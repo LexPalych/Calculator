@@ -1,3 +1,5 @@
+package calculate;
+
 public class ExampleElement {
     private Character sign;
     private Double number;

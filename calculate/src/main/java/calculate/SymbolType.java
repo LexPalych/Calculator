@@ -1,4 +1,6 @@
-enum SymbolType {
+package calculate;
+
+public enum SymbolType {
     SIGN,
     DIGIT,
     LETTER,
