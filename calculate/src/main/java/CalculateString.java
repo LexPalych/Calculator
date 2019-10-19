@@ -99,7 +99,6 @@ public class CalculateString {
     private static List<Double> getNumberList(final String subExpression) {
         List<Double> numberList = new LinkedList<>();
         int i = 0;
-        int lastElementSymbolIndex = 0;
         ExampleElement exampleElement = new ExampleElement();
 
         while (i < subExpression.length()) {
@@ -108,36 +107,23 @@ public class CalculateString {
 
             if (symbolType == SymbolType.DIGIT) {
                 exampleElement = getNumberExampleElement(subExpression.substring(i));
-//                i += exampleElement.getLengthExample();
-
-            } else if (symbolType == SymbolType.SIGN) {
-                if (i == 0) {
-                    exampleElement.setNumber(0.0);
-                    exampleElement.setLengthExample(1);
-//                    i++;
-
-                } else {
-                    i++;
-                    continue;
-                }
-
-//                if (i == 0) {
-//                    exampleElement.setNumber(0.0);
-//                }
-//                i++;
 
             } else if (symbolType == SymbolType.LETTER) {
                 exampleElement = getFunctionExampleElement(subExpression.substring(i));
-//                i += exampleElement.getLengthExample();
 
             } else if (symbolType == SymbolType.BRACKET) {
                 exampleElement = getBracketExampleElement(subExpression.substring(i));
-//                i += exampleElement.getLengthExample();
+
+            } else if (symbolType == SymbolType.SIGN) {
+                if (i == 0) {
+                    numberList.add(0.0);
+                }
+                i++;
+                continue;
             }
 
             numberList.add(exampleElement.getNumber());
             i += exampleElement.getLengthExample();
-//            i = lastElementSymbolIndex + 1;
         }
         return numberList;
     }
