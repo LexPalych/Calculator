@@ -1,7 +1,7 @@
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-class Functions {
+class MathFunctions {
     private static final Double RAD = Math.acos(-1)/180;
 
     private static final Function<Double, Double> SIN = value -> Math.sin(value * RAD);
@@ -16,12 +16,12 @@ class Functions {
     private static final Function<Double, Double> COS_HYPERBOLIC = value -> Math.cos(value * RAD);
     private static final Function<Double, Double> TAN_HYPERBOLIC = value -> Math.tan(value * RAD);
 
-    private static final Function<Double, Double> NATURAL_LOGARITHM = Functions::getLogarithm;
+    private static final Function<Double, Double> NATURAL_LOGARITHM = MathFunctions::getLogarithm;
     private static final Function<Double, Double> EXP = Math::exp;
     private static final Function<Double, Double> ABS = Math::abs;
     private static final Function<Double, Double> SQRT = Math::sqrt;
 
-    static final Function<Double, Double> FACTORIAL = Functions::getFactorial;
+    static final Function<Double, Double> FACTORIAL = MathFunctions::getFactorial;
 
     static final BiFunction<Double, Double, Double> ADDITIONAL = Double::sum;
     static final BiFunction<Double, Double, Double> SUBTRACTION = (x, y) -> x - y;

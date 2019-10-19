@@ -2,82 +2,32 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CalculateString {
-    public static double calculateString(final String expression) {
+    public static double calculateString(final String example) {
         ExampleValidation check = new ExampleValidation();
 
-        if (check.checkExpression(expression))
-            return calculate(expression);
+        if (check.checkExpression(example))
+            return calculate(example);
 
         else
             throw new StringException("Какая-то неведомая ошибка");
     }
 
-    static double calculate(final String expression) {
-        List<Double> numberList = getNumberList(expression);
-        List<Character> signList = getSignList(expression);
+    static double calculate(final String example) {
+        List<Double> numberList = getNumberList(example);
+        List<Character> signList = getSignList(example);
 
         return CalculateExampleElement.calculateExpressionValue(numberList, signList);
     }
 
-//    private static ExampleElement getNumberExampleElement(final String subExpression) {
-//        int lastNumberIndex = 0;
-//        String number;
-//        ExampleElement exampleElement = new ExampleElement();
-//
-//        while (lastNumberIndex < subExpression.length() && SymbolValidation.getSymbolType(subExpression.charAt(lastNumberIndex)) == SymbolType.DIGIT) {
-//            lastNumberIndex++;
-//        }
-//
-//        number = subExpression.substring(0, lastNumberIndex);
-//        exampleElement.setNumber(Double.parseDouble(number));
-//        exampleElement.setLength(number.length());
-//
-//        return exampleElement;
-//    }
-//
-//    private static ExampleElement getFunctionExampleElement(final String subExpression) {
-//        ExampleElement exampleElement = new ExampleElement();
-//
-//        int lastFunctionIndex = getClosingBracketIndex(subExpression);
-//        String exampleFunction = subExpression.substring(0, lastFunctionIndex+1);
-//        double functionValue = CalculateFunction.getFunctionValue(exampleFunction);
-//
-//        exampleElement.setNumber(functionValue);
-//        exampleElement.setLength(exampleFunction.length());
-//
-//        return exampleElement;
-//    }
-//
-//    private static ExampleElement getSignExampleElement(final Character signChar) {
-//        ExampleElement exampleElement = new ExampleElement();
-//
-//        exampleElement.setSign(signChar);
-//        exampleElement.setLength(1);
-//
-//        return exampleElement;
-//    }
-//
-//    private static ExampleElement getBracketExampleElement(final String subExpression) {
-//        ExampleElement exampleElement = new ExampleElement();
-//
-//        int lastFunctionIndex = getClosingBracketIndex(subExpression);
-//        String exampleBracket = subExpression.substring(1, lastFunctionIndex);
-//        double bracketValue = calculate(exampleBracket);
-//
-//        exampleElement.setNumber(bracketValue);
-//        exampleElement.setLength(exampleBracket.length() + 2);
-//
-//        return exampleElement;
-//    }
-
-    private static List<Character> getSignList(final String subExpression) {
+    private static List<Character> getSignList(final String subExample) {
         List<Character> signList = new LinkedList<>();
         int i = 0;
         char symbol;
+
         signList.add(null);
 
-        while (i < subExpression.length()) {
-            symbol = subExpression.charAt(i);
+        while (i < subExample.length()) {
+            symbol = subExample.charAt(i);
 
             SymbolType symbolType = SymbolValidation.getSymbolType(symbol);
 
@@ -85,7 +35,7 @@ public class CalculateString {
                 signList.add(symbol);
 
             } else if (symbolType == SymbolType.BRACKET) {
-                i += getClosingBracketIndex(subExpression.substring(i));
+                i += getClosingBracketIndex(subExample.substring(i));
             }
 
             i++;
@@ -93,23 +43,23 @@ public class CalculateString {
         return signList;
     }
 
-    private static List<Double> getNumberList(final String subExpression) {
+    private static List<Double> getNumberList(final String subExample) {
         List<Double> numberList = new LinkedList<>();
-        int i = 0;
         ExampleElement exampleElement = new ExampleElement();
+        int i = 0;
 
-        while (i < subExpression.length()) {
-            char symbol = subExpression.charAt(i);
+        while (i < subExample.length()) {
+            char symbol = subExample.charAt(i);
             SymbolType symbolType = SymbolValidation.getSymbolType(symbol);
 
             if (symbolType == SymbolType.DIGIT) {
-                exampleElement = ExampleElement.getNumberExampleElement(subExpression.substring(i));
+                exampleElement = Example.getNumberFromExample(subExample.substring(i));
 
             } else if (symbolType == SymbolType.LETTER) {
-                exampleElement = ExampleElement.getFunctionExampleElement(subExpression.substring(i));
+                exampleElement = Example.getFunctionFromExample(subExample.substring(i));
 
             } else if (symbolType == SymbolType.BRACKET) {
-                exampleElement = ExampleElement.getBracketExampleElement(subExpression.substring(i));
+                exampleElement = Example.getBracketFromExample(subExample.substring(i));
 
             } else if (symbolType == SymbolType.SIGN) {
                 if (i == 0) {
@@ -125,13 +75,13 @@ public class CalculateString {
         return numberList;
     }
 
-    static int getClosingBracketIndex(final String subExpression) {
+    static int getClosingBracketIndex(final String subExample) {
         int bracketAmount = 0;
         int lastBracketIndex = 0;
         char currentChar;
 
         do {
-            currentChar = subExpression.charAt(lastBracketIndex++);
+            currentChar = subExample.charAt(lastBracketIndex++);
 
             if (currentChar == '(') {
                 bracketAmount++;

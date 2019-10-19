@@ -7,7 +7,7 @@ class CalculateFunction {
      */
     static double getFunctionValue(final String expression) {
         String functionName = getFunctionName(expression);
-        Function<Double, Double> function = Functions.getFunctions(functionName);
+        Function<Double, Double> function = MathFunctions.getFunctions(functionName);
 
         String functionArgument = getFunctionArgument(expression);
         double functionArgumentValue = CalculateString.calculate(functionArgument);
