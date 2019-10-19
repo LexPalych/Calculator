@@ -108,27 +108,36 @@ public class CalculateString {
 
             if (symbolType == SymbolType.DIGIT) {
                 exampleElement = getNumberExampleElement(subExpression.substring(i));
-                lastElementSymbolIndex = i + exampleElement.getLengthExample() - 1;
+//                i += exampleElement.getLengthExample();
 
-            } else if (symbolType == SymbolType.SIGN && i == 0) {
-                exampleElement.setNumber(0.0);
-                lastElementSymbolIndex = i;
+            } else if (symbolType == SymbolType.SIGN) {
+                if (i == 0) {
+                    exampleElement.setNumber(0.0);
+                    exampleElement.setLengthExample(1);
+//                    i++;
 
-            } else if (symbolType == SymbolType.SIGN && i != 0) {
-                i++;
-                continue;
+                } else {
+                    i++;
+                    continue;
+                }
+
+//                if (i == 0) {
+//                    exampleElement.setNumber(0.0);
+//                }
+//                i++;
 
             } else if (symbolType == SymbolType.LETTER) {
                 exampleElement = getFunctionExampleElement(subExpression.substring(i));
-                lastElementSymbolIndex = i + exampleElement.getLengthExample() - 1;
+//                i += exampleElement.getLengthExample();
 
             } else if (symbolType == SymbolType.BRACKET) {
                 exampleElement = getBracketExampleElement(subExpression.substring(i));
-                lastElementSymbolIndex = i + exampleElement.getLengthExample() - 1;
+//                i += exampleElement.getLengthExample();
             }
 
             numberList.add(exampleElement.getNumber());
-            i = lastElementSymbolIndex + 1;
+            i += exampleElement.getLengthExample();
+//            i = lastElementSymbolIndex + 1;
         }
         return numberList;
     }
