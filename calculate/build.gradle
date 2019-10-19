@@ -9,6 +9,7 @@ repositories {
     mavenCentral()
 }
 
+//Добавление многопоточности
 test {
     systemProperties['junit.jupiter.execution.parallel.enabled'] = true
     systemProperties['junit.jupiter.execution.parallel.mode.default'] = 'concurrent'

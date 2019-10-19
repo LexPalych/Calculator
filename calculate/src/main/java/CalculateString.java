@@ -1,9 +1,6 @@
 import java.util.LinkedList;
 import java.util.List;
 
-import static java.lang.Character.isDigit;
-import static java.lang.Character.isLetter;
-
 public class CalculateString {
     public static double calculateString(final String expression) {
         ExampleValidation check = new ExampleValidation();
@@ -25,32 +22,12 @@ public class CalculateString {
         return CalculateExampleElement.calculateExpressionValue(numberList, signList);
     }
 
-    private static SymbolType checkSymbolType(final char symbol) {
-        List<Character> signList = List.of('+', '-', '*', '/', '^', '!');
-
-        if (signList.contains(symbol)) {
-            return SymbolType.SIGN;
-
-        } else if (isDigit(symbol) || symbol == '.') {
-            return SymbolType.DIGIT;
-
-        } else if (isLetter(symbol)) {
-            return SymbolType.LETTER;
-
-        } else if (symbol == '(') {
-            return SymbolType.BRACKET;
-
-        } else {
-            throw new SecurityException("Неизестный сивол " + symbol);
-        }
-    }
-
     private static ExampleElement getNumberExampleElement(final String subExpression) {
         int lastNumberIndex = 0;
         String number;
         ExampleElement exampleElement = new ExampleElement();
 
-        while (lastNumberIndex < subExpression.length() && checkSymbolType(subExpression.charAt(lastNumberIndex)) == SymbolType.DIGIT) {
+        while (lastNumberIndex < subExpression.length() && SymbolValidation.getSymbolType(subExpression.charAt(lastNumberIndex)) == SymbolType.DIGIT) {
             lastNumberIndex++;
         }
 
@@ -105,7 +82,7 @@ public class CalculateString {
         while (i < subExpression.length()) {
             symbol = subExpression.charAt(i);
 
-            SymbolType symbolType = checkSymbolType(symbol);
+            SymbolType symbolType = SymbolValidation.getSymbolType(symbol);
 
             if (symbolType == SymbolType.SIGN) {
                 signList.add(symbol);
@@ -122,13 +99,12 @@ public class CalculateString {
     private static List<Double> getNumberList(final String subExpression) {
         List<Double> numberList = new LinkedList<>();
         int i = 0;
-        int closeBracketIndex;
         int lastElementSymbolIndex = 0;
         ExampleElement exampleElement = new ExampleElement();
 
         while (i < subExpression.length()) {
             char symbol = subExpression.charAt(i);
-            SymbolType symbolType = checkSymbolType(symbol);
+            SymbolType symbolType = SymbolValidation.getSymbolType(symbol);
 
             if (symbolType == SymbolType.DIGIT) {
                 exampleElement = getNumberExampleElement(subExpression.substring(i));

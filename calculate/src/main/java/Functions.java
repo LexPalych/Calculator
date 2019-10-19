@@ -23,11 +23,11 @@ class Functions {
 
     static final Function<Double, Double> FACTORIAL = Functions::getFactorial;
 
-    static final BiFunction<Double, Double, Double> ADDITIONAL = (x, y) -> x + y;
+    static final BiFunction<Double, Double, Double> ADDITIONAL = Double::sum;
     static final BiFunction<Double, Double, Double> SUBTRACTION = (x, y) -> x - y;
     static final BiFunction<Double, Double, Double> MULTIPLICATION = (x, y) -> x * y;
     static final BiFunction<Double, Double, Double> DIVISION = (x, y) -> x / y;
-    static final BiFunction<Double, Double, Double> EXPONENTIATION = (x, y) -> Math.pow(x, y);
+    static final BiFunction<Double, Double, Double> EXPONENTIATION = Math::pow;
 
     private static Double getLogarithm(final Double argument) {
         if (argument > 0)

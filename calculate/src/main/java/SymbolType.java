@@ -1,4 +1,4 @@
-public enum SymbolType {
+enum SymbolType {
     SIGN,
     DIGIT,
     LETTER,
