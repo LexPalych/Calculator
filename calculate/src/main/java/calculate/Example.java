@@ -3,7 +3,8 @@ package calculate;
 import static calculate.CalculateFunction.getFunctionValue;
 import static calculate.CalculateString.calculate;
 import static calculate.CalculateString.getClosingBracketIndex;
-import static calculate.SymbolValidation.getSymbolType;
+import static calculate.SymbolType.Symbol.DIGIT;
+import static calculate.SymbolType.getSymbolType;
 
 public class Example {
     public static ExampleElement getExampleNumber(final String subExample) {
@@ -11,7 +12,7 @@ public class Example {
         String number;
         ExampleElement exampleElement = new ExampleElement();
 
-        while (lastNumberIndex < subExample.length() && getSymbolType(subExample.charAt(lastNumberIndex)) == SymbolType.DIGIT) {
+        while (lastNumberIndex < subExample.length() && getSymbolType(subExample.charAt(lastNumberIndex)) == DIGIT) {
             lastNumberIndex++;
         }
 

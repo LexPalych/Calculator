@@ -5,8 +5,8 @@ import java.util.List;
 
 import static calculate.CalculateExampleElement.calculateExpressionValue;
 import static calculate.Example.*;
-import static calculate.SymbolType.*;
-import static calculate.SymbolValidation.getSymbolType;
+import static calculate.SymbolType.Symbol.*;
+import static calculate.SymbolType.getSymbolType;
 
 public class CalculateString {
     public static double calculateString(final String example) {
@@ -36,7 +36,7 @@ public class CalculateString {
         while (i < subExample.length()) {
             symbol = subExample.charAt(i);
 
-            SymbolType symbolType = getSymbolType(symbol);
+            SymbolType.Symbol symbolType = getSymbolType(symbol);
 
             if (symbolType == SIGN) {
                 signList.add(symbol);
@@ -57,7 +57,7 @@ public class CalculateString {
 
         while (i < subExample.length()) {
             char symbol = subExample.charAt(i);
-            SymbolType symbolType = getSymbolType(symbol);
+            SymbolType.Symbol symbolType = getSymbolType(symbol);
 
             if (symbolType == DIGIT) {
                 exampleElement = getExampleNumber(subExample.substring(i));
