@@ -62,6 +62,14 @@ public class PairExampleElement {
         signList.remove(index);
     }
 
+    public double getNumber(final int index) {
+        return numberList.get(index);
+    }
+
+    public char getSign(final int index) {
+        return signList.get(index);
+    }
+
     public int size() {
         return signList.size();
     }
