@@ -4,7 +4,7 @@ import java.util.List;
 
 import static calculate.ActionPriority.PriorityAction.*;
 import static calculate.ActionPriority.getPriority;
-import static calculate.MathFunctions.*;
+import static functions.MathFunctions.*;
 
 public class CalculateExampleElement {
     static double calculateExpressionValue(List<Double> numberList, List<Character> signList) {

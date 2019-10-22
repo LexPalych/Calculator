@@ -3,7 +3,7 @@ package calculate;
 import java.util.function.Function;
 
 import static calculate.CalculateString.calculate;
-import static calculate.MathFunctions.getFunctions;
+import static functions.TrigonometricFunctions.getFunctions;
 
 class CalculateFunction {
     /**

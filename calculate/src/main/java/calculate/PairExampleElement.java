@@ -2,6 +2,7 @@ package calculate;
 
 import java.util.List;
 
+@Deprecated
 public class PairExampleElement {
     PairExampleElement pairExampleElement;
     List<Double> numberList;
