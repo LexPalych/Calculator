@@ -1,10 +1,12 @@
 package functions;
 
+import calculate.ActionPriority;
+import calculate.StringException;
+
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 public class MathFunctions {
-    public static final Function<Double, Double> FACTORIAL = MathFunctions::getFactorial;
+    public static final BiFunction<Double, Double, Double> FACTORIAL = MathFunctions::getFactorial;
     public static final BiFunction<Double, Double, Double> ADDITIONAL = Double::sum;
     public static final BiFunction<Double, Double, Double> SUBTRACTION = (x, y) -> x - y;
     public static final BiFunction<Double, Double, Double> MULTIPLICATION = (x, y) -> x * y;
@@ -16,7 +18,7 @@ public class MathFunctions {
      * @param number - число
      * @return - возвращает факториал числа типом Double
      */
-    private static double getFactorial(double number) {
+    private static Double getFactorial(final double number, final double number1) {
         if (number < 0)
             throw new ArithmeticException("Отрицательный аргумент факториала");
 
@@ -27,7 +29,33 @@ public class MathFunctions {
             return 1.0;
 
         else
-            return number * getFactorial(number-1);
+            return number * getFactorial(number-1, 1);
+    }
+
+    public static BiFunction<Double, Double, Double> getFunction(ActionPriority.Priorities priorities) {
+        switch (priorities) {
+            case FIRST:
+                return FACTORIAL;
+
+            case SECOND:
+                return EXPONENTIATION;
+
+            case THIRD:
+                return DIVISION;
+
+            case FOURTH:
+                return MULTIPLICATION;
+
+            case FIFTH:
+                return SUBTRACTION;
+
+            case SIXTH:
+                return ADDITIONAL;
+
+            default:
+                throw new StringException("Неизвестный приоритет функции");
+
+        }
     }
 
 }

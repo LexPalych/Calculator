@@ -1,9 +1,9 @@
 package calculate;
 
-import static calculate.ActionPriority.PriorityAction.*;
+import static calculate.ActionPriority.Priorities.*;
 
 public class ActionPriority {
-    public static PriorityAction getPriority(final char symbol) {
+    public static Priorities getPriority(final char symbol) {
         if (symbol == '!') {
             return FIRST;
 
@@ -27,7 +27,7 @@ public class ActionPriority {
         }
     }
 
-    public enum PriorityAction {
+    public enum Priorities {
         FIRST,
         SECOND,
         THIRD,
