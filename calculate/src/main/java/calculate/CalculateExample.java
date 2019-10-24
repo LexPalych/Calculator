@@ -3,13 +3,13 @@ package calculate;
 import java.util.LinkedList;
 import java.util.List;
 
-import static calculate.CalculateElement.calculateExpressionValue;
+import static calculate.CalculateElement.calculateElement;
 import static calculate.ElementCreator.*;
 import static calculate.SymbolType.Symbol.*;
 import static calculate.SymbolType.getSymbolType;
 
 public class CalculateExample {
-    public static double calculateString(final String example) {
+    public static double calculateExample(final String example) {
         ExampleValidation check = new ExampleValidation();
 
         if (check.checkExpression(example))
@@ -23,7 +23,7 @@ public class CalculateExample {
         List<Double> numberList = getNumberList(example);
         List<Character> signList = getSignList(example);
 
-        return calculateExpressionValue(numberList, signList);
+        return calculateElement(numberList, signList);
     }
 
     private static List<Character> getSignList(final String subExample) {

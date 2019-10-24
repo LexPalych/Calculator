@@ -8,7 +8,7 @@ import static calculate.MathActionPriority.getPriority;
 import static functions.MathFunctions.*;
 
 public class CalculateElement {
-    static double calculateExpressionValue(final List<Double> numberList, final List<Character> signList) {
+    static double calculateElement(final List<Double> numberList, final List<Character> signList) {
         BiFunction<Double, Double, Double> function;
         MathActionPriority.Priorities actionPriority;
         double value;

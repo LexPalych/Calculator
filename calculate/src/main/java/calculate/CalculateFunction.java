@@ -10,28 +10,28 @@ class CalculateFunction {
      * Нахождит значение тригонометрической функции
      * @return - возвращает значение тригонометрической функции
      */
-    static double getFunctionValue(final String expression) {
-        String functionName = getFunctionName(expression);
+    static double getFunctionValue(final String example) {
+        String functionName = getFunctionName(example);
         Function<Double, Double> function = getFunctions(functionName);
 
-        String functionArgument = getFunctionArgument(expression);
+        String functionArgument = getFunctionArgument(example);
         double functionArgumentValue = calculate(functionArgument);
 
         return function.apply(functionArgumentValue);
     }
 
-    private static String getFunctionName(final String expression) {
-        int nameFunctionLastIndex = 0;
+    private static String getFunctionName(final String example) {
+        int lastLetterIndex = 0;
 
-        while (expression.charAt(nameFunctionLastIndex) != '(') {
-            nameFunctionLastIndex++;
+        while (example.charAt(lastLetterIndex) != '(') {
+            lastLetterIndex++;
         }
 
-        return expression.substring(0, nameFunctionLastIndex);
+        return example.substring(0, lastLetterIndex);
     }
 
-    private static String getFunctionArgument(final String expression) {
-        String functionName = getFunctionName(expression);
-        return expression.substring(functionName.length()+1, expression.length()-1);
+    private static String getFunctionArgument(final String example) {
+        String functionName = getFunctionName(example);
+        return example.substring(functionName.length()+1, example.length()-1);
     }
 }
