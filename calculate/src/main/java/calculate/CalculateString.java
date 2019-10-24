@@ -68,6 +68,13 @@ public class CalculateString {
             } else if (symbolType == BRACKET) {
                 exampleElement = getExampleBracket(subExample.substring(i));
 
+            } else if (symbolType == FACTORIAL) {
+                var index = numberList.size()-1;
+                var value = getFactorial(numberList.get(index));
+                numberList.set(index, value);
+                i++;
+                continue;
+
             } else if (symbolType == SIGN) {
                 if (i == 0) {
                     numberList.add(0.0);
@@ -100,6 +107,25 @@ public class CalculateString {
         lastBracketIndex--;
 
         return lastBracketIndex;
+    }
+
+    /**
+     * Находит факториал числа
+     * @param number - число
+     * @return - возвращает факториал числа типом Double
+     */
+    private static Double getFactorial(final double number) {
+        if (number < 0)
+            throw new ArithmeticException("Отрицательный аргумент факториала");
+
+        if (number % 1 !=0)
+            throw new ArithmeticException("Аргумент факториала не является целым числом");
+
+        if (number == 0 || number == 1)
+            return 1.0;
+
+        else
+            return number * getFactorial(number-1);
     }
 
 }

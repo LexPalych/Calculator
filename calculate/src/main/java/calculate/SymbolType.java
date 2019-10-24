@@ -8,7 +8,7 @@ import static java.lang.Character.isLetter;
 
 public class SymbolType {
     public static Symbol getSymbolType(final char symbol) {
-        List<Character> signList = List.of('+', '-', '*', '/', '^', '!');
+        List<Character> signList = List.of('+', '-', '*', '/', '^');
 
         if (signList.contains(symbol)) {
             return SIGN;
@@ -22,6 +22,9 @@ public class SymbolType {
         } else if (symbol == '(') {
             return BRACKET;
 
+        } else if (symbol == '!') {
+            return FACTORIAL;
+
         } else {
             throw new SecurityException("Неизестный сивол " + symbol);
         }
@@ -31,7 +34,8 @@ public class SymbolType {
         SIGN,
         DIGIT,
         LETTER,
-        BRACKET
+        BRACKET,
+        FACTORIAL
     }
 }
 
