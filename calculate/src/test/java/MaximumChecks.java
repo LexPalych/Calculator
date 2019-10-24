@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
 
-import static calculate.CalculateString.calculate;
+import static calculate.CalculateExample.calculate;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MaximumChecks {

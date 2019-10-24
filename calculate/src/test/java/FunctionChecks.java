@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
 
-import static calculate.CalculateString.calculateString;
+import static calculate.CalculateExample.calculateString;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FunctionChecks {

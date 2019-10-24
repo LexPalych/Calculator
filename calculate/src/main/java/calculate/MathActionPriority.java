@@ -1,8 +1,8 @@
 package calculate;
 
-import static calculate.ActionPriority.Priorities.*;
+import static calculate.MathActionPriority.Priorities.*;
 
-public class ActionPriority {
+public class MathActionPriority {
     public static Priorities getPriority(final char symbol) {
         if (symbol == '!') {
             return FIRST;

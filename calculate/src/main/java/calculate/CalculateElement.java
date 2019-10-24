@@ -3,18 +3,18 @@ package calculate;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import static calculate.ActionPriority.Priorities.*;
-import static calculate.ActionPriority.getPriority;
+import static calculate.MathActionPriority.Priorities.*;
+import static calculate.MathActionPriority.getPriority;
 import static functions.MathFunctions.*;
 
-public class CalculateExampleElement {
+public class CalculateElement {
     static double calculateExpressionValue(final List<Double> numberList, final List<Character> signList) {
         BiFunction<Double, Double, Double> function;
-        ActionPriority.Priorities actionPriority;
+        MathActionPriority.Priorities actionPriority;
         double value;
         int i = 1;
 
-        List<ActionPriority.Priorities> prioritiesList = List.of(FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH);
+        List<MathActionPriority.Priorities> prioritiesList = List.of(FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH);
 
         for (int n = 1; n < prioritiesList.size(); n++) {
             while (i < signList.size()) {

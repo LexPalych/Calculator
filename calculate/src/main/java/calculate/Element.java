@@ -1,6 +1,6 @@
 package calculate;
 
-public class ExampleElement {
+public class Element {
     private Character sign;
     private Double number;
     private int length;

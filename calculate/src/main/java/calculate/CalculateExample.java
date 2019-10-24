@@ -3,12 +3,12 @@ package calculate;
 import java.util.LinkedList;
 import java.util.List;
 
-import static calculate.CalculateExampleElement.calculateExpressionValue;
-import static calculate.Example.*;
+import static calculate.CalculateElement.calculateExpressionValue;
+import static calculate.ElementCreator.*;
 import static calculate.SymbolType.Symbol.*;
 import static calculate.SymbolType.getSymbolType;
 
-public class CalculateString {
+public class CalculateExample {
     public static double calculateString(final String example) {
         ExampleValidation check = new ExampleValidation();
 
@@ -52,7 +52,7 @@ public class CalculateString {
 
     private static List<Double> getNumberList(final String subExample) {
         List<Double> numberList = new LinkedList<>();
-        ExampleElement exampleElement = new ExampleElement();
+        Element exampleElement = new Element();
         int i = 0;
 
         while (i < subExample.length()) {

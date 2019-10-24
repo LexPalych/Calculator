@@ -2,7 +2,7 @@ package calculate;
 
 import java.util.function.Function;
 
-import static calculate.CalculateString.calculate;
+import static calculate.CalculateExample.calculate;
 import static functions.TrigonometricFunctions.getFunctions;
 
 class CalculateFunction {

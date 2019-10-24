@@ -1,16 +1,16 @@
 package calculate;
 
 import static calculate.CalculateFunction.getFunctionValue;
-import static calculate.CalculateString.calculate;
-import static calculate.CalculateString.getClosingBracketIndex;
+import static calculate.CalculateExample.calculate;
+import static calculate.CalculateExample.getClosingBracketIndex;
 import static calculate.SymbolType.Symbol.DIGIT;
 import static calculate.SymbolType.getSymbolType;
 
-public class Example {
-    public static ExampleElement getExampleNumber(final String subExample) {
+public class ElementCreator {
+    public static Element getExampleNumber(final String subExample) {
         int lastNumberIndex = 0;
         String number;
-        ExampleElement exampleElement = new ExampleElement();
+        Element exampleElement = new Element();
 
         while (lastNumberIndex < subExample.length() && getSymbolType(subExample.charAt(lastNumberIndex)) == DIGIT) {
             lastNumberIndex++;
@@ -23,8 +23,8 @@ public class Example {
         return exampleElement;
     }
 
-    public static ExampleElement getExampleFunction(final String subExample) {
-        ExampleElement exampleElement = new ExampleElement();
+    public static Element getExampleFunction(final String subExample) {
+        Element exampleElement = new Element();
 
         int lastFunctionIndex = getClosingBracketIndex(subExample);
         String exampleFunction = subExample.substring(0, lastFunctionIndex+1);
@@ -36,8 +36,8 @@ public class Example {
         return exampleElement;
     }
 
-    public static ExampleElement getExampleSign(final Character signChar) {
-        ExampleElement exampleElement = new ExampleElement();
+    public static Element getExampleSign(final Character signChar) {
+        Element exampleElement = new Element();
 
         exampleElement.setSign(signChar);
         exampleElement.setLength(1);
@@ -45,8 +45,8 @@ public class Example {
         return exampleElement;
     }
 
-    public static ExampleElement getExampleBracket(final String subExample) {
-        ExampleElement exampleElement = new ExampleElement();
+    public static Element getExampleBracket(final String subExample) {
+        Element exampleElement = new Element();
 
         int lastFunctionIndex = getClosingBracketIndex(subExample);
         String exampleBracket = subExample.substring(1, lastFunctionIndex);

@@ -1,6 +1,6 @@
 package functions;
 
-import calculate.ActionPriority;
+import calculate.MathActionPriority;
 import calculate.StringException;
 
 import java.util.function.BiFunction;
@@ -32,7 +32,7 @@ public class MathFunctions {
             return number * getFactorial(number-1);
     }
 
-    public static BiFunction<Double, Double, Double> getFunction(ActionPriority.Priorities priorities) {
+    public static BiFunction<Double, Double, Double> getFunction(MathActionPriority.Priorities priorities) {
         switch (priorities) {
 //            case FIRST:
 //                return FACTORIAL;
