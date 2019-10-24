@@ -64,7 +64,7 @@ class FunctionChecks {
     void cosh() {
         String expression = "cosh(0)";
         double value = calculateString(expression);
-        double result = 0.0;
+        double result = 1.0;
         assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
