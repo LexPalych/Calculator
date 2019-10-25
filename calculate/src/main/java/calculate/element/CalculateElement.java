@@ -1,22 +1,26 @@
-package calculate;
+package calculate.element;
+
+import calculate.MathActionPriority;
 
 import java.util.List;
 import java.util.function.BiFunction;
 
 import static calculate.MathActionPriority.Priorities.*;
 import static calculate.MathActionPriority.getPriority;
-import static functions.MathFunctions.*;
+import static calculate.functions.MathFunctions.*;
 
 public class CalculateElement {
-    static double calculateElement(final List<Double> numberList, final List<Character> signList) {
+    public static double calculateElement(final List<Double> numberList, final List<Character> signList) {
         BiFunction<Double, Double, Double> function;
         MathActionPriority.Priorities currentPriorities;
         double value;
-        int i = 1;
+        int i;
 
         List<MathActionPriority.Priorities> prioritiesList = List.of(FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH);
 
         for (MathActionPriority.Priorities priority : prioritiesList) {
+            i = 1;
+
             while (i < signList.size()) {
                 currentPriorities = getPriority(signList.get(i));
 
@@ -31,12 +35,13 @@ public class CalculateElement {
 
                     numberList.remove(i);
                     signList.remove(i);
+
                 } else {
                     i++;
                 }
             }
-            i = 1;
         }
+
         return numberList.get(0);
     }
 

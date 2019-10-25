@@ -1,7 +1,7 @@
-package calculate;
+package calculate.element;
 
 import static calculate.CalculateExample.calculate;
-import static calculate.CalculateFunction.getFunctionValue;
+import static calculate.functions.CalculateFunction.getFunctionValue;
 import static calculate.CalculateExample.getClosingBracketIndex;
 import static calculate.SymbolType.Symbol.DIGIT;
 import static calculate.SymbolType.getSymbolType;

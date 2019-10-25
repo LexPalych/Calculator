@@ -1,4 +1,4 @@
-package functions;
+package calculate.functions;
 
 import calculate.StringException;
 

@@ -1,10 +1,12 @@
 package calculate;
 
+import calculate.element.Element;
+
 import java.util.LinkedList;
 import java.util.List;
 
-import static calculate.CalculateElement.calculateElement;
-import static calculate.ElementCreator.*;
+import static calculate.element.CalculateElement.calculateElement;
+import static calculate.element.ElementCreator.*;
 import static calculate.SymbolType.Symbol.*;
 import static calculate.SymbolType.getSymbolType;
 
@@ -56,7 +58,7 @@ public class CalculateExample {
         return calculateElement(numberList, signList);
     }
 
-    static int getClosingBracketIndex(final String subExample) {
+    public static int getClosingBracketIndex(final String subExample) {
         int bracketAmount = 0;
         int lastBracketIndex = 0;
         char currentChar;

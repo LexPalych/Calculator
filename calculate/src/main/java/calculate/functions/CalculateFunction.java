@@ -1,16 +1,16 @@
-package calculate;
+package calculate.functions;
 
 import java.util.function.Function;
 
 import static calculate.CalculateExample.calculate;
-import static functions.TrigonometricFunctions.getFunctions;
+import static calculate.functions.TrigonometricFunctions.getFunctions;
 
-class CalculateFunction {
+public class CalculateFunction {
     /**
      * Нахождит значение тригонометрической функции
      * @return - возвращает значение тригонометрической функции
      */
-    static double getFunctionValue(final String example) {
+    public static double getFunctionValue(final String example) {
         String functionName = getFunctionName(example);
         Function<Double, Double> function = getFunctions(functionName);
 

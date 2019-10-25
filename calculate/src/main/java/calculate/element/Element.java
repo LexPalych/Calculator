@@ -1,4 +1,4 @@
-package calculate;
+package calculate.element;
 
 public class Element {
     private Character sign;
