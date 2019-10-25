@@ -13,44 +13,13 @@ public class CalculateExample {
         ExampleValidation check = new ExampleValidation();
 
         if (check.checkExpression(example))
-            return getNumberList(example);
+            return calculate(example);
 
         else
             throw new StringException("Какая-то неведомая ошибка");
     }
 
-//    public static double calculate(final String example) {
-//        List<Double> numberList = getNumberList(example);
-//        List<Character> signList = getSignList(example);
-//
-//        return calculateElement(numberList, signList);
-//    }
-
-    private static List<Character> getSignList(final String subExample) {
-        List<Character> signList = new LinkedList<>();
-        int i = 0;
-        char symbol;
-
-        signList.add(null);
-
-        while (i < subExample.length()) {
-            symbol = subExample.charAt(i);
-
-            SymbolType.Symbol symbolType = getSymbolType(symbol);
-
-            if (symbolType == SIGN) {
-                signList.add(symbol);
-
-            } else if (symbolType == BRACKET) {
-                i += getClosingBracketIndex(subExample.substring(i));
-            }
-
-            i++;
-        }
-        return signList;
-    }
-
-    public static Double getNumberList(final String subExample) {
+    public static Double calculate(final String subExample) {
         List<Double> numberList = new LinkedList<>();
         List<Character> signList = new LinkedList<>();
         Element exampleElement = new Element();
@@ -70,13 +39,6 @@ public class CalculateExample {
 
             } else if (symbolType == BRACKET) {
                 exampleElement = getExampleBracket(subExample.substring(i));
-
-            } else if (symbolType == FACTORIAL) {
-                var index = numberList.size()-1;
-                var value = getFactorial(numberList.get(index));
-                numberList.set(index, value);
-                i++;
-                continue;
 
             } else if (symbolType == SIGN) {
                 if (i == 0) {
@@ -113,24 +75,4 @@ public class CalculateExample {
 
         return lastBracketIndex;
     }
-
-    /**
-     * Находит факториал числа
-     * @param number - число
-     * @return - возвращает факториал числа типом Double
-     */
-    private static Double getFactorial(final double number) {
-        if (number < 0)
-            throw new ArithmeticException("Отрицательный аргумент факториала");
-
-        if (number % 1 !=0)
-            throw new ArithmeticException("Аргумент факториала не является целым числом");
-
-        if (number == 0 || number == 1)
-            return 1.0;
-
-        else
-            return number * getFactorial(number-1);
-    }
-
 }

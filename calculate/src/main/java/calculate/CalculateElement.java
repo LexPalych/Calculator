@@ -16,17 +16,22 @@ public class CalculateElement {
 
         List<MathActionPriority.Priorities> prioritiesList = List.of(FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH);
 
-        for (int n = 1; n < prioritiesList.size(); n++) {
+        for (MathActionPriority.Priorities priority : prioritiesList) {
             while (i < signList.size()) {
-                actionPriority = prioritiesList.get(n);
 
-                if (actionPriority == getPriority(signList.get(i))) {
-                    function = getFunction(actionPriority);
-                    value = function.apply(numberList.get(i-1), numberList.get(i));
-                    numberList.set(i-1, value);
+                if (priority == getPriority(signList.get(i))) {
+                    if (priority == FIRST) {
+                        numberList.set(i - 1, getFactorial(numberList.get(i - 1)));
+                        signList.remove(i);
 
-                    numberList.remove(i);
-                    signList.remove(i);
+                    } else {
+                        function = getFunction(priority);
+                        value = function.apply(numberList.get(i - 1), numberList.get(i));
+                        numberList.set(i - 1, value);
+
+                        numberList.remove(i);
+                        signList.remove(i);
+                    }
 
                 } else {
                     i++;

@@ -2,7 +2,7 @@ package calculate;
 
 import java.util.function.Function;
 
-import static calculate.CalculateExample.getNumberList;
+import static calculate.CalculateExample.calculate;
 import static functions.TrigonometricFunctions.getFunctions;
 
 class CalculateFunction {
@@ -15,7 +15,7 @@ class CalculateFunction {
         Function<Double, Double> function = getFunctions(functionName);
 
         String functionArgument = getFunctionArgument(example);
-        double functionArgumentValue = getNumberList(functionArgument);
+        double functionArgumentValue = calculate(functionArgument);
 
         return function.apply(functionArgumentValue);
     }

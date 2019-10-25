@@ -18,7 +18,7 @@ public class MathFunctions {
      * @param number - число
      * @return - возвращает факториал числа типом Double
      */
-    private static Double getFactorial(final double number) {
+    public static Double getFactorial(final double number) {
         if (number < 0)
             throw new ArithmeticException("Отрицательный аргумент факториала");
 
