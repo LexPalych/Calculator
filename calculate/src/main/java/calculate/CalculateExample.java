@@ -13,18 +13,18 @@ public class CalculateExample {
         ExampleValidation check = new ExampleValidation();
 
         if (check.checkExpression(example))
-            return calculate(example);
+            return getNumberList(example);
 
         else
             throw new StringException("Какая-то неведомая ошибка");
     }
 
-    public static double calculate(final String example) {
-        List<Double> numberList = getNumberList(example);
-        List<Character> signList = getSignList(example);
-
-        return calculateElement(numberList, signList);
-    }
+//    public static double calculate(final String example) {
+//        List<Double> numberList = getNumberList(example);
+//        List<Character> signList = getSignList(example);
+//
+//        return calculateElement(numberList, signList);
+//    }
 
     private static List<Character> getSignList(final String subExample) {
         List<Character> signList = new LinkedList<>();
@@ -50,10 +50,13 @@ public class CalculateExample {
         return signList;
     }
 
-    private static List<Double> getNumberList(final String subExample) {
+    public static Double getNumberList(final String subExample) {
         List<Double> numberList = new LinkedList<>();
+        List<Character> signList = new LinkedList<>();
         Element exampleElement = new Element();
+
         int i = 0;
+        signList.add(null);
 
         while (i < subExample.length()) {
             char symbol = subExample.charAt(i);
@@ -78,7 +81,9 @@ public class CalculateExample {
             } else if (symbolType == SIGN) {
                 if (i == 0) {
                     numberList.add(0.0);
+
                 }
+                signList.add(subExample.charAt(i));
                 i++;
                 continue;
             }
@@ -86,7 +91,7 @@ public class CalculateExample {
             numberList.add(exampleElement.getNumber());
             i += exampleElement.getLength();
         }
-        return numberList;
+        return calculateElement(numberList, signList);
     }
 
     static int getClosingBracketIndex(final String subExample) {

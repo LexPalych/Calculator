@@ -1,7 +1,7 @@
 package calculate;
 
+import static calculate.CalculateExample.getNumberList;
 import static calculate.CalculateFunction.getFunctionValue;
-import static calculate.CalculateExample.calculate;
 import static calculate.CalculateExample.getClosingBracketIndex;
 import static calculate.SymbolType.Symbol.DIGIT;
 import static calculate.SymbolType.getSymbolType;
@@ -50,7 +50,7 @@ public class ElementCreator {
 
         int lastFunctionIndex = getClosingBracketIndex(subExample);
         String exampleBracket = subExample.substring(1, lastFunctionIndex);
-        double bracketValue = calculate(exampleBracket);
+        double bracketValue = getNumberList(exampleBracket);
 
         exampleElement.setNumber(bracketValue);
         exampleElement.setLength(exampleBracket.length() + 2);
