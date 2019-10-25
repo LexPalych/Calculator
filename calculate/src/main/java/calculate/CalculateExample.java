@@ -5,6 +5,7 @@ import calculate.element.Element;
 import java.util.LinkedList;
 import java.util.List;
 
+import static calculate.ExampleValidation.checkExpression;
 import static calculate.element.CalculateElement.calculateElement;
 import static calculate.element.ElementCreator.*;
 import static calculate.SymbolType.Symbol.*;
@@ -12,9 +13,8 @@ import static calculate.SymbolType.getSymbolType;
 
 public class CalculateExample {
     public static double calculateExample(final String example) {
-        ExampleValidation check = new ExampleValidation();
 
-        if (check.checkExpression(example))
+        if (checkExpression(example))
             return calculate(example);
 
         else
@@ -24,7 +24,7 @@ public class CalculateExample {
     public static Double calculate(final String subExample) {
         List<Double> numberList = new LinkedList<>();
         List<Character> signList = new LinkedList<>();
-        Element exampleElement = new Element();
+        Element element = new Element();
 
         int i = 0;
         signList.add(null);
@@ -34,13 +34,13 @@ public class CalculateExample {
             SymbolType.Symbol symbolType = getSymbolType(symbol);
 
             if (symbolType == DIGIT) {
-                exampleElement = getExampleNumber(subExample.substring(i));
+                element = getExampleNumber(subExample.substring(i));
 
             } else if (symbolType == LETTER) {
-                exampleElement = getExampleFunction(subExample.substring(i));
+                element = getExampleFunction(subExample.substring(i));
 
             } else if (symbolType == BRACKET) {
-                exampleElement = getExampleBracket(subExample.substring(i));
+                element = getExampleBracket(subExample.substring(i));
 
             } else if (symbolType == SIGN) {
                 if (i == 0) {
@@ -52,8 +52,8 @@ public class CalculateExample {
                 continue;
             }
 
-            numberList.add(exampleElement.getNumber());
-            i += exampleElement.getLength();
+            numberList.add(element.getNumber());
+            i += element.getLength();
         }
         return calculateElement(numberList, signList);
     }
