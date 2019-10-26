@@ -22,10 +22,7 @@ public class SymbolType {
         } else if (symbol == '(') {
             return BRACKET;
 
-        } /*else if (symbol == '!') {
-            return FACTORIAL;
-
-        }*/ else {
+        } else {
             throw new SecurityException("Неизестный сивол " + symbol);
         }
     }
@@ -35,7 +32,5 @@ public class SymbolType {
         DIGIT,
         LETTER,
         BRACKET,
-        FACTORIAL
     }
 }
-

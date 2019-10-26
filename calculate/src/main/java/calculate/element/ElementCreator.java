@@ -35,15 +35,6 @@ public class ElementCreator {
         return exampleElement;
     }
 
-    public static Element getExampleSign(final Character signChar) {
-        Element exampleElement = new Element();
-
-        exampleElement.setSign(signChar);
-        exampleElement.setLength(1);
-
-        return exampleElement;
-    }
-
     public static Element getExampleBracket(final String subExample) {
         Element exampleElement = new Element();
 

@@ -6,7 +6,6 @@ import calculate.StringException;
 import java.util.function.BiFunction;
 
 public class MathFunctions {
-//    public static final BiFunction<Double, Double, Double> FACTORIAL = MathFunctions::getFactorial;
     public static final BiFunction<Double, Double, Double> ADDITIONAL = Double::sum;
     public static final BiFunction<Double, Double, Double> SUBTRACTION = (x, y) -> x - y;
     public static final BiFunction<Double, Double, Double> MULTIPLICATION = (x, y) -> x * y;
@@ -34,9 +33,6 @@ public class MathFunctions {
 
     public static BiFunction<Double, Double, Double> getFunction(MathActionPriority.Priorities priorities) {
         switch (priorities) {
-//            case FIRST:
-//                return FACTORIAL;
-
             case SECOND:
                 return EXPONENTIATION;
 

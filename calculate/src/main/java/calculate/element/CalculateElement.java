@@ -44,5 +44,4 @@ public class CalculateElement {
 
         return numberList.get(0);
     }
-
 }
