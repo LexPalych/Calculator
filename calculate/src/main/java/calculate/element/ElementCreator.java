@@ -9,43 +9,43 @@ public class ElementCreator {
     public static Element getExampleNumber(final String subExample) {
         int lastNumberIndex = 0;
         String number;
-        Element exampleElement = new Element();
+        Element element = new Element();
 
         while (lastNumberIndex < subExample.length() && getSymbolType(subExample.charAt(lastNumberIndex)) == DIGIT) {
             lastNumberIndex++;
         }
 
         number = subExample.substring(0, lastNumberIndex);
-        exampleElement.setNumber(Double.parseDouble(number));
-        exampleElement.setLength(number.length());
+        element.setNumber(Double.parseDouble(number));
+        element.setLength(number.length());
 
-        return exampleElement;
+        return element;
     }
 
     public static Element getExampleFunction(final String subExample) {
-        Element exampleElement = new Element();
+        Element element = new Element();
 
         int lastFunctionIndex = getClosingBracketIndex(subExample);
         String exampleFunction = subExample.substring(0, lastFunctionIndex+1);
         double functionValue = getFunctionValue(exampleFunction);
 
-        exampleElement.setNumber(functionValue);
-        exampleElement.setLength(exampleFunction.length());
+        element.setNumber(functionValue);
+        element.setLength(exampleFunction.length());
 
-        return exampleElement;
+        return element;
     }
 
     public static Element getExampleBracket(final String subExample) {
-        Element exampleElement = new Element();
+        Element element = new Element();
 
         int lastFunctionIndex = getClosingBracketIndex(subExample);
         String exampleBracket = subExample.substring(1, lastFunctionIndex);
         double bracketValue = calculate(exampleBracket);
 
-        exampleElement.setNumber(bracketValue);
-        exampleElement.setLength(exampleBracket.length() + 2);
+        element.setNumber(bracketValue);
+        element.setLength(exampleBracket.length() + 2);
 
-        return exampleElement;
+        return element;
     }
 
     private static int getClosingBracketIndex(final String subExample) {
