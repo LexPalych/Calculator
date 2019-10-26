@@ -1,10 +1,9 @@
 package calculate.element;
 
 import static calculate.CalculateExample.calculate;
-import static calculate.functions.CalculateFunction.getFunctionValue;
-import static calculate.CalculateExample.getClosingBracketIndex;
 import static calculate.SymbolType.Symbol.DIGIT;
 import static calculate.SymbolType.getSymbolType;
+import static calculate.functions.CalculateFunction.getFunctionValue;
 
 public class ElementCreator {
     public static Element getExampleNumber(final String subExample) {
@@ -56,5 +55,25 @@ public class ElementCreator {
         exampleElement.setLength(exampleBracket.length() + 2);
 
         return exampleElement;
+    }
+
+    private static int getClosingBracketIndex(final String subExample) {
+        int bracketAmount = 0;
+        int lastBracketIndex = 0;
+        char currentChar;
+
+        do {
+            currentChar = subExample.charAt(lastBracketIndex++);
+
+            if (currentChar == '(') {
+                bracketAmount++;
+
+            } else if (currentChar == ')') {
+                bracketAmount--;
+            }
+        } while (!(bracketAmount == 0 && currentChar == ')'));
+        lastBracketIndex--;
+
+        return lastBracketIndex;
     }
 }
