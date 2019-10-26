@@ -10,7 +10,7 @@ class ExampleValidation {
      * Проверяет выражение на правильность записи
      * @return - возвращает true, если ошибок нет
      */
-    static boolean checkExpression(final String expression) {
+    static boolean checkExample(final String expression) {
         return checkIncorrectSigns(expression) &&
                 checkBracketAmount(expression) &&
                 checkBracketOrder(expression) &&

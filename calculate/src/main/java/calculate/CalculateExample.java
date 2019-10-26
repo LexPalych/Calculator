@@ -5,7 +5,7 @@ import calculate.element.Element;
 import java.util.LinkedList;
 import java.util.List;
 
-import static calculate.ExampleValidation.checkExpression;
+import static calculate.ExampleValidation.checkExample;
 import static calculate.element.CalculateElement.calculateElement;
 import static calculate.element.ElementCreator.*;
 import static calculate.SymbolType.Symbol.*;
@@ -14,7 +14,7 @@ import static calculate.SymbolType.getSymbolType;
 public class CalculateExample {
     public static double calculateExample(final String example) {
 
-        if (checkExpression(example))
+        if (checkExample(example))
             return calculate(example);
 
         else
