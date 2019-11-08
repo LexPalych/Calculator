@@ -13,12 +13,9 @@ import static calculate.SymbolType.getSymbolType;
 
 public class CalculateExample {
     public static double calculateExample(final String example) {
+        checkExample(example);
 
-        if (checkExample(example))
-            return calculate(example);
-
-        else
-            throw new StringException("Какая-то неведомая ошибка");
+        return calculate(example);
     }
 
     public static Double calculate(final String subExample) {

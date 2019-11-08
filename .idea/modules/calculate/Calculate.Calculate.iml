@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
   <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="Calculate" externalSystemModuleVersion="1.0" linkedProjectId=":Calculate" linkedProjectPath="$MODULE_DIR$/../../../calculate" rootProjectPath="$MODULE_DIR$/../../.." />
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <content url="file://$MODULE_DIR$/../../../calculate">
+      <excludeFolder url="file://$MODULE_DIR$/../../../calculate/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../calculate/build" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
 </module>

@@ -1,17 +1,45 @@
 package calculate;
 
+import org.junit.jupiter.api.function.Executable;
+
+import java.util.LinkedList;
 import java.util.List;
 
-import static java.lang.Character.isDigit;
-import static java.lang.Character.isLetter;
+import static java.lang.Character.*;
+import static java.util.stream.Collectors.toList;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ExampleValidation {
     /**
      * Проверяет выражение на правильность записи
-     * @return - возвращает true, если ошибок нет
      */
-    static boolean checkExample(final String expression) {
-        return checkIncorrectSigns(expression) &&
+    static void checkExample(final String expression) {
+
+        List<Character> expressionCharList = expression
+                .chars()
+                .mapToObj(c -> (char) c)
+                .collect(toList());
+
+        List<Executable> executableList = new LinkedList<>();
+
+        executableList.add(checkIncorrectSigns(expressionCharList));
+        executableList.add(checkBracketAmount(expressionCharList));
+        executableList.add(checkBracketOrder(expressionCharList));
+        executableList.add(checkArgumentBracket(expressionCharList));
+        executableList.add(checkExpressionInBracketIsCorrect(expressionCharList));
+        executableList.add(checkSymbolBeforeFunction(expressionCharList));
+        executableList.add(checkSeveralSignConsecutive(expressionCharList));
+        executableList.add(checkFactorial(expressionCharList));
+        executableList.add(checkFirstSymbol(expressionCharList));
+        executableList.add(checkLastSymbol(expressionCharList));
+        executableList.add(checkNoSpace(expressionCharList));
+        executableList.add(checkNoComma(expressionCharList));
+        executableList.add(checkNoOnlyLetter(expressionCharList));
+
+        assertAll(executableList);
+
+
+        return checkIncorrectSigns(expressionCharList) &&
                 checkBracketAmount(expression) &&
                 checkBracketOrder(expression) &&
                 checkArgumentBracket(expression) &&
@@ -30,47 +58,40 @@ class ExampleValidation {
      * Проверяет, что нет некорректных символов
      * @return - возвращает true, если в выражении нет некорректных символов
      */
-    private static boolean checkIncorrectSigns(final String expression) {
+    private static Executable checkIncorrectSigns(final List<Character> expressionCharList) {
         List<Character> signList = List.of('(', ')', '+', '-', '*', '/', '!', '^', '.');
-        char symbol;
 
-        for (int i = 0; i < expression.length(); i++) {
-            symbol = expression.charAt(i);
+        List<Character> executableList = expressionCharList
+                .stream()
+                .filter(symbol -> !(isLetter(symbol) || isDigit(symbol) || signList.contains(symbol)))
+                .collect(toList());
 
-            if (!(isLetter(symbol) || isDigit(symbol) || signList.contains(symbol)))
-                throw new StringException("Введён некорректный символ");
-        }
-
-        return true;
+        return () -> assertEquals(executableList.size(), 0, "Симол(ы) " + executableList + " являются некорректными");
     }
 
     /**
      * Проверяет, что количество открывающих скобочек равно количеству закрывающих
      * @return - возвращает true, если в выражении количество открывающих скобочек равно количеству закрывающих
      */
-    private static boolean checkBracketAmount(final String expression) {
-        int bracket = 0;
+    private static Executable checkBracketAmount(final List<Character> expressionCharList) {
+        int openingBracket = (int) expressionCharList
+                .stream()
+                .filter(symbol -> symbol.equals('('))
+                .count();
 
-        for (int i = 0; i < expression.length(); i++) {
-            if (expression.charAt(i) == '(') {
-                bracket++;
+        int closingBracket = (int) expressionCharList
+                .stream()
+                .filter(symbol -> symbol.equals(')'))
+                .count();
 
-            } else if (expression.charAt(i) == ')') {
-                bracket--;
-            }
-        }
-
-        if (bracket != 0)
-            throw new StringException("Неверное количество скобочек");
-
-        return true;
+        return () -> assertEquals(openingBracket, closingBracket, "Неверное количество скобочек");
     }
 
     /**
      * Проверить, что закрывающая скобочка стоит после открывающей
      * @return - возвращает true, если в выражении открывающая и закрывающая скобочки стоят в правильнм порядке
      */
-    private static boolean checkBracketOrder(final String expression) {
+    private static Executable checkBracketOrder(final List<Character> expressionCharList) {
         int bracket = 0;
 
         for (int i = 0; i < expression.length(); i++) {
@@ -79,11 +100,10 @@ class ExampleValidation {
                 bracket++;
 
             } else if (expression.charAt(i) == ')') {
-                if (bracket == 0)
-                    throw new StringException("Закрывающая скобочка стоит перед открывающей");
-                else
-                    bracket--;
+                bracket--;
             }
+
+            assertTrue(bracket >= 0, "Закрывающая скобочка стоит перед открывающей");
         }
 
         return true;
@@ -93,7 +113,7 @@ class ExampleValidation {
      * Проверить, что перед аргументом стоит открывающая скобочка
      * @return - возвращает true, если в выражении количество открывающих скобочек равно количеству закрывающих
      */
-    private static boolean checkArgumentBracket(final String expression) {
+    private static Executable checkArgumentBracket(final String expression) {
         for (int i = 1; i < expression.length(); i++) {
             if (isDigit(expression.charAt(i)) && isLetter(expression.charAt(i-1)))
                 throw new StringException("Отсутствует открывающая скобочка перед аргументом");
@@ -106,7 +126,7 @@ class ExampleValidation {
      * Проверить, что в скобочках присутствует выражение
      * @return - возвращает true, если в скобочках присутствует выражение
      */
-    private static boolean checkExpressionInBracketIsCorrect(final String expression) {
+    private static Executable checkExpressionInBracketIsCorrect(final String expression) {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '.', '(');
         char symbol;
         char frontSymbol;
@@ -126,7 +146,7 @@ class ExampleValidation {
      * Проверить, что перед именем функции отсутствуют некорректные символы
      * @return - возвращает true, если перед именем функции отсутствуют некорректные символы
      */
-    private static boolean checkSymbolBeforeFunction(final String expression) {
+    private static Executable checkSymbolBeforeFunction(final String expression) {
         char symbol;
         char frontSymbol;
 
@@ -146,7 +166,7 @@ class ExampleValidation {
      * Проверить, что в выражении отсутствуют подряд стоящие знаки
      * @return - возвращает true, если в выражении отсутствуют подряд стоящие знаки
      */
-    private static boolean checkSeveralSignConsecutive(final String expression) {
+    private static Executable checkSeveralSignConsecutive(final String expression) {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '.');
 
         for (int i = 1; i < expression.length(); i++) {
@@ -161,7 +181,7 @@ class ExampleValidation {
      * Проверить, что в выражении перед факториалом отсутствуют некорректные символы
      * @return - возвращает true, если в выражении перед факториалом отсутствуют некорректные символы
      */
-    private static boolean checkFactorial(final String expression) {
+    private static Executable checkFactorial(final String expression) {
         char symbol;
         char frontSymbol;
 
@@ -180,7 +200,7 @@ class ExampleValidation {
      * Проверить, что выражение начинается с корректного символа
      * @return - возвращает true, если выражение начинается с корректного символа
      */
-    private static boolean checkFirstSymbol(final String expression) {
+    private static Executable checkFirstSymbol(final String expression) {
         List<Character> signList = List.of('+', '*', '/', '!', '^', '.');
 
         if (signList.contains(expression.charAt(0)))
@@ -193,7 +213,7 @@ class ExampleValidation {
      * Проверить, что выражение заканчивается корректным символом
      * @return - возвращает true, если выражение заканчивается с корректного символа
      */
-    private static boolean checkLastSymbol(final String expression) {
+    private static Executable checkLastSymbol(final String expression) {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '.');
 
         if (signList.contains(expression.charAt(expression.length() - 1)))
@@ -206,7 +226,7 @@ class ExampleValidation {
      * Проверить, что в выражении отсутствуют пробелы
      * @return - возвращает true, если в выражении отсутствуют пробелы
      */
-    private static boolean checkNoSpace(final String expression) {
+    private static Executable checkNoSpace(final String expression) {
         for (int i = 1; i < expression.length(); i++) {
             if (expression.charAt(i) == ' ')
                 throw new StringException("Выражение не должно содержать пробелов");
@@ -219,7 +239,7 @@ class ExampleValidation {
      * Проверить, что в выражении отсутствуют запятые
      * @return - возвращает true, если в выражении отсутствуют запятые
      */
-    private static boolean checkNoComma(final String expression) {
+    private static Executable checkNoComma(final String expression) {
         for (int i = 1; i < expression.length(); i++) {
             if (expression.charAt(i) == ',')
                 throw new StringException("Выражение не должно содержать запятыхю. Используйте точку");
@@ -232,7 +252,7 @@ class ExampleValidation {
      * Проверить, что в выражении присутствуют числа или константы
      * @return - возвращает true, если в выражении присутствуют числа или константы
      */
-    private static boolean checkNoOnlyLetter(final String expression) {
+    private static Executable checkNoOnlyLetter(final String expression) {
         char symbol;
 
         for (int i = 0; i < expression.length(); i++) {

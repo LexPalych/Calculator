@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
   <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="Calculate" externalSystemModuleType="sourceSet" externalSystemModuleVersion="1.0" linkedProjectId="Calculate:test" linkedProjectPath="$MODULE_DIR$/../.." rootProjectPath="$MODULE_DIR$/../.." />
+  <component name="NewModuleRootManager">
+    <output-test url="file://$MODULE_DIR$/../../build/classes/java/test" />
+    <content url="file://$MODULE_DIR$/../../src/test" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Calculate.main" />
+  </component>
   <component name="TestModuleProperties" production-module="Calculate.main" />
 </module>
