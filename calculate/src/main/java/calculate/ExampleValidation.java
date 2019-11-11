@@ -28,12 +28,10 @@ class ExampleValidation {
         executableList.addAll(checkArgumentBracket(expressionCharList));
         executableList.addAll(checkExpressionInBracketIsCorrect(expressionCharList));
         executableList.addAll(checkSymbolBeforeFunction(expressionCharList));
+        executableList.addAll(checkSymbolAfterFunction(expressionCharList));
         executableList.addAll(checkSeveralSignConsecutive(expressionCharList));
-        executableList.addAll(checkFactorial(expressionCharList));
         executableList.addAll(checkFirstSymbol(expressionCharList));
         executableList.addAll(checkLastSymbol(expressionCharList));
-        executableList.addAll(checkNoSpace(expressionCharList));
-        executableList.addAll(checkNoComma(expressionCharList));
         executableList.addAll(checkNoOnlyLetter(expressionCharList));
 
         assertAll(executableList);
@@ -43,7 +41,7 @@ class ExampleValidation {
      * Проверяет наличие некорректных символов в выражении
      */
     private static List<Executable> checkIncorrectSigns(final List<Character> expressionCharList) {
-        List<Character> signList = List.of('(', ')', '+', '-', '*', '/', '!', '^', '.');
+        List<Character> signList = List.of('(', ')', '+', '-', '*', '/', '!', '^', '.', ' ', ',');
 
         return expressionCharList
                 .stream()
@@ -113,7 +111,7 @@ class ExampleValidation {
 
             executableList.add(() ->
                     assertFalse(isDigit(expressionCharList.get(j)) && isLetter(expressionCharList.get(j-1)),
-                    "Отсутствует скобочка перед аргументом на позиции " + j)
+                    "Отсутствует скобочка перед аргументом функции на позиции " + j)
             );
         }
 
@@ -160,6 +158,26 @@ class ExampleValidation {
     }
 
     /**
+     * Проверянт наличие после имени функции некорректных симолов
+     */
+    private static List<Executable> checkSymbolAfterFunction(final List<Character> expressionCharList) {
+        List<Character> signList = List.of(')', '.', '!', '+', '-', '*', '/', '^');
+        List<Executable> executableList = new LinkedList<>();
+
+        for (int i = 0; i < expressionCharList.size()-1; i++) {
+            char currentSymbol = expressionCharList.get(i);
+            char nextSymbol = expressionCharList.get(i+1);
+
+            executableList.add(() ->
+                    assertFalse(isLetter(currentSymbol) && signList.contains(nextSymbol),
+                    "Некорректный символ (" + nextSymbol + ") после имени функциии")
+            );
+        }
+
+        return executableList;
+    }
+
+    /**
      * Проверяет наличие подряд стоящих знаков
      */
     private static List<Executable> checkSeveralSignConsecutive(final List<Character> expressionCharList) {
@@ -181,91 +199,47 @@ class ExampleValidation {
     }
 
     /**
-     * Проверить, что в выражении перед факториалом отсутствуют некорректные символы
-     * @return - возвращает true, если в выражении перед факториалом отсутствуют некорректные символы
+     * Проверяет наличие некорректных символов в начале выражения
      */
-    private static Executable checkFactorial(final String expression) {
-        char symbol;
-        char frontSymbol;
-
-        for (int i = 1; i < expression.length(); i++) {
-            symbol = expression.charAt(i);
-            frontSymbol = expression.charAt(i-1);
-
-            if (symbol == '!' && !(isDigit(frontSymbol) || frontSymbol == ')' || frontSymbol == '!'))
-                throw new StringException("Некорректный аргумент фактоиала");
-        }
-
-        return true;
-    }
-
-    /**
-     * Проверить, что выражение начинается с корректного символа
-     * @return - возвращает true, если выражение начинается с корректного символа
-     */
-    private static Executable checkFirstSymbol(final String expression) {
+    private static List<Executable> checkFirstSymbol(final List<Character> expressionCharList) {
         List<Character> signList = List.of('+', '*', '/', '!', '^', '.');
+        List<Executable> executableList = new LinkedList<>();
 
-        if (signList.contains(expression.charAt(0)))
-            throw new StringException("Некорректный первый символ выражения");
+        executableList.add(() ->
+                assertFalse(signList.contains(expressionCharList.get(0)),
+                "Некорректный первый символ выражения")
+        );
 
-        return true;
+        return executableList;
     }
 
     /**
-     * Проверить, что выражение заканчивается корректным символом
-     * @return - возвращает true, если выражение заканчивается с корректного символа
+     * Проверяет наличие некорректных символов в конце выражения
      */
-    private static Executable checkLastSymbol(final String expression) {
+    private static List<Executable> checkLastSymbol(final List<Character> expressionCharList) {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '.');
+        List<Executable> executableList = new LinkedList<>();
 
-        if (signList.contains(expression.charAt(expression.length() - 1)))
-            throw new StringException("Некорректный последний символ выражения");
+        executableList.add(() ->
+                assertFalse(signList.contains(expressionCharList.get(expressionCharList.size()-1)),
+                "Некорректный последний символ выражения")
+        );
 
-        return true;
+        return executableList;
     }
 
     /**
-     * Проверить, что в выражении отсутствуют пробелы
-     * @return - возвращает true, если в выражении отсутствуют пробелы
+     * Проверяет наличие в выражении чисел
      */
-    private static Executable checkNoSpace(final String expression) {
-        for (int i = 1; i < expression.length(); i++) {
-            if (expression.charAt(i) == ' ')
-                throw new StringException("Выражение не должно содержать пробелов");
-        }
+    private static List<Executable> checkNoOnlyLetter(final List<Character> expressionCharList) {
+        List<Executable> executableList = new LinkedList<>();
 
-        return true;
-    }
+        executableList.add(() ->
+                assertFalse((int) expressionCharList.stream().filter(Character::isDigit).count() != 0,
+                "В выражении отсутствуют числа")
+        );
 
-    /**
-     * Проверить, что в выражении отсутствуют запятые
-     * @return - возвращает true, если в выражении отсутствуют запятые
-     */
-    private static Executable checkNoComma(final String expression) {
-        for (int i = 1; i < expression.length(); i++) {
-            if (expression.charAt(i) == ',')
-                throw new StringException("Выражение не должно содержать запятыхю. Используйте точку");
-        }
-
-        return true;
-    }
-
-    /**
-     * Проверить, что в выражении присутствуют числа или константы
-     * @return - возвращает true, если в выражении присутствуют числа или константы
-     */
-    private static Executable checkNoOnlyLetter(final String expression) {
-        char symbol;
-
-        for (int i = 0; i < expression.length(); i++) {
-            symbol = expression.charAt(i);
-
-            if (isDigit(symbol))
-                return true;
-        }
-
-        throw new StringException("В выражении отсутствуют числа");
+        return executableList;
     }
 
 }
