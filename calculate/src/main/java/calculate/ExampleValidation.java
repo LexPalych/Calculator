@@ -20,21 +20,35 @@ class ExampleValidation {
                 .mapToObj(c -> (char) c)
                 .collect(toList());
 
-        List<Executable> executableList = new LinkedList<>();
+//        List<Executable> executableList = new LinkedList<>();
 
-        executableList.addAll(checkIncorrectSigns(expressionCharList));
-        executableList.add(checkBracketAmount(expressionCharList));
-        executableList.addAll(checkBracketOrder(expressionCharList));
-        executableList.addAll(checkArgumentBracket(expressionCharList));
-        executableList.addAll(checkExpressionInBracketIsCorrect(expressionCharList));
-        executableList.addAll(checkSymbolBeforeFunction(expressionCharList));
-        executableList.addAll(checkSymbolAfterFunction(expressionCharList));
-        executableList.addAll(checkSeveralSignConsecutive(expressionCharList));
-        executableList.add(checkFirstSymbol(expressionCharList));
-        executableList.add(checkLastSymbol(expressionCharList));
-        executableList.add(checkNoOnlyLetter(expressionCharList));
+        List<Object> executableList = List.of(
+                checkBracketAmount(expressionCharList),
+                checkFirstSymbol(expressionCharList),
+                checkLastSymbol(expressionCharList),
+                checkNoOnlyLetter(expressionCharList),
+                checkIncorrectSigns(expressionCharList),
+                checkBracketOrder(expressionCharList),
+                checkArgumentBracket(expressionCharList),
+                checkExpressionInBracketIsCorrect(expressionCharList),
+                checkSymbolBeforeFunction(expressionCharList),
+                checkSymbolAfterFunction(expressionCharList),
+                checkSeveralSignConsecutive(expressionCharList)
+        );
 
-        assertAll(executableList);
+//        executableList.addAll(checkIncorrectSigns(expressionCharList));
+//        executableList.add(checkBracketAmount(expressionCharList));
+//        executableList.addAll(checkBracketOrder(expressionCharList));
+//        executableList.addAll(checkArgumentBracket(expressionCharList));
+//        executableList.addAll(checkExpressionInBracketIsCorrect(expressionCharList));
+//        executableList.addAll(checkSymbolBeforeFunction(expressionCharList));
+//        executableList.addAll(checkSymbolAfterFunction(expressionCharList));
+//        executableList.addAll(checkSeveralSignConsecutive(expressionCharList));
+//        executableList.add(checkFirstSymbol(expressionCharList));
+//        executableList.add(checkLastSymbol(expressionCharList));
+//        executableList.add(checkNoOnlyLetter(expressionCharList));
+
+        assertAll((Executable) executableList);
     }
 
     /**
