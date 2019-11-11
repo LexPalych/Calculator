@@ -22,59 +22,44 @@ class ExampleValidation {
 
         List<Executable> executableList = new LinkedList<>();
 
-        executableList.add(checkIncorrectSigns(expressionCharList));
-        executableList.add(checkBracketAmount(expressionCharList));
-        executableList.add(checkBracketOrder(expressionCharList));
-        executableList.add(checkArgumentBracket(expressionCharList));
-        executableList.add(checkExpressionInBracketIsCorrect(expressionCharList));
-        executableList.add(checkSymbolBeforeFunction(expressionCharList));
-        executableList.add(checkSeveralSignConsecutive(expressionCharList));
-        executableList.add(checkFactorial(expressionCharList));
-        executableList.add(checkFirstSymbol(expressionCharList));
-        executableList.add(checkLastSymbol(expressionCharList));
-        executableList.add(checkNoSpace(expressionCharList));
-        executableList.add(checkNoComma(expressionCharList));
-        executableList.add(checkNoOnlyLetter(expressionCharList));
+        executableList.addAll(checkIncorrectSigns(expressionCharList));
+        executableList.addAll(checkBracketAmount(expressionCharList));
+        executableList.addAll(checkBracketOrder(expressionCharList));
+        executableList.addAll(checkArgumentBracket(expressionCharList));
+        executableList.addAll(checkExpressionInBracketIsCorrect(expressionCharList));
+        executableList.addAll(checkSymbolBeforeFunction(expressionCharList));
+        executableList.addAll(checkSeveralSignConsecutive(expressionCharList));
+        executableList.addAll(checkFactorial(expressionCharList));
+        executableList.addAll(checkFirstSymbol(expressionCharList));
+        executableList.addAll(checkLastSymbol(expressionCharList));
+        executableList.addAll(checkNoSpace(expressionCharList));
+        executableList.addAll(checkNoComma(expressionCharList));
+        executableList.addAll(checkNoOnlyLetter(expressionCharList));
 
         assertAll(executableList);
-
-
-        return checkIncorrectSigns(expressionCharList) &&
-                checkBracketAmount(expression) &&
-                checkBracketOrder(expression) &&
-                checkArgumentBracket(expression) &&
-                checkExpressionInBracketIsCorrect(expression) &&
-                checkSymbolBeforeFunction(expression) &&
-                checkSeveralSignConsecutive(expression) &&
-                checkFactorial(expression) &&
-                checkFirstSymbol(expression) &&
-                checkLastSymbol(expression) &&
-                checkNoSpace(expression) &&
-                checkNoComma(expression) &&
-                checkNoOnlyLetter(expression);
     }
 
     /**
      * Проверяет наличие некорректных символов в выражении
      */
-    private static Executable checkIncorrectSigns(final List<Character> expressionCharList) {
+    private static List<Executable> checkIncorrectSigns(final List<Character> expressionCharList) {
         List<Character> signList = List.of('(', ')', '+', '-', '*', '/', '!', '^', '.');
 
-        List<Executable> executableList = expressionCharList
+        return expressionCharList
                 .stream()
                 .map(symbol -> (Executable) () ->
                         assertTrue(isLetter(symbol) || isDigit(symbol) || signList.contains(symbol),
-                                "Симол " + symbol + " является некорректным"))
+                        "Симол " + symbol + " является некорректным")
+                )
                 .collect(toList());
-
-        return () -> assertAll(executableList);
-
     }
 
     /**
      * Проверяет сопадение в количестве открывающий и закрыающих скобочек
      */
-    private static Executable checkBracketAmount(final List<Character> expressionCharList) {
+    private static List<Executable> checkBracketAmount(final List<Character> expressionCharList) {
+        List<Executable> executableList = new LinkedList<>();
+
         int openingBracket = (int) expressionCharList
                 .stream()
                 .filter(symbol -> symbol.equals('('))
@@ -85,16 +70,21 @@ class ExampleValidation {
                 .filter(symbol -> symbol.equals(')'))
                 .count();
 
-        return () -> assertEquals(openingBracket, closingBracket, "Неверное количество скобочек");
+        executableList.add(() -> assertEquals(openingBracket, closingBracket, "Неверное количество скобочек"));
+
+        return executableList;
     }
 
     /**
      * Проверяет наличие закрывающей скобочки перед открыающей
      */
-    private static Executable checkBracketOrder(final List<Character> expressionCharList) {
+    private static List<Executable> checkBracketOrder(final List<Character> expressionCharList) {
+        List<Executable> executableList = new LinkedList<>();
         int bracket = 0;
 
-        for (Character symbol : expressionCharList) {
+        for (int i = 0; i < expressionCharList.size(); i++) {
+            int j = i;
+            char symbol = expressionCharList.get(j);
 
             if (symbol == '(') {
                 bracket++;
@@ -104,82 +94,90 @@ class ExampleValidation {
             }
 
             if (bracket < 0) {
-                return () -> fail("Закрывающая скобочка стоит перед открывающей");
+                executableList.add(() -> fail("Закрывающая скобочка стоит перед открывающей (позиция " + j + " )"));
+                bracket = 0;
             }
         }
 
-        return () -> assertTrue(true);
+        return executableList;
     }
 
     /**
      * Проверяет наличие скобочки перед выражением аргумента функции
      */
-    private static Executable checkArgumentBracket(final List<Character> expressionCharList) {
+    private static List<Executable> checkArgumentBracket(final List<Character> expressionCharList) {
         List<Executable> executableList = new LinkedList<>();
 
         for (int i = 1; i < expressionCharList.size(); i++) {
             int j = i;
-            executableList.add(() -> assertFalse(isDigit(expressionCharList.get(j)) && isLetter(expressionCharList.get(j - 1)),
-                    "Отсутствует скобочка перед аргументом на позиции " + j));
+
+            executableList.add(() ->
+                    assertFalse(isDigit(expressionCharList.get(j)) && isLetter(expressionCharList.get(j-1)),
+                    "Отсутствует скобочка перед аргументом на позиции " + j)
+            );
         }
 
-        return () -> assertAll(executableList);
-
+        return executableList;
     }
 
     /**
-     * Проверить, что в скобочках присутствует выражение
-     * @return - возвращает true, если в скобочках присутствует выражение
+     * Проверяет наличие в скобочках какого-либо выражения
      */
-    private static Executable checkExpressionInBracketIsCorrect(final String expression) {
+    private static List<Executable> checkExpressionInBracketIsCorrect(final List<Character> expressionCharList) {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '.', '(');
-        char symbol;
-        char frontSymbol;
+        List<Executable> executableList = new LinkedList<>();
 
-        for (int i = 1; i < expression.length(); i++) {
-            symbol = expression.charAt(i);
-            frontSymbol = expression.charAt(i-1);
+        for (int i = 1; i < expressionCharList.size(); i++) {
+            int j = i;
 
-            if (symbol == ')' && signList.contains(frontSymbol))
-                throw new StringException("Выражение в скобочках некорректно");
+            executableList.add(() ->
+                    assertFalse(expressionCharList.get(j) == ')' && signList.contains(expressionCharList.get(j)),
+                    "Отсутстует выражение перед скобочкой на позиции " + j)
+            );
         }
 
-        return true;
+        return executableList;
     }
 
     /**
-     * Проверить, что перед именем функции отсутствуют некорректные символы
-     * @return - возвращает true, если перед именем функции отсутствуют некорректные символы
+     * Проверянт наличие перед функцией некорректных симолов
      */
-    private static Executable checkSymbolBeforeFunction(final String expression) {
-        char symbol;
-        char frontSymbol;
+    private static List<Executable> checkSymbolBeforeFunction(final List<Character> expressionCharList) {
+        List<Character> signList = List.of(')', '.', '!');
+        List<Executable> executableList = new LinkedList<>();
 
-        for (int i = 1; i < expression.length(); i++) {
-            symbol = expression.charAt(i);
-            frontSymbol = expression.charAt(i-1);
+        for (int i = 1; i < expressionCharList.size(); i++) {
+            char currentSymbol = expressionCharList.get(i);
+            char prevSymbol = expressionCharList.get(i-1);
 
-            if (isLetter(symbol) &&
-                    ((isDigit(frontSymbol) || frontSymbol == '.' || frontSymbol == ')' || frontSymbol == '!')))
-                throw new StringException("Некорректный символ перед функцией");
+            executableList.add(() ->
+                    assertFalse(isLetter(currentSymbol) && ((isDigit(prevSymbol) || signList.contains(prevSymbol))),
+                    "Некорректный символ (" + prevSymbol + ") перед функцией")
+            );
         }
 
-        return true;
+        return executableList;
     }
 
     /**
-     * Проверить, что в выражении отсутствуют подряд стоящие знаки
-     * @return - возвращает true, если в выражении отсутствуют подряд стоящие знаки
+     * Проверяет наличие подряд стоящих знаков
      */
-    private static Executable checkSeveralSignConsecutive(final String expression) {
+    private static List<Executable> checkSeveralSignConsecutive(final List<Character> expressionCharList) {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '.');
+        List<Executable> executableList = new LinkedList<>();
 
-        for (int i = 1; i < expression.length(); i++) {
-            if (signList.contains(expression.charAt(i)) && signList.contains(expression.charAt(i-1)))
-                throw new StringException("Два или более знака подряд");
+        for (int i = 0; i < expressionCharList.size()-1; i++) {
+            int j = i;
+            char currentSymbol = expressionCharList.get(j);
+            char nextSymbol = expressionCharList.get(j+1);
+
+            executableList.add(() ->
+                    assertFalse(signList.contains(currentSymbol) && signList.contains(nextSymbol),
+                    "Несколько знаков подряд начиная с позиции " + j)
+            );
         }
 
-        return true;
+        return executableList;
     }
 
     /**
