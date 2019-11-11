@@ -6,10 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static calculate.ExampleValidation.checkExample;
-import static calculate.element.CalculateElement.calculateElement;
-import static calculate.element.ElementCreator.*;
 import static calculate.SymbolType.Symbol.*;
 import static calculate.SymbolType.getSymbolType;
+import static calculate.element.CalculateElement.calculateElement;
+import static calculate.element.ElementCreator.*;
 
 public class CalculateExample {
     public static double calculateExample(final String example) {

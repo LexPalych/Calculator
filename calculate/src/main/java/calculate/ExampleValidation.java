@@ -5,7 +5,8 @@ import org.junit.jupiter.api.function.Executable;
 import java.util.LinkedList;
 import java.util.List;
 
-import static java.lang.Character.*;
+import static java.lang.Character.isDigit;
+import static java.lang.Character.isLetter;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,35 +21,37 @@ class ExampleValidation {
                 .mapToObj(c -> (char) c)
                 .collect(toList());
 
-//        List<Executable> executableList = new LinkedList<>();
+        List<Executable> executableList = new LinkedList<>();
 
-        List<Object> executableList = List.of(
-                checkBracketAmount(expressionCharList),
-                checkFirstSymbol(expressionCharList),
-                checkLastSymbol(expressionCharList),
-                checkNoOnlyLetter(expressionCharList),
-                checkIncorrectSigns(expressionCharList),
-                checkBracketOrder(expressionCharList),
-                checkArgumentBracket(expressionCharList),
-                checkExpressionInBracketIsCorrect(expressionCharList),
-                checkSymbolBeforeFunction(expressionCharList),
-                checkSymbolAfterFunction(expressionCharList),
-                checkSeveralSignConsecutive(expressionCharList)
-        );
+//        assertAll(checkIncorrectSigns(expressionCharList));
 
-//        executableList.addAll(checkIncorrectSigns(expressionCharList));
-//        executableList.add(checkBracketAmount(expressionCharList));
-//        executableList.addAll(checkBracketOrder(expressionCharList));
-//        executableList.addAll(checkArgumentBracket(expressionCharList));
-//        executableList.addAll(checkExpressionInBracketIsCorrect(expressionCharList));
-//        executableList.addAll(checkSymbolBeforeFunction(expressionCharList));
-//        executableList.addAll(checkSymbolAfterFunction(expressionCharList));
-//        executableList.addAll(checkSeveralSignConsecutive(expressionCharList));
-//        executableList.add(checkFirstSymbol(expressionCharList));
-//        executableList.add(checkLastSymbol(expressionCharList));
-//        executableList.add(checkNoOnlyLetter(expressionCharList));
+//        List<Object> executableList = List.of(
+//                checkBracketAmount(expressionCharList),
+//                checkFirstSymbol(expressionCharList),
+//                checkLastSymbol(expressionCharList),
+//                checkNoOnlyLetter(expressionCharList),
+//                checkIncorrectSigns(expressionCharList),
+//                checkBracketOrder(expressionCharList),
+//                checkArgumentBracket(expressionCharList),
+//                checkExpressionInBracketIsCorrect(expressionCharList),
+//                checkSymbolBeforeFunction(expressionCharList),
+//                checkSymbolAfterFunction(expressionCharList),
+//                checkSeveralSignConsecutive(expressionCharList)
+//        );
 
-        assertAll((Executable) executableList);
+        executableList.addAll(checkIncorrectSigns(expressionCharList));
+        executableList.add(checkBracketAmount(expressionCharList));
+        executableList.addAll(checkBracketOrder(expressionCharList));
+        executableList.addAll(checkArgumentBracket(expressionCharList));
+        executableList.addAll(checkExpressionInBracketIsCorrect(expressionCharList));
+        executableList.addAll(checkSymbolBeforeFunction(expressionCharList));
+        executableList.addAll(checkSymbolAfterFunction(expressionCharList));
+        executableList.addAll(checkSeveralSignConsecutive(expressionCharList));
+        executableList.add(checkFirstSymbol(expressionCharList));
+        executableList.add(checkLastSymbol(expressionCharList));
+        executableList.add(checkNoOnlyLetter(expressionCharList));
+
+        assertAll(executableList);
     }
 
     /**
@@ -230,7 +233,7 @@ class ExampleValidation {
      * Проверяет наличие в выражении чисел
      */
     private static Executable checkNoOnlyLetter(final List<Character> expressionCharList) {
-        return () -> assertFalse((int) expressionCharList.stream().filter(Character::isDigit).count() != 0, "В выражении отсутствуют числа");
+        return () -> assertTrue((int) expressionCharList.stream().filter(Character::isDigit).count() != 0, "В выражении отсутствуют числа");
     }
 
 }
