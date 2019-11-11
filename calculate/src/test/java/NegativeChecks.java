@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class NegativeChecks {
 
     @Test
-    void badSymbol() {
-        String expression = "1+2";
+    void badExample() {
+        String expression = "+1%^&(((()))";
         double value = calculateExample(expression);
         double result = 3;
-        assertTrue(value == result, "РћР¶РёРґР°Р»РѕСЃСЊ " + result + ", Р° РїРѕР»СѓС‡РёР»РѕСЃСЊ " + value);
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
 }

@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ExampleValidation {
     /**
-     * РџСЂРѕРІРµСЂСЏРµС‚ РІС‹СЂР°Р¶РµРЅРёРµ РЅР° РїСЂР°РІРёР»СЊРЅРѕСЃС‚СЊ Р·Р°РїРёСЃРё
+     * Проверяет выражение на правильность записи
      */
     static void checkExample(final String expression) {
 
@@ -55,7 +55,7 @@ class ExampleValidation {
     }
 
     /**
-     * РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹С… СЃРёРјРІРѕР»РѕРІ РІ РІС‹СЂР°Р¶РµРЅРёРё
+     * Проверяет наличие некорректных символов в выражении
      */
     private static List<Executable> checkIncorrectSigns(final List<Character> expressionCharList) {
         List<Character> signList = List.of('(', ')', '+', '-', '*', '/', '!', '^', '.', ' ', ',');
@@ -64,13 +64,13 @@ class ExampleValidation {
                 .stream()
                 .map(symbol -> (Executable) () ->
                         assertTrue(isLetter(symbol) || isDigit(symbol) || signList.contains(symbol),
-                        "РЎРёРјРѕР» " + symbol + " СЏРІР»СЏРµС‚СЃСЏ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Рј")
+                        "Симол " + symbol + " является некорректным")
                 )
                 .collect(toList());
     }
 
     /**
-     * РџСЂРѕРІРµСЂСЏРµС‚ СЃРѕРїР°РґРµРЅРёРµ РІ РєРѕР»РёС‡РµСЃС‚РІРµ РѕС‚РєСЂС‹РІР°СЋС‰РёР№ Рё Р·Р°РєСЂС‹Р°СЋС‰РёС… СЃРєРѕР±РѕС‡РµРє
+     * Проверяет сопадение в количестве открывающий и закрыающих скобочек
      */
     private static Executable checkBracketAmount(final List<Character> expressionCharList) {
         int openingBracket = (int) expressionCharList
@@ -83,11 +83,11 @@ class ExampleValidation {
                 .filter(symbol -> symbol.equals(')'))
                 .count();
 
-        return () -> assertEquals(openingBracket, closingBracket, "РќРµРІРµСЂРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРєРѕР±РѕС‡РµРє");
+        return () -> assertEquals(openingBracket, closingBracket, "Неверное количество скобочек");
     }
 
     /**
-     * РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ Р·Р°РєСЂС‹РІР°СЋС‰РµР№ СЃРєРѕР±РѕС‡РєРё РїРµСЂРµРґ РѕС‚РєСЂС‹Р°СЋС‰РµР№
+     * Проверяет наличие закрывающей скобочки перед открыающей
      */
     private static List<Executable> checkBracketOrder(final List<Character> expressionCharList) {
         List<Executable> executableList = new LinkedList<>();
@@ -105,7 +105,7 @@ class ExampleValidation {
             }
 
             if (bracket < 0) {
-                executableList.add(() -> fail("Р—Р°РєСЂС‹РІР°СЋС‰Р°СЏ СЃРєРѕР±РѕС‡РєР° СЃС‚РѕРёС‚ РїРµСЂРµРґ РѕС‚РєСЂС‹РІР°СЋС‰РµР№ (РїРѕР·РёС†РёСЏ " + j + " )"));
+                executableList.add(() -> fail("Закрывающая скобочка стоит перед открывающей (позиция " + j + ")"));
                 bracket = 0;
             }
         }
@@ -114,7 +114,7 @@ class ExampleValidation {
     }
 
     /**
-     * РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ СЃРєРѕР±РѕС‡РєРё РїРµСЂРµРґ РІС‹СЂР°Р¶РµРЅРёРµРј Р°СЂРіСѓРјРµРЅС‚Р° С„СѓРЅРєС†РёРё
+     * Проверяет наличие скобочки перед выражением аргумента функции
      */
     private static List<Executable> checkArgumentBracket(final List<Character> expressionCharList) {
         List<Executable> executableList = new LinkedList<>();
@@ -124,7 +124,7 @@ class ExampleValidation {
 
             executableList.add(() ->
                     assertFalse(isDigit(expressionCharList.get(j)) && isLetter(expressionCharList.get(j-1)),
-                    "РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ СЃРєРѕР±РѕС‡РєР° РїРµСЂРµРґ Р°СЂРіСѓРјРµРЅС‚РѕРј С„СѓРЅРєС†РёРё РЅР° РїРѕР·РёС†РёРё " + j)
+                    "Отсутствует скобочка перед аргументом функции на позиции " + j)
             );
         }
 
@@ -132,7 +132,7 @@ class ExampleValidation {
     }
 
     /**
-     * РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РІ СЃРєРѕР±РѕС‡РєР°С… РєР°РєРѕРіРѕ-Р»РёР±Рѕ РІС‹СЂР°Р¶РµРЅРёСЏ
+     * Проверяет наличие в скобочках какого-либо выражения
      */
     private static List<Executable> checkExpressionInBracketIsCorrect(final List<Character> expressionCharList) {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '.', '(');
@@ -143,7 +143,7 @@ class ExampleValidation {
 
             executableList.add(() ->
                     assertFalse(expressionCharList.get(j) == ')' && signList.contains(expressionCharList.get(j)),
-                    "РћС‚СЃСѓС‚СЃС‚СѓРµС‚ РІС‹СЂР°Р¶РµРЅРёРµ РїРµСЂРµРґ СЃРєРѕР±РѕС‡РєРѕР№ РЅР° РїРѕР·РёС†РёРё " + j)
+                    "Отсутстует выражение перед скобочкой на позиции " + j)
             );
         }
 
@@ -151,7 +151,7 @@ class ExampleValidation {
     }
 
     /**
-     * РџСЂРѕРІРµСЂСЏРЅС‚ РЅР°Р»РёС‡РёРµ РїРµСЂРµРґ С„СѓРЅРєС†РёРµР№ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹С… СЃРёРјРѕР»РѕРІ
+     * Проверянт наличие перед функцией некорректных симолов
      */
     private static List<Executable> checkSymbolBeforeFunction(final List<Character> expressionCharList) {
         List<Character> signList = List.of(')', '.', '!');
@@ -163,7 +163,7 @@ class ExampleValidation {
 
             executableList.add(() ->
                     assertFalse(isLetter(currentSymbol) && ((isDigit(prevSymbol) || signList.contains(prevSymbol))),
-                    "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ СЃРёРјРІРѕР» (" + prevSymbol + ") РїРµСЂРµРґ С„СѓРЅРєС†РёРµР№")
+                    "Некорректный символ (" + prevSymbol + ") перед функцией")
             );
         }
 
@@ -171,7 +171,7 @@ class ExampleValidation {
     }
 
     /**
-     * РџСЂРѕРІРµСЂСЏРЅС‚ РЅР°Р»РёС‡РёРµ РїРѕСЃР»Рµ РёРјРµРЅРё С„СѓРЅРєС†РёРё РЅРµРєРѕСЂСЂРµРєС‚РЅС‹С… СЃРёРјРѕР»РѕРІ
+     * Проверянт наличие после имени функции некорректных симолов
      */
     private static List<Executable> checkSymbolAfterFunction(final List<Character> expressionCharList) {
         List<Character> signList = List.of(')', '.', '!', '+', '-', '*', '/', '^');
@@ -183,7 +183,7 @@ class ExampleValidation {
 
             executableList.add(() ->
                     assertFalse(isLetter(currentSymbol) && signList.contains(nextSymbol),
-                    "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ СЃРёРјРІРѕР» (" + nextSymbol + ") РїРѕСЃР»Рµ РёРјРµРЅРё С„СѓРЅРєС†РёРёРё")
+                    "Некорректный символ (" + nextSymbol + ") после имени функциии")
             );
         }
 
@@ -191,7 +191,7 @@ class ExampleValidation {
     }
 
     /**
-     * РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїРѕРґСЂСЏРґ СЃС‚РѕСЏС‰РёС… Р·РЅР°РєРѕРІ
+     * Проверяет наличие подряд стоящих знаков
      */
     private static List<Executable> checkSeveralSignConsecutive(final List<Character> expressionCharList) {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '.');
@@ -204,7 +204,7 @@ class ExampleValidation {
 
             executableList.add(() ->
                     assertFalse(signList.contains(currentSymbol) && signList.contains(nextSymbol),
-                    "РќРµСЃРєРѕР»СЊРєРѕ Р·РЅР°РєРѕРІ РїРѕРґСЂСЏРґ РЅР°С‡РёРЅР°СЏ СЃ РїРѕР·РёС†РёРё " + j)
+                    "Несколько знаков подряд начиная с позиции " + j)
             );
         }
 
@@ -212,28 +212,28 @@ class ExampleValidation {
     }
 
     /**
-     * РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹С… СЃРёРјРІРѕР»РѕРІ РІ РЅР°С‡Р°Р»Рµ РІС‹СЂР°Р¶РµРЅРёСЏ
+     * Проверяет наличие некорректных символов в начале выражения
      */
     private static Executable checkFirstSymbol(final List<Character> expressionCharList) {
         List<Character> signList = List.of('+', '*', '/', '!', '^', '.');
 
-        return () -> assertFalse(signList.contains(expressionCharList.get(0)), "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РїРµСЂРІС‹Р№ СЃРёРјРІРѕР» РІС‹СЂР°Р¶РµРЅРёСЏ");
+        return () -> assertFalse(signList.contains(expressionCharList.get(0)), "Некорректный первый символ выражения");
     }
 
     /**
-     * РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹С… СЃРёРјРІРѕР»РѕРІ РІ РєРѕРЅС†Рµ РІС‹СЂР°Р¶РµРЅРёСЏ
+     * Проверяет наличие некорректных символов в конце выражения
      */
     private static Executable checkLastSymbol(final List<Character> expressionCharList) {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '.');
 
-        return () -> assertFalse(signList.contains(expressionCharList.get(expressionCharList.size()-1)), "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РїРѕСЃР»РµРґРЅРёР№ СЃРёРјРІРѕР» РІС‹СЂР°Р¶РµРЅРёСЏ");
+        return () -> assertFalse(signList.contains(expressionCharList.get(expressionCharList.size()-1)), "Некорректный последний символ выражения");
     }
 
     /**
-     * РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РІ РІС‹СЂР°Р¶РµРЅРёРё С‡РёСЃРµР»
+     * Проверяет наличие в выражении чисел
      */
     private static Executable checkNoOnlyLetter(final List<Character> expressionCharList) {
-        return () -> assertTrue((int) expressionCharList.stream().filter(Character::isDigit).count() != 0, "Р’ РІС‹СЂР°Р¶РµРЅРёРё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ С‡РёСЃР»Р°");
+        return () -> assertTrue((int) expressionCharList.stream().filter(Character::isDigit).count() != 0, "В выражении отсутствуют числа");
     }
 
 }
