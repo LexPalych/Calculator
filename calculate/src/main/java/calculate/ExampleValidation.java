@@ -55,23 +55,24 @@ class ExampleValidation {
     }
 
     /**
-     * Проверяет, что нет некорректных символов
-     * @return - возвращает true, если в выражении нет некорректных символов
+     * Проверяет наличие некорректных символов в выражении
      */
     private static Executable checkIncorrectSigns(final List<Character> expressionCharList) {
         List<Character> signList = List.of('(', ')', '+', '-', '*', '/', '!', '^', '.');
 
-        List<Character> executableList = expressionCharList
+        List<Executable> executableList = expressionCharList
                 .stream()
-                .filter(symbol -> !(isLetter(symbol) || isDigit(symbol) || signList.contains(symbol)))
+                .map(symbol -> (Executable) () ->
+                        assertTrue(isLetter(symbol) || isDigit(symbol) || signList.contains(symbol),
+                                "Симол " + symbol + " является некорректным"))
                 .collect(toList());
 
-        return () -> assertEquals(executableList.size(), 0, "Симол(ы) " + executableList + " являются некорректными");
+        return () -> assertAll(executableList);
+
     }
 
     /**
-     * Проверяет, что количество открывающих скобочек равно количеству закрывающих
-     * @return - возвращает true, если в выражении количество открывающих скобочек равно количеству закрывающих
+     * Проверяет сопадение в количестве открывающий и закрыающих скобочек
      */
     private static Executable checkBracketAmount(final List<Character> expressionCharList) {
         int openingBracket = (int) expressionCharList
@@ -88,8 +89,7 @@ class ExampleValidation {
     }
 
     /**
-     * Проверить, что закрывающая скобочка стоит после открывающей
-     * @return - возвращает true, если в выражении открывающая и закрывающая скобочки стоят в правильнм порядке
+     * Проверяет наличие закрывающей скобочки перед открыающей
      */
     private static Executable checkBracketOrder(final List<Character> expressionCharList) {
         int bracket = 0;
@@ -112,16 +112,19 @@ class ExampleValidation {
     }
 
     /**
-     * Проверить, что перед аргументом стоит открывающая скобочка
-     * @return - возвращает true, если в выражении количество открывающих скобочек равно количеству закрывающих
+     * Проверяет наличие скобочки перед выражением аргумента функции
      */
-    private static Executable checkArgumentBracket(final String expression) {
-        for (int i = 1; i < expression.length(); i++) {
-            if (isDigit(expression.charAt(i)) && isLetter(expression.charAt(i-1)))
-                throw new StringException("Отсутствует открывающая скобочка перед аргументом");
+    private static Executable checkArgumentBracket(final List<Character> expressionCharList) {
+        List<Executable> executableList = new LinkedList<>();
+
+        for (int i = 1; i < expressionCharList.size(); i++) {
+            int j = i;
+            executableList.add(() -> assertFalse(isDigit(expressionCharList.get(j)) && isLetter(expressionCharList.get(j - 1)),
+                    "Отсутствует скобочка перед аргументом на позиции " + j));
         }
 
-        return true;
+        return () -> assertAll(executableList);
+
     }
 
     /**
