@@ -23,16 +23,16 @@ class ExampleValidation {
         List<Executable> executableList = new LinkedList<>();
 
         executableList.addAll(checkIncorrectSigns(expressionCharList));
-        executableList.addAll(checkBracketAmount(expressionCharList));
+        executableList.add(checkBracketAmount(expressionCharList));
         executableList.addAll(checkBracketOrder(expressionCharList));
         executableList.addAll(checkArgumentBracket(expressionCharList));
         executableList.addAll(checkExpressionInBracketIsCorrect(expressionCharList));
         executableList.addAll(checkSymbolBeforeFunction(expressionCharList));
         executableList.addAll(checkSymbolAfterFunction(expressionCharList));
         executableList.addAll(checkSeveralSignConsecutive(expressionCharList));
-        executableList.addAll(checkFirstSymbol(expressionCharList));
-        executableList.addAll(checkLastSymbol(expressionCharList));
-        executableList.addAll(checkNoOnlyLetter(expressionCharList));
+        executableList.add(checkFirstSymbol(expressionCharList));
+        executableList.add(checkLastSymbol(expressionCharList));
+        executableList.add(checkNoOnlyLetter(expressionCharList));
 
         assertAll(executableList);
     }
@@ -55,9 +55,7 @@ class ExampleValidation {
     /**
      * Проверяет сопадение в количестве открывающий и закрыающих скобочек
      */
-    private static List<Executable> checkBracketAmount(final List<Character> expressionCharList) {
-        List<Executable> executableList = new LinkedList<>();
-
+    private static Executable checkBracketAmount(final List<Character> expressionCharList) {
         int openingBracket = (int) expressionCharList
                 .stream()
                 .filter(symbol -> symbol.equals('('))
@@ -68,9 +66,7 @@ class ExampleValidation {
                 .filter(symbol -> symbol.equals(')'))
                 .count();
 
-        executableList.add(() -> assertEquals(openingBracket, closingBracket, "Неверное количество скобочек"));
-
-        return executableList;
+        return () -> assertEquals(openingBracket, closingBracket, "Неверное количество скобочек");
     }
 
     /**
@@ -201,45 +197,26 @@ class ExampleValidation {
     /**
      * Проверяет наличие некорректных символов в начале выражения
      */
-    private static List<Executable> checkFirstSymbol(final List<Character> expressionCharList) {
+    private static Executable checkFirstSymbol(final List<Character> expressionCharList) {
         List<Character> signList = List.of('+', '*', '/', '!', '^', '.');
-        List<Executable> executableList = new LinkedList<>();
 
-        executableList.add(() ->
-                assertFalse(signList.contains(expressionCharList.get(0)),
-                "Некорректный первый символ выражения")
-        );
-
-        return executableList;
+        return () -> assertFalse(signList.contains(expressionCharList.get(0)), "Некорректный первый символ выражения");
     }
 
     /**
      * Проверяет наличие некорректных символов в конце выражения
      */
-    private static List<Executable> checkLastSymbol(final List<Character> expressionCharList) {
+    private static Executable checkLastSymbol(final List<Character> expressionCharList) {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '.');
-        List<Executable> executableList = new LinkedList<>();
 
-        executableList.add(() ->
-                assertFalse(signList.contains(expressionCharList.get(expressionCharList.size()-1)),
-                "Некорректный последний символ выражения")
-        );
-
-        return executableList;
+        return () -> assertFalse(signList.contains(expressionCharList.get(expressionCharList.size()-1)), "Некорректный последний символ выражения");
     }
 
     /**
      * Проверяет наличие в выражении чисел
      */
-    private static List<Executable> checkNoOnlyLetter(final List<Character> expressionCharList) {
-        List<Executable> executableList = new LinkedList<>();
-
-        executableList.add(() ->
-                assertFalse((int) expressionCharList.stream().filter(Character::isDigit).count() != 0,
-                "В выражении отсутствуют числа")
-        );
-
-        return executableList;
+    private static Executable checkNoOnlyLetter(final List<Character> expressionCharList) {
+        return () -> assertFalse((int) expressionCharList.stream().filter(Character::isDigit).count() != 0, "В выражении отсутствуют числа");
     }
 
 }
