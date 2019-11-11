@@ -94,19 +94,21 @@ class ExampleValidation {
     private static Executable checkBracketOrder(final List<Character> expressionCharList) {
         int bracket = 0;
 
-        for (int i = 0; i < expression.length(); i++) {
+        for (Character symbol : expressionCharList) {
 
-            if (expression.charAt(i) == '(') {
+            if (symbol == '(') {
                 bracket++;
 
-            } else if (expression.charAt(i) == ')') {
+            } else if (symbol == ')') {
                 bracket--;
             }
 
-            assertTrue(bracket >= 0, "Закрывающая скобочка стоит перед открывающей");
+            if (bracket < 0) {
+                return () -> fail("Закрывающая скобочка стоит перед открывающей");
+            }
         }
 
-        return true;
+        return () -> assertTrue(true);
     }
 
     /**
