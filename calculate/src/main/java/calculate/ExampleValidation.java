@@ -23,22 +23,6 @@ class ExampleValidation {
 
         List<Executable> executableList = new LinkedList<>();
 
-//        assertAll(checkIncorrectSigns(expressionCharList));
-
-//        List<Object> executableList = List.of(
-//                checkBracketAmount(expressionCharList),
-//                checkFirstSymbol(expressionCharList),
-//                checkLastSymbol(expressionCharList),
-//                checkNoOnlyLetter(expressionCharList),
-//                checkIncorrectSigns(expressionCharList),
-//                checkBracketOrder(expressionCharList),
-//                checkArgumentBracket(expressionCharList),
-//                checkExpressionInBracketIsCorrect(expressionCharList),
-//                checkSymbolBeforeFunction(expressionCharList),
-//                checkSymbolAfterFunction(expressionCharList),
-//                checkSeveralSignConsecutive(expressionCharList)
-//        );
-
         executableList.addAll(checkIncorrectSigns(expressionCharList));
         executableList.add(checkBracketAmount(expressionCharList));
         executableList.addAll(checkBracketOrder(expressionCharList));
