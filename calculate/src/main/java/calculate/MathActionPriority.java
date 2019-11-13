@@ -9,26 +9,27 @@ public class MathActionPriority {
      * @return - возвращает приоритет знака
      */
     public static Priorities getPriority(final char symbol) {
-        if (symbol == '!') {
-            return FIRST;
+        switch (symbol) {
+            case '!':
+                return FIRST;
 
-        } else if (symbol == '^') {
-            return SECOND;
+            case '^':
+                return SECOND;
 
-        } else if (symbol == '/') {
-            return THIRD;
+            case '/':
+                return THIRD;
 
-        } else if (symbol == '*') {
-            return FOURTH;
+            case '*':
+                return FOURTH;
 
-        } else if (symbol == '-') {
-            return FIFTH;
+            case '-':
+                return FIFTH;
 
-        } else if (symbol == '+') {
-            return SIXTH;
+            case '+':
+                return SIXTH;
 
-        } else {
-            throw new SecurityException("Неизестный сивол " + symbol);
+            default:
+                throw new SecurityException("Неизестный сивол " + symbol);
         }
     }
 
