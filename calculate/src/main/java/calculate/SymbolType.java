@@ -6,6 +6,9 @@ import static calculate.SymbolType.Symbol.*;
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 
+/**
+ * Класс типов символов примера: знак/число/буква/скобочка
+ */
 public class SymbolType {
     public static Symbol getSymbolType(final char symbol) {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '!');

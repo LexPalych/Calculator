@@ -3,6 +3,11 @@ package calculate;
 import static calculate.MathActionPriority.Priorities.*;
 
 public class MathActionPriority {
+    /**
+     * Присваивает приоритет (порядок действия) знака логического действия примера
+     * @param symbol - знак
+     * @return - возвращает приоритет знака
+     */
     public static Priorities getPriority(final char symbol) {
         if (symbol == '!') {
             return FIRST;

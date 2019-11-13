@@ -1,5 +1,8 @@
 package calculate.element;
 
+/**
+ * Элемент примера: число/знак
+ */
 public class Element {
     private Character sign;
     private Double number;

@@ -6,11 +6,11 @@ import calculate.StringException;
 import java.util.function.BiFunction;
 
 public class MathFunctions {
-    public static final BiFunction<Double, Double, Double> ADDITIONAL = Double::sum;
-    public static final BiFunction<Double, Double, Double> SUBTRACTION = (x, y) -> x - y;
-    public static final BiFunction<Double, Double, Double> MULTIPLICATION = (x, y) -> x * y;
-    public static final BiFunction<Double, Double, Double> DIVISION = (x, y) -> x / y;
-    public static final BiFunction<Double, Double, Double> EXPONENTIATION = Math::pow;
+    private static final BiFunction<Double, Double, Double> ADDITIONAL = Double::sum;
+    private static final BiFunction<Double, Double, Double> SUBTRACTION = (x, y) -> x - y;
+    private static final BiFunction<Double, Double, Double> MULTIPLICATION = (x, y) -> x * y;
+    private static final BiFunction<Double, Double, Double> DIVISION = (x, y) -> x / y;
+    private static final BiFunction<Double, Double, Double> EXPONENTIATION = Math::pow;
 
     /**
      * Находит факториал числа
@@ -31,6 +31,11 @@ public class MathFunctions {
             return number * getFactorial(number-1);
     }
 
+    /**
+     * Распознаёт приоритет выполняемого действия и возращает соответствующую логическую функцию
+     * @param priorities - приоритет
+     * @return - возвращает логическую функцию
+     */
     public static BiFunction<Double, Double, Double> getFunction(MathActionPriority.Priorities priorities) {
         switch (priorities) {
             case SECOND:

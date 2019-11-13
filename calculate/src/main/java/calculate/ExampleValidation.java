@@ -10,6 +10,9 @@ import static java.lang.Character.isLetter;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Класс для валидации примера на корректность записи
+ */
 class ExampleValidation {
     /**
      * Проверяет выражение на правильность записи

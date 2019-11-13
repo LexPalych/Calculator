@@ -5,7 +5,15 @@ import static calculate.SymbolType.Symbol.DIGIT;
 import static calculate.SymbolType.getSymbolType;
 import static calculate.functions.CalculateFunction.getFunctionValue;
 
+/**
+ * Класс методов для распознавания элементов примера
+ */
 public class ElementCreator {
+    /**
+     * Распознаёт и выцепляет из примера первое число
+     * @param subExample - пример
+     * @return - возвращает елемент примера (число)
+     */
     public static Element getExampleNumber(final String subExample) {
         int lastNumberIndex = 0;
         String number;
@@ -22,6 +30,11 @@ public class ElementCreator {
         return element;
     }
 
+    /**
+     * Распознаёт и выцепляет из примера первую функцию
+     * @param subExample - пример
+     * @return - возвращает елемент примера (число)
+     */
     public static Element getExampleFunction(final String subExample) {
         Element element = new Element();
 
@@ -35,6 +48,11 @@ public class ElementCreator {
         return element;
     }
 
+    /**
+     * Распознаёт и выцепляет из примера выражение, заключённое во внешние скобочки
+     * @param subExample - пример
+     * @return - возвращает елемент примера (число)
+     */
     public static Element getExampleBracket(final String subExample) {
         Element element = new Element();
 
@@ -48,6 +66,11 @@ public class ElementCreator {
         return element;
     }
 
+    /**
+     * Находит индекс скобочки, закрыающей перую открывающую скобочку
+     * @param subExample - пример
+     * @return - возвращает индекс закрывающей скобочки
+     */
     private static int getClosingBracketIndex(final String subExample) {
         int bracketAmount = 0;
         int lastBracketIndex = 0;

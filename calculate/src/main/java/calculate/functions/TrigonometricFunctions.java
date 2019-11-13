@@ -4,7 +4,7 @@ import calculate.StringException;
 
 import java.util.function.Function;
 
-public class TrigonometricFunctions {
+class TrigonometricFunctions {
     private static final Double RAD = Math.acos(-1)/180;
 
     private static final Function<Double, Double> SIN = value -> Math.sin(value * RAD);
@@ -24,6 +24,11 @@ public class TrigonometricFunctions {
     private static final Function<Double, Double> ABS = Math::abs;
     private static final Function<Double, Double> SQRT = Math::sqrt;
 
+    /**
+     * Находит натуральный логарифм аргумента
+     * @param argument - аргумент
+     * @return - возвращает значение ln
+     */
     private static Double getLogarithm(final Double argument) {
         if (argument > 0)
             return Math.log(argument);
@@ -31,7 +36,12 @@ public class TrigonometricFunctions {
             throw new ArithmeticException("Аргумент логарифма должен быть положительным");
     }
 
-    public static Function<Double, Double> getFunctions(final String functionName) {
+    /**
+     * Распознаёт строку с именем функции и возвращает соответствующую функцию
+     * @param functionName - имя функции
+     * @return - возвращает функцию для расчётов
+     */
+    static Function<Double, Double> getFunctions(final String functionName) {
         switch (functionName) {
             case "sin":
                 return SIN;

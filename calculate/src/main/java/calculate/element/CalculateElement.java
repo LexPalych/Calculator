@@ -10,6 +10,12 @@ import static calculate.MathActionPriority.getPriority;
 import static calculate.functions.MathFunctions.*;
 
 public class CalculateElement {
+    /**
+     * Выполняет расчёт примера в соответстии с порядком дейстий
+     * @param numberList - список чисел примера
+     * @param signList - список знаков логических действий примера
+     * @return - возвращает результат дейстий
+     */
     public static double calculateElement(final List<Double> numberList, final List<Character> signList) {
         BiFunction<Double, Double, Double> function;
         MathActionPriority.Priorities currentPriorities;
