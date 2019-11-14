@@ -1,6 +1,18 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.qameta.allure:allure-gradle:2.8.1"
+    }
+}
+
 plugins {
     id 'groovy'
     id 'idea'
+    id 'io.qameta.allure' version '2.5'
 }
 
 group 'Calculate'
@@ -20,14 +32,22 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
+    apply plugin: 'io.qameta.allure'
 
+    allure {
+        autoconfigure = true
+
+        version = '2.12.1'
+
+        useJUnit5 {
+            version = '2.12.1'
+        }
+    }
 
     dependencies {
         compile "org.junit.jupiter:junit-jupiter-api:${jupiterVersion}"
         compile "org.junit.jupiter:junit-jupiter-params:${jupiterVersion}"
         compile "org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}"
-//        compile 'org.apache.logging.log4j:log4j-api'
-//        compile 'org.apache.logging.log4j:log4j-core'
     }
 
     test {

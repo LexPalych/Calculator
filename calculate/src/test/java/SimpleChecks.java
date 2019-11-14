@@ -1,3 +1,4 @@
+import io.qameta.allure.Description;
 import org.junit.jupiter.api.Test;
 
 import static calculate.CalculateExample.calculateExample;
@@ -6,11 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class SimpleChecks {
 
     @Test
+    @Description("Если вы идите эту надпись, значит я на верном пути")
     void addition() {
         String expression = "1+2";
         double value = calculateExample(expression);
         double result = 3;
-        assertTrue(value == result, "РћР¶РёРґР°Р»РѕСЃСЊ " + result + ", Р° РїРѕР»СѓС‡РёР»РѕСЃСЊ " + value);
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -18,7 +20,7 @@ class SimpleChecks {
         String expression = "9-3";
         double value = calculateExample(expression);
         double result = 6;
-        assertTrue(value == result, "РћР¶РёРґР°Р»РѕСЃСЊ " + result + ", Р° РїРѕР»СѓС‡РёР»РѕСЃСЊ " + value);
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -26,7 +28,7 @@ class SimpleChecks {
         String expression = "7*8";
         double value = calculateExample(expression);
         double result = 56;
-        assertTrue(value == result, "РћР¶РёРґР°Р»РѕСЃСЊ " + result + ", Р° РїРѕР»СѓС‡РёР»РѕСЃСЊ " + value);
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -34,7 +36,7 @@ class SimpleChecks {
         String expression = "18/3";
         double value = calculateExample(expression);
         double result = 6;
-        assertTrue(value == result, "РћР¶РёРґР°Р»РѕСЃСЊ " + result + ", Р° РїРѕР»СѓС‡РёР»РѕСЃСЊ " + value);
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -42,7 +44,7 @@ class SimpleChecks {
         String expression = "2^3";
         double value = calculateExample(expression);
         double result = 8;
-        assertTrue(value == result, "РћР¶РёРґР°Р»РѕСЃСЊ " + result + ", Р° РїРѕР»СѓС‡РёР»РѕСЃСЊ " + value);
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -50,7 +52,7 @@ class SimpleChecks {
         String expression = "3!";
         double value = calculateExample(expression);
         double result = 6;
-        assertTrue(value == result, "РћР¶РёРґР°Р»РѕСЃСЊ " + result + ", Р° РїРѕР»СѓС‡РёР»РѕСЃСЊ " + value);
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
 }
