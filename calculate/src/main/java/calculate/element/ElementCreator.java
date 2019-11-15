@@ -2,6 +2,7 @@ package calculate.element;
 
 import static calculate.CalculateExample.calculate;
 import static calculate.SymbolType.Symbol.DIGIT;
+import static calculate.element.Element.TypeElement.*;
 import static calculate.SymbolType.getSymbolType;
 import static calculate.functions.CalculateFunction.getFunctionValue;
 
@@ -24,8 +25,13 @@ public class ElementCreator {
         }
 
         number = subExample.substring(0, lastNumberIndex);
-        element.setNumber(Double.parseDouble(number));
-        element.setLength(number.length());
+
+        element.setElement(number);
+        element.setValueElement(Double.parseDouble(number));
+        element.setTypeElement(NUMBER);
+
+//        element.setNumber(Double.parseDouble(number));
+//        element.setLength(number.length());
 
         return element;
     }
@@ -42,8 +48,12 @@ public class ElementCreator {
         String exampleFunction = subExample.substring(0, lastFunctionIndex+1);
         double functionValue = getFunctionValue(exampleFunction);
 
-        element.setNumber(functionValue);
-        element.setLength(exampleFunction.length());
+        element.setElement(exampleFunction);
+        element.setValueElement(functionValue);
+        element.setTypeElement(FUNCTION);
+
+//        element.setNumber(functionValue);
+//        element.setLength(exampleFunction.length());
 
         return element;
     }
@@ -60,8 +70,21 @@ public class ElementCreator {
         String exampleBracket = subExample.substring(1, lastFunctionIndex);
         double bracketValue = calculate(exampleBracket);
 
-        element.setNumber(bracketValue);
-        element.setLength(exampleBracket.length() + 2);
+        element.setElement(exampleBracket);
+        element.setValueElement(bracketValue);
+        element.setTypeElement(BRACKET);
+
+//        element.setNumber(bracketValue);
+//        element.setLength(exampleBracket.length() + 2);
+
+        return element;
+    }
+
+    public static Element getExampleSign(final String sign) {
+        Element element = new Element();
+
+        element.setElement(sign);
+        element.setTypeElement(SIGN);
 
         return element;
     }

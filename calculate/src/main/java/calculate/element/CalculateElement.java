@@ -7,6 +7,7 @@ import java.util.function.BiFunction;
 
 import static calculate.MathActionPriority.Priorities.*;
 import static calculate.MathActionPriority.getPriority;
+import static calculate.element.Element.TypeElement.*;
 import static calculate.functions.MathFunctions.*;
 
 public class CalculateElement {
@@ -16,13 +17,32 @@ public class CalculateElement {
      * @param signList - список знаков логических действий примера
      * @return - возвращает результат дейстий
      */
-    public static double calculateElement(final List<Double> numberList, final List<Character> signList) {
+    public static double calculateElement(/*final List<Double> numberList, final List<Character> signList*/ final List<Element> elementList) {
         BiFunction<Double, Double, Double> function;
         MathActionPriority.Priorities currentPriorities;
         double value;
         int i;
 
+        Element element = new Element();
+
         List<MathActionPriority.Priorities> prioritiesList = List.of(FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH);
+
+        for (MathActionPriority.Priorities priority : prioritiesList) {
+            for (i = 0; i < elementList.size(); i++) {
+                if (elementList.get(i).getTypeElement() == SIGN) {
+                    currentPriorities = getPriority(elementList.get(i).getElement());
+
+                    if (currentPriorities == FIRST) {
+                        element.setValueElement(getFactorial(elementList.get(i-1).getValueElement()));
+                        element.setTypeElement(NUMBER);
+
+                        elementList.set(i-1, element);
+
+                    }
+
+                }
+            }
+        }
 
         for (MathActionPriority.Priorities priority : prioritiesList) {
             i = 1;

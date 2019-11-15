@@ -4,32 +4,45 @@ package calculate.element;
  * Элемент примера: число/знак
  */
 public class Element {
-    private Character sign;
-    private Double number;
-    private int length;
+    private String element;
+    private TypeElement typeElement;
+    private Double valueElement;
 
     public int getLength() {
-        return length;
+        return element.length();
     }
 
-    public void setLength(int length) {
-        this.length = length;
+    public TypeElement getTypeElement() {
+        return typeElement;
     }
 
-    public Character getSign() {
-        return sign;
+    public Double getValueElement() {
+        return valueElement;
     }
 
-    public void setSign(Character sign) {
-        this.sign = sign;
+    public String getElement() {
+        return element;
     }
 
-    public Double getNumber() {
-        return number;
+    public void setElement(String element) {
+        this.element = element;
     }
 
-    public void setNumber(Double number) {
-        this.number = number;
+    public void setTypeElement(TypeElement typeElement) {
+        this.typeElement = typeElement;
+    }
+
+    public void setValueElement(Double valueElement) {
+        this.valueElement = valueElement;
+    }
+
+    public enum TypeElement {
+        NUMBER,
+        FUNCTION,
+        BRACKET,
+        SIGN
     }
 
 }
+
+

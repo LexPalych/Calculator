@@ -1,6 +1,7 @@
 package calculate;
 
 import static calculate.MathActionPriority.Priorities.*;
+import static calculate.MathActionPriority.Priorities.SIXTH;
 
 public class MathActionPriority {
     /**
@@ -8,30 +9,56 @@ public class MathActionPriority {
      * @param symbol - знак
      * @return - возвращает приоритет знака
      */
-    public static Priorities getPriority(final char symbol) {
+//    public static Priorities getPriority(final char symbol) {
+//        switch (symbol) {
+//            case '!':
+//                return FIRST;
+//
+//            case '^':
+//                return SECOND;
+//
+//            case '/':
+//                return THIRD;
+//
+//            case '*':
+//                return FOURTH;
+//
+//            case '-':
+//                return FIFTH;
+//
+//            case '+':
+//                return SIXTH;
+//
+//            default:
+//                throw new SecurityException("Неизестный сивол " + symbol);
+//        }
+//    }
+
+    public static Priorities getPriority(final String symbol) {
         switch (symbol) {
-            case '!':
+            case "!":
                 return FIRST;
 
-            case '^':
+            case "^":
                 return SECOND;
 
-            case '/':
+            case "/":
                 return THIRD;
 
-            case '*':
+            case "*":
                 return FOURTH;
 
-            case '-':
+            case "-":
                 return FIFTH;
 
-            case '+':
+            case "+":
                 return SIXTH;
 
             default:
                 throw new SecurityException("Неизестный сивол " + symbol);
         }
     }
+
 
     public enum Priorities {
         FIRST,

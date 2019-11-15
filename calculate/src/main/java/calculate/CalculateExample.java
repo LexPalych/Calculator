@@ -8,6 +8,8 @@ import java.util.List;
 import static calculate.ExampleValidation.checkExample;
 import static calculate.SymbolType.getSymbolType;
 import static calculate.element.CalculateElement.calculateElement;
+import static calculate.element.Element.TypeElement.NUMBER;
+import static calculate.element.Element.TypeElement.SIGN;
 import static calculate.element.ElementCreator.*;
 
 public class CalculateExample {
@@ -34,6 +36,8 @@ public class CalculateExample {
         List<Character> signList = new LinkedList<>();
         Element element = new Element();
 
+        List<Element> elementList = new LinkedList<>();
+
         int i = 0;
 
         // Т.к. знаков между числами всегда на один меньше, чем чисел,
@@ -59,18 +63,24 @@ public class CalculateExample {
                     break;
 
                 case SIGN:
-                    if (i == 0) {
-                        numberList.add(0.0);
-
-                    }
-                    signList.add(subExample.charAt(i));
-                    i++;
-                    continue;
+                    element = getExampleSign(subExample.substring(i));
+                    break;
             }
 
-            numberList.add(element.getNumber());
+//            numberList.add(element.getNumber());
+            elementList.add(element);
             i += element.getLength();
+
         }
-        return calculateElement(numberList, signList);
+
+        if (elementList.get(0).getTypeElement() == SIGN) {
+            element.setValueElement(0.0);
+            element.setTypeElement(NUMBER);
+
+            elementList.set(0, element);
+        }
+
+//        return calculateElement(numberList, signList);
+        return calculateElement(elementList);
     }
 }
