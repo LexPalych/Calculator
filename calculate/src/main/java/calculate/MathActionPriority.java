@@ -1,7 +1,10 @@
 package calculate;
 
+import java.util.List;
+import java.util.function.BiFunction;
+
 import static calculate.MathActionPriority.Priorities.*;
-import static calculate.MathActionPriority.Priorities.SIXTH;
+import static calculate.functions.MathFunctions.*;
 
 public class MathActionPriority {
     /**
@@ -33,6 +36,8 @@ public class MathActionPriority {
 //                throw new SecurityException("Неизестный сивол " + symbol);
 //        }
 //    }
+
+    public static final List<BiFunction> PRIORITY_LIST = List.of(EXPONENTIATION, DIVISION, MULTIPLICATION, SUBTRACTION, ADDITIONAL);
 
     public static Priorities getPriority(final String symbol) {
         switch (symbol) {

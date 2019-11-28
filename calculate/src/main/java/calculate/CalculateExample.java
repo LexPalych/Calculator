@@ -31,18 +31,11 @@ public class CalculateExample {
      * @return - возвращает результат вычисления примера (подпримера главного примера)
      */
     public static Double calculate(final String subExample) {
-//        List<Double> numberList = new LinkedList<>();
-//        List<Character> signList = new LinkedList<>();
         Element element = new Element();
 
         List<Element> elementList = new LinkedList<>();
 
         int i = 0;
-
-        // Т.к. знаков между числами всегда на один меньше, чем чисел,
-        // а для корректной работы списки должны быть одной длины,
-        // нулевому знаку присваивается значение null
-//        signList.add(null);
 
         while (i < subExample.length()) {
             char symbol = subExample.charAt(i);
@@ -66,7 +59,6 @@ public class CalculateExample {
                     break;
             }
 
-//            numberList.add(element.getNumber());
             elementList.add(element);
             i += element.getElement().length();
 
@@ -77,11 +69,9 @@ public class CalculateExample {
             firstElement.setElement("0.0");
             firstElement.setValue(0.0);
 
-//            elementList.set(0, new Element<>("0.0", 0.0));
             elementList.set(0, firstElement);
         }
 
-//        return calculateElement(numberList, signList);
         return calculateElement(elementList);
     }
 }

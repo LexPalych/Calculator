@@ -1,88 +1,45 @@
 package calculate.element;
 
-import calculate.MathActionPriority;
-
 import java.util.List;
 import java.util.function.BiFunction;
 
-import static calculate.MathActionPriority.Priorities.*;
-import static calculate.MathActionPriority.getPriority;
-import static calculate.element.Element.TypeElement.*;
-import static calculate.functions.MathFunctions.*;
+import static calculate.MathActionPriority.PRIORITY_LIST;
+import static calculate.element.Element.TypeElement.SIGN;
 
 public class CalculateElement {
     /**
      * Выполняет расчёт примера в соответстии с порядком дейстий
      */
-    public static double calculateElement(/*final List<Double> numberList, final List<Character> signList*/ final List<Element> elementList) {
-        BiFunction<Double, Double, Double> function;
-        MathActionPriority.Priorities currentPriorities;
+    public static double calculateElement(final List<Element> elementList) {
         double value;
-//        int i;
+        int i;
 
         Element element = new Element();
 
-        List<MathActionPriority.Priorities> prioritiesList = List.of(FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH);
-
 //        i = 0;
-        for (MathActionPriority.Priorities priority : prioritiesList) {
 
-            for (int i = 0; i < elementList.size()-1; i++) {
-                if (elementList.get(i).getTypeElement() == SIGN) {
-                    currentPriorities = getPriority(elementList.get(i).getElement());
+        for (BiFunction function : PRIORITY_LIST) {
+            i = 0;
 
-                    if (currentPriorities == FIRST) {
-                        element.setValueElement(getFactorial(elementList.get(i-1).getValueElement()));
-                        element.setTypeElement(NUMBER);
+            while (i < elementList.size()) {
+                element = elementList.get(i);
+                if (element.getTypeElement() == SIGN && element.getValue() == function) {
 
-                        elementList.set(i-1, element);
+                    value = (double) function.apply(elementList.get(i-1).getValue(), elementList.get(i+1).getValue());
 
-                    } else if (currentPriorities == priority) {
-                        function = getFunction(currentPriorities);
-                        value = function.apply(elementList.get(i - 1).getValueElement(), elementList.get(i + 1).getValueElement());
+                    elementList.get(i-1).setValue(value);
+                    elementList.set(i-1, elementList.get(i-1));
 
-                        element.setValueElement(value);
-                        element.setTypeElement(NUMBER);
+                    elementList.remove(i);
+                    elementList.remove(i);
 
-                        elementList.set(i - 1, element);
-
-                        elementList.remove(i + 1);
-                        elementList.remove(i);
-
-                    } /*else {
-                        i++;
-                    }*/
+                } else {
+                    i++;
                 }
             }
         }
 
-        return elementList.get(0).getValueElement();
-
-//        for (MathActionPriority.Priorities priority : prioritiesList) {
-//            i = 1;
-//
-//            while (i < signList.size()) {
-//                currentPriorities = getPriority(signList.get(i));
-//
-//                if (currentPriorities == FIRST) {
-//                    numberList.set(i - 1, getFactorial(numberList.get(i - 1)));
-//                    signList.remove(i);
-//
-//                } else if (currentPriorities == priority) {
-//                    function = getFunction(priority);
-//                    value = function.apply(numberList.get(i - 1), numberList.get(i));
-//                    numberList.set(i - 1, value);
-//
-//                    numberList.remove(i);
-//                    signList.remove(i);
-//
-//                } else {
-//                    i++;
-//                }
-//            }
-//        }
-//
-//        return numberList.get(0);
+        return (double) elementList.get(0).getValue();
 
     }
 }

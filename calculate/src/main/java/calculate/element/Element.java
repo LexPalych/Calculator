@@ -1,9 +1,5 @@
 package calculate.element;
 
-import calculate.StringException;
-
-import java.util.function.BiFunction;
-
 import static calculate.element.Element.TypeElement.NUMBER;
 import static calculate.element.Element.TypeElement.SIGN;
 
@@ -41,14 +37,14 @@ public class Element<T> {
     }
 
     public TypeElement getTypeElement() {
+        var qqq = getValue().getClass();
+
         if (getValue().getClass() == Double.class) {
             return NUMBER;
 
-        } else if (getValue().getClass() == BiFunction.class) {
+        } else {
             return SIGN;
-
-        } else
-            throw new StringException("Неизестный тип елемента примера");
+        }
     }
 
     public enum TypeElement {
