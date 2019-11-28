@@ -1,6 +1,5 @@
 package calculate.functions;
 
-import calculate.MathActionPriority;
 import calculate.StringException;
 
 import java.util.function.BiFunction;
@@ -56,34 +55,6 @@ public class MathFunctions {
 
         else
             return number * getFactorial(number-1);
-    }
-
-    /**
-     * Распознаёт приоритет выполняемого действия и возращает соответствующую логическую функцию
-     * @param priorities - приоритет
-     * @return - возвращает логическую функцию
-     */
-    public static BiFunction<Double, Double, Double> getFunction(MathActionPriority.Priorities priorities) {
-        switch (priorities) {
-            case SECOND:
-                return EXPONENTIATION;
-
-            case THIRD:
-                return DIVISION;
-
-            case FOURTH:
-                return MULTIPLICATION;
-
-            case FIFTH:
-                return SUBTRACTION;
-
-            case SIXTH:
-                return ADDITIONAL;
-
-            default:
-                throw new StringException("Неизвестный приоритет функции");
-
-        }
     }
 
 }

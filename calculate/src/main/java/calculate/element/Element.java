@@ -49,8 +49,6 @@ public class Element<T> {
 
     public enum TypeElement {
         NUMBER,
-        FUNCTION,
-        BRACKET,
         SIGN
     }
 
