@@ -8,7 +8,6 @@ import java.util.List;
 import static calculate.ExampleValidation.checkExample;
 import static calculate.SymbolType.getSymbolType;
 import static calculate.element.CalculateElement.calculateElement;
-import static calculate.element.Element.TypeElement.NUMBER;
 import static calculate.element.Element.TypeElement.SIGN;
 import static calculate.element.ElementCreator.*;
 
@@ -32,8 +31,8 @@ public class CalculateExample {
      * @return - возвращает результат вычисления примера (подпримера главного примера)
      */
     public static Double calculate(final String subExample) {
-        List<Double> numberList = new LinkedList<>();
-        List<Character> signList = new LinkedList<>();
+//        List<Double> numberList = new LinkedList<>();
+//        List<Character> signList = new LinkedList<>();
         Element element = new Element();
 
         List<Element> elementList = new LinkedList<>();
@@ -43,7 +42,7 @@ public class CalculateExample {
         // Т.к. знаков между числами всегда на один меньше, чем чисел,
         // а для корректной работы списки должны быть одной длины,
         // нулевому знаку присваивается значение null
-        signList.add(null);
+//        signList.add(null);
 
         while (i < subExample.length()) {
             char symbol = subExample.charAt(i);
@@ -69,15 +68,17 @@ public class CalculateExample {
 
 //            numberList.add(element.getNumber());
             elementList.add(element);
-            i += element.getLength();
+            i += element.getElement().length();
 
         }
 
         if (elementList.get(0).getTypeElement() == SIGN) {
-            element.setValueElement(0.0);
-            element.setTypeElement(NUMBER);
+            Element<Double> firstElement = new Element<>();
+            firstElement.setElement("0.0");
+            firstElement.setValue(0.0);
 
-            elementList.set(0, element);
+//            elementList.set(0, new Element<>("0.0", 0.0));
+            elementList.set(0, firstElement);
         }
 
 //        return calculateElement(numberList, signList);

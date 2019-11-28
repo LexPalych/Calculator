@@ -1,10 +1,12 @@
 package calculate.element;
 
+import java.util.function.BiFunction;
+
 import static calculate.CalculateExample.calculate;
 import static calculate.SymbolType.Symbol.DIGIT;
-import static calculate.element.Element.TypeElement.*;
 import static calculate.SymbolType.getSymbolType;
 import static calculate.functions.CalculateFunction.getFunctionValue;
+import static calculate.functions.MathFunctions.getMathFunction;
 
 /**
  * Класс методов для распознавания элементов примера
@@ -15,25 +17,22 @@ public class ElementCreator {
      * @param subExample - пример
      * @return - возвращает елемент примера (число)
      */
-    public static Element getExampleNumber(final String subExample) {
+    public static Element<Double> getExampleNumber(final String subExample) {
         int lastNumberIndex = 0;
-        String number;
-        Element element = new Element();
+        Element<Double> element = new Element<>();
 
         while (lastNumberIndex < subExample.length() && getSymbolType(subExample.charAt(lastNumberIndex)) == DIGIT) {
             lastNumberIndex++;
         }
 
-        number = subExample.substring(0, lastNumberIndex);
+        String stringValue = subExample.substring(0, lastNumberIndex);
+        Double numericValue = Double.parseDouble(stringValue);
 
-        element.setElement(number);
-        element.setValueElement(Double.parseDouble(number));
-        element.setTypeElement(NUMBER);
-
-//        element.setNumber(Double.parseDouble(number));
-//        element.setLength(number.length());
+        element.setElement(stringValue);
+        element.setValue(numericValue);
 
         return element;
+//        return new Element<>(stringValue, numericValue);
     }
 
     /**
@@ -41,19 +40,16 @@ public class ElementCreator {
      * @param subExample - пример
      * @return - возвращает елемент примера (число)
      */
-    public static Element getExampleFunction(final String subExample) {
-        Element element = new Element();
+    public static Element<Double> getExampleFunction(final String subExample) {
+        Element<Double> element = new Element<>();
 
         int lastFunctionIndex = getClosingBracketIndex(subExample);
-        String exampleFunction = subExample.substring(0, lastFunctionIndex+1);
-        double functionValue = getFunctionValue(exampleFunction);
 
-        element.setElement(exampleFunction);
-        element.setValueElement(functionValue);
-        element.setTypeElement(FUNCTION);
+        String stringValue = subExample.substring(0, lastFunctionIndex+1);
+        Double numericValue = getFunctionValue(stringValue);
 
-//        element.setNumber(functionValue);
-//        element.setLength(exampleFunction.length());
+        element.setElement(stringValue);
+        element.setValue(numericValue);
 
         return element;
     }
@@ -63,28 +59,25 @@ public class ElementCreator {
      * @param subExample - пример
      * @return - возвращает елемент примера (число)
      */
-    public static Element getExampleBracket(final String subExample) {
-        Element element = new Element();
+    public static Element<Double> getExampleBracket(final String subExample) {
+        Element<Double> element = new Element<>();
 
         int lastFunctionIndex = getClosingBracketIndex(subExample);
-        String exampleBracket = subExample.substring(1, lastFunctionIndex);
-        double bracketValue = calculate(exampleBracket);
 
-        element.setElement(exampleBracket);
-        element.setValueElement(bracketValue);
-        element.setTypeElement(BRACKET);
+        String stringValue = subExample.substring(1, lastFunctionIndex);
+        Double numericValue = calculate(stringValue);
 
-//        element.setNumber(bracketValue);
-//        element.setLength(exampleBracket.length() + 2);
+        element.setElement(stringValue);
+        element.setValue(numericValue);
 
         return element;
     }
 
-    public static Element getExampleSign(final String sign) {
-        Element element = new Element();
+    public static Element<BiFunction> getExampleSign(final String sign) {
+        Element<BiFunction> element = new Element<>();
 
         element.setElement(sign);
-        element.setTypeElement(SIGN);
+        element.setValue(getMathFunction(sign));
 
         return element;
     }

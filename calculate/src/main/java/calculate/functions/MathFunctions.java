@@ -12,6 +12,29 @@ public class MathFunctions {
     private static final BiFunction<Double, Double, Double> DIVISION = (x, y) -> x / y;
     private static final BiFunction<Double, Double, Double> EXPONENTIATION = Math::pow;
 
+    public static BiFunction<Double, Double, Double> getMathFunction(final String sign) {
+        switch (sign) {
+            case "+":
+                return ADDITIONAL;
+
+            case "-":
+                return SUBTRACTION;
+
+            case "*":
+                return MULTIPLICATION;
+
+            case "/":
+                return DIVISION;
+
+            case "^":
+                return EXPONENTIATION;
+
+            default:
+                throw new StringException("Неизвестный знак дейстия");
+
+        }
+    }
+
     /**
      * Находит факториал числа
      * @param number - число
