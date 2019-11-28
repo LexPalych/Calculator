@@ -13,22 +13,21 @@ import static calculate.functions.MathFunctions.*;
 public class CalculateElement {
     /**
      * Выполняет расчёт примера в соответстии с порядком дейстий
-     * @param numberList - список чисел примера
-     * @param signList - список знаков логических действий примера
-     * @return - возвращает результат дейстий
      */
     public static double calculateElement(/*final List<Double> numberList, final List<Character> signList*/ final List<Element> elementList) {
         BiFunction<Double, Double, Double> function;
         MathActionPriority.Priorities currentPriorities;
         double value;
-        int i;
+//        int i;
 
         Element element = new Element();
 
         List<MathActionPriority.Priorities> prioritiesList = List.of(FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH);
 
+//        i = 0;
         for (MathActionPriority.Priorities priority : prioritiesList) {
-            for (i = 0; i < elementList.size(); i++) {
+
+            for (int i = 0; i < elementList.size()-1; i++) {
                 if (elementList.get(i).getTypeElement() == SIGN) {
                     currentPriorities = getPriority(elementList.get(i).getElement());
 
@@ -38,36 +37,52 @@ public class CalculateElement {
 
                         elementList.set(i-1, element);
 
-                    }
+                    } else if (currentPriorities == priority) {
+                        function = getFunction(currentPriorities);
+                        value = function.apply(elementList.get(i - 1).getValueElement(), elementList.get(i + 1).getValueElement());
 
+                        element.setValueElement(value);
+                        element.setTypeElement(NUMBER);
+
+                        elementList.set(i - 1, element);
+
+                        elementList.remove(i + 1);
+                        elementList.remove(i);
+
+                    } /*else {
+                        i++;
+                    }*/
                 }
             }
         }
 
-        for (MathActionPriority.Priorities priority : prioritiesList) {
-            i = 1;
+        return elementList.get(0).getValueElement();
 
-            while (i < signList.size()) {
-                currentPriorities = getPriority(signList.get(i));
+//        for (MathActionPriority.Priorities priority : prioritiesList) {
+//            i = 1;
+//
+//            while (i < signList.size()) {
+//                currentPriorities = getPriority(signList.get(i));
+//
+//                if (currentPriorities == FIRST) {
+//                    numberList.set(i - 1, getFactorial(numberList.get(i - 1)));
+//                    signList.remove(i);
+//
+//                } else if (currentPriorities == priority) {
+//                    function = getFunction(priority);
+//                    value = function.apply(numberList.get(i - 1), numberList.get(i));
+//                    numberList.set(i - 1, value);
+//
+//                    numberList.remove(i);
+//                    signList.remove(i);
+//
+//                } else {
+//                    i++;
+//                }
+//            }
+//        }
+//
+//        return numberList.get(0);
 
-                if (currentPriorities == FIRST) {
-                    numberList.set(i - 1, getFactorial(numberList.get(i - 1)));
-                    signList.remove(i);
-
-                } else if (currentPriorities == priority) {
-                    function = getFunction(priority);
-                    value = function.apply(numberList.get(i - 1), numberList.get(i));
-                    numberList.set(i - 1, value);
-
-                    numberList.remove(i);
-                    signList.remove(i);
-
-                } else {
-                    i++;
-                }
-            }
-        }
-
-        return numberList.get(0);
     }
 }
