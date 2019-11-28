@@ -69,7 +69,7 @@ public class CalculateExample {
             firstElement.setElement("0.0");
             firstElement.setValue(0.0);
 
-            elementList.set(0, firstElement);
+            elementList.add(0, firstElement);
         }
 
         return calculateElement(elementList);

@@ -11,6 +11,7 @@ public class MathFunctions {
     public static final BiFunction<Double, Double, Double> MULTIPLICATION = (x, y) -> x * y;
     public static final BiFunction<Double, Double, Double> DIVISION = (x, y) -> x / y;
     public static final BiFunction<Double, Double, Double> EXPONENTIATION = Math::pow;
+    public static final BiFunction<Double, Double, Double> FACTORIAL = (x, y) -> getFactorial(x);
 
     public static BiFunction<Double, Double, Double> getMathFunction(final String sign) {
         switch (sign) {
@@ -28,6 +29,9 @@ public class MathFunctions {
 
             case "^":
                 return EXPONENTIATION;
+
+            case "!":
+                return FACTORIAL;
 
             default:
                 throw new StringException("Неизвестный знак дейстия");

@@ -67,7 +67,8 @@ public class ElementCreator {
         String stringValue = subExample.substring(1, lastFunctionIndex);
         Double numericValue = calculate(stringValue);
 
-        element.setElement(stringValue);
+//        element.setElement(subExample);
+        element.setElement(subExample.substring(0, lastFunctionIndex+1));
         element.setValue(numericValue);
 
         return element;

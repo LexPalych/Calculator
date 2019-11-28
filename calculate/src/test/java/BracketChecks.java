@@ -68,4 +68,12 @@ class BracketChecks {
         assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
     }
 
+    @Test
+    void bracket19() {
+        String expression = "(1+((1+2)+2))";
+        double value = calculateExample(expression);
+        double result = 6;
+        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+    }
+
 }

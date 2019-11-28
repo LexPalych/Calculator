@@ -37,7 +37,7 @@ public class MathActionPriority {
 //        }
 //    }
 
-    public static final List<BiFunction> PRIORITY_LIST = List.of(EXPONENTIATION, DIVISION, MULTIPLICATION, SUBTRACTION, ADDITIONAL);
+    public static final List<BiFunction> PRIORITY_LIST = List.of(FACTORIAL, EXPONENTIATION, DIVISION, MULTIPLICATION, SUBTRACTION, ADDITIONAL);
 
     public static Priorities getPriority(final String symbol) {
         switch (symbol) {
