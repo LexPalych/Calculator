@@ -8,7 +8,10 @@ import static calculate.functions.MathFunctions.*;
 
 public class CalculateElement {
     /**
-     * Выполняет расчёт примера в соответстии с порядком дейстий
+     * Выполняет расчёт элементов примера:
+     * Выполняет действия между числами примера в соответствии с приоритетом (порядком действия) знаков
+     * @param elementList - список элементов примера
+     * @return - возвращает значение примера
      */
     public static double calculateElement(final List<Element> elementList) {
         double value;
@@ -46,6 +49,5 @@ public class CalculateElement {
         }
 
         return (double) elementList.get(0).getValue();
-
     }
 }

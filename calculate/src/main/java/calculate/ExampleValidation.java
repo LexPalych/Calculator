@@ -17,7 +17,7 @@ class ExampleValidation {
     /**
      * ѕровер€ет выражение на правильность записи
      */
-    static void checkExample(final String expression) {
+    static void assertExample(final String expression) {
 
         List<Character> expressionCharList = expression
                 .chars()
