@@ -28,11 +28,11 @@ public class ElementCreator {
         String stringValue = subExample.substring(0, lastNumberIndex);
         Double numericValue = Double.parseDouble(stringValue);
 
-        element.setElement(stringValue);
-        element.setValue(numericValue);
+//        element.setElement(stringValue);
+//        element.setValue(numericValue);
 
-        return element;
-//        return new Element<>(stringValue, numericValue);
+//        return element;
+        return new Element<>(stringValue, numericValue);
     }
 
     /**
@@ -48,10 +48,11 @@ public class ElementCreator {
         String stringValue = subExample.substring(0, lastFunctionIndex+1);
         Double numericValue = getFunctionValue(stringValue);
 
-        element.setElement(stringValue);
-        element.setValue(numericValue);
+//        element.setElement(stringValue);
+//        element.setValue(numericValue);
 
-        return element;
+//        return element;
+        return new Element<>(stringValue, numericValue);
     }
 
     /**
@@ -64,23 +65,25 @@ public class ElementCreator {
 
         int lastFunctionIndex = getClosingBracketIndex(subExample);
 
-        String stringValue = subExample.substring(1, lastFunctionIndex);
-        Double numericValue = calculate(stringValue);
+        String stringValue = subExample.substring(0, lastFunctionIndex+1);
+        Double numericValue = calculate(subExample.substring(1, lastFunctionIndex));
 
 //        element.setElement(subExample);
-        element.setElement(subExample.substring(0, lastFunctionIndex+1));
-        element.setValue(numericValue);
+//        element.setElement(subExample.substring(0, lastFunctionIndex+1));
+//        element.setValue(numericValue);
 
-        return element;
+//        return element;
+        return new Element<>(stringValue, numericValue);
     }
 
     public static Element<BiFunction> getExampleSign(final String sign) {
         Element<BiFunction> element = new Element<>();
 
-        element.setElement(sign);
-        element.setValue(getMathFunction(sign));
+//        element.setElement(sign);
+//        element.setValue(getMathFunction(sign));
 
-        return element;
+//        return element;
+        return new Element<>(sign, getMathFunction(sign));
     }
 
     /**
