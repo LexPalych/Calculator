@@ -16,7 +16,8 @@ public class CalculateElement {
     public static double calculateElement(final List<Element> elementList) {
         double value;
         int i;
-        Element element;
+        Double first;
+        Double second;
 
         List<BiFunction> prioritySignList = getPriorityList(elementList);
 
@@ -27,23 +28,20 @@ public class CalculateElement {
                 i = 0;
 
                 while (i < elementList.size()) {
-                    element = elementList.get(i);
+                    if (elementList.get(i).getValue() == function) {
+                        first = (Double) elementList.get(i-1).getValue();
 
-                    if (element.getValue() == FACTORIAL) {
+                        if (function == FACTORIAL) {
+                            second = 0.0;
 
-                        value = (double) function.apply(elementList.get(i-1).getValue(), null);
+                        } else {
+                            second = (Double) elementList.get(i+1).getValue();
+                            elementList.remove(i);
+                        }
+                        elementList.remove(i);
+
+                        value = (double) function.apply(first, second);
                         elementList.get(i-1).setValue(value);
-
-                        elementList.remove(i);
-
-                    } else if (element.getValue() == function) {
-
-                        value = (double) function.apply(elementList.get(i-1).getValue(), elementList.get(i+1).getValue());
-
-                        elementList.get(i-1).setValue(value);
-
-                        elementList.remove(i);
-                        elementList.remove(i);
 
                     } else {
                         i++;
