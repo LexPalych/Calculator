@@ -37,14 +37,14 @@ public class Element<T> {
     }
 
     public TypeElement getTypeElement() {
-        var qqq = getValue().getClass();
-
         if (getValue().getClass() == Double.class) {
             return NUMBER;
 
-        } else {
+        } else if (getValue().getClass().getSimpleName().contains("MathFunctions$$Lambda")) {
             return SIGN;
-        }
+
+        } else
+            throw new SecurityException("Неизестный тип элемента" + getValue());
     }
 
     public enum TypeElement {
