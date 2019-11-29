@@ -43,7 +43,7 @@ public class MathFunctions {
      * @param number - число
      * @return - возвращает факториал числа типом Double
      */
-    public static Double getFactorial(final double number) {
+    private static Double getFactorial(final double number) {
         if (number < 0)
             throw new ArithmeticException("Отрицательный аргумент факториала");
 

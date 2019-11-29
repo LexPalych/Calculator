@@ -59,7 +59,6 @@ public class ElementCreator {
             } else {
                 break;
             }
-
         }
 
         String stringValue = subExample.substring(0, lastNumberIndex);
@@ -127,6 +126,7 @@ public class ElementCreator {
             } else if (currentChar == ')') {
                 bracketAmount--;
             }
+
         } while (!(bracketAmount == 0 && currentChar == ')'));
         lastBracketIndex--;
 

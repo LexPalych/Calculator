@@ -41,7 +41,7 @@ class TrigonometricFunctions {
      * @param functionName - имя функции
      * @return - возвращает функцию для расчётов
      */
-    static Function<Double, Double> getFunctions(final String functionName) {
+    static Function<Double, Double> getTrigonometricFunction(final String functionName) {
         switch (functionName) {
             case "sin":
                 return SIN;
