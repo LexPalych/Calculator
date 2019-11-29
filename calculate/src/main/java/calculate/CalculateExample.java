@@ -24,11 +24,11 @@ public class CalculateExample {
     }
 
     /**
-     * Разбивает пример на элементы (числа/знаки)
-     * В итоге получается список чисел в примере (все функции и скобочки выщитываются рекурсивным запуском текущего метода)
-     * И список знаков между ними
+     * Разбивает пример (подпример главного примера) на список элементов:
+     * Числа, знаки математических действий, выражения в скобках, функции
+     * Значения таких элементов, как выражения в скобках и функции, рекурсивно высчитываются
      * @param subExample - пример (подпример главного примера)
-     * @return - возвращает результат вычисления примера (подпримера главного примера)
+     * @return - возвращает список элементов примера, состоящий из числовых значений и знаков (лямбда-функций) между ними
      */
     public static Double calculate(final String subExample) {
         Element element = new Element();
@@ -64,12 +64,15 @@ public class CalculateExample {
 
         }
 
+        //Если первый элемент примера (подпримера главного примера) является знаком действия (впереди стоит минус "-"),
+        //То на нулевую позицию помещается ноль ("0.0"),
+        //Чтобы сохранялся принцип "число-знак-число-знак-число"
         if (elementList.get(0).getTypeElement() == SIGN) {
-            Element<Double> firstElement = new Element<>();
-            firstElement.setElement("0.0");
-            firstElement.setValue(0.0);
+//            Element<Double> firstElement = new Element<>();
+//            firstElement.setElement("0.0");
+//            firstElement.setValue(0.0);
 
-            elementList.add(0, firstElement);
+            elementList.add(0, new Element<>("0.0", 0.0));
         }
 
         return calculateElement(elementList);
