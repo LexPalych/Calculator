@@ -5,6 +5,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static calculate.CalculateExample.calculate;
+import static calculate.element.ElementCreator.Symbol.*;
 import static calculate.functions.CalculateFunction.getFunctionValue;
 import static calculate.functions.MathFunctions.getMathFunction;
 import static java.lang.Character.isDigit;
@@ -14,28 +15,29 @@ import static java.lang.Character.isLetter;
  * Класс методов для распознавания элементов примера
  */
 public class ElementCreator {
-    public static final Function<String, Element> DIGIT_FUNCTION = string -> getExampleNumber(string);
-    public static final Function<String, Element> LETTER_FUNCTION = string -> getExampleFunction(string);
-    public static final Function<String, Element> BRACKET_FUNCTION = string -> getExampleBracket(string);
-    public static final Function<String, Element> SIGN_FUNCTION = string -> getExampleSign(string);
+    private static final Function<String, Element> DIGIT_FUNCTION = ElementCreator::getExampleNumber;
+    private static final Function<String, Element> LETTER_FUNCTION = ElementCreator::getExampleFunction;
+    private static final Function<String, Element> BRACKET_FUNCTION = ElementCreator::getExampleBracket;
+    private static final Function<String, Element> SIGN_FUNCTION = ElementCreator::getExampleSign;
 
-    public static Function<String, Element> getCreateElementFunction(final char symbol) {
-        List<Character> signList = List.of('+', '-', '*', '/', '^', '!');
+    public static Function<String, Element> createElementFunction(final char symbol) {
+        Symbol symbolType = getSymbolType(symbol);
 
-        if (signList.contains(symbol)) {
-            return SIGN_FUNCTION;
+        switch (symbolType) {
+            case SIGN:
+                return SIGN_FUNCTION;
 
-        } else if (isDigit(symbol) || symbol == '.') {
-            return DIGIT_FUNCTION;
+            case DIGIT:
+                return DIGIT_FUNCTION;
 
-        } else if (isLetter(symbol)) {
-            return LETTER_FUNCTION;
+            case LETTER:
+                return LETTER_FUNCTION;
 
-        } else if (symbol == '(') {
-            return BRACKET_FUNCTION;
+            case BRACKET:
+                return BRACKET_FUNCTION;
 
-        } else {
-            throw new SecurityException("Неизестный символ " + symbol);
+            default:
+                throw new SecurityException("Отсутствует условие для символа " + symbol);
         }
     }
 
@@ -44,7 +46,7 @@ public class ElementCreator {
      * @param subExample - пример
      * @return - возвращает елемент примера (число)
      */
-    public static Element<Double> getExampleNumber(final String subExample) {
+    private static Element<Double> getExampleNumber(final String subExample) {
         int lastNumberIndex = 0;
         char symbol;
 
@@ -71,7 +73,7 @@ public class ElementCreator {
      * @param subExample - пример
      * @return - возвращает елемент примера (число)
      */
-    public static Element<Double> getExampleFunction(final String subExample) {
+    private static Element<Double> getExampleFunction(final String subExample) {
         int lastFunctionIndex = getClosingBracketIndex(subExample);
 
         String stringValue = subExample.substring(0, lastFunctionIndex+1);
@@ -85,7 +87,7 @@ public class ElementCreator {
      * @param subExample - пример
      * @return - возвращает елемент примера (число)
      */
-    public static Element<Double> getExampleBracket(final String subExample) {
+    private static Element<Double> getExampleBracket(final String subExample) {
         int lastFunctionIndex = getClosingBracketIndex(subExample);
 
         String stringValue = subExample.substring(0, lastFunctionIndex+1);
@@ -99,7 +101,7 @@ public class ElementCreator {
      * @param subExample - пример
      * @return - возвращает елемент примера (знак)
      */
-    public static Element<BiFunction> getExampleSign(final String subExample) {
+    private static Element<BiFunction> getExampleSign(final String subExample) {
         String stringValue = subExample.substring(0, 1);
         BiFunction mathFunctionValue = getMathFunction(stringValue);
 
@@ -129,5 +131,32 @@ public class ElementCreator {
         lastBracketIndex--;
 
         return lastBracketIndex;
+    }
+
+    private static Symbol getSymbolType(final char symbol) {
+        List<Character> signList = List.of('+', '-', '*', '/', '^', '!');
+
+        if (signList.contains(symbol)) {
+            return SIGN;
+
+        } else if (isDigit(symbol) || symbol == '.') {
+            return DIGIT;
+
+        } else if (isLetter(symbol)) {
+            return LETTER;
+
+        } else if (symbol == '(') {
+            return BRACKET;
+
+        } else {
+            throw new SecurityException("Неизестный сивол " + symbol);
+        }
+    }
+
+    protected enum Symbol {
+        SIGN,
+        DIGIT,
+        LETTER,
+        BRACKET,
     }
 }

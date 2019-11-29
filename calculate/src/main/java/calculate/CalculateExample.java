@@ -9,7 +9,7 @@ import java.util.function.Function;
 import static calculate.ExampleValidation.checkExample;
 import static calculate.element.CalculateElement.calculateElement;
 import static calculate.element.Element.TypeElement.SIGN;
-import static calculate.element.ElementCreator.getCreateElementFunction;
+import static calculate.element.ElementCreator.createElementFunction;
 
 public class CalculateExample {
     /**
@@ -40,8 +40,8 @@ public class CalculateExample {
         while (i < subExample.length()) {
             char symbol = subExample.charAt(i);
 
-            Function<String, Element> createElement = getCreateElementFunction(symbol);
-            element = createElement.apply(subExample.substring(i));
+            Function<String, Element> createElementFunction = createElementFunction(symbol);
+            element = createElementFunction.apply(subExample.substring(i));
 
             elementList.add(element);
             i += element.getElement().length();
