@@ -3,9 +3,8 @@ package calculate.element;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import static calculate.element.Element.TypeElement.SIGN;
-import static calculate.functions.MathFunctions.FACTORIAL;
 import static calculate.functions.ActionPriority.getPriorityList;
+import static calculate.functions.MathFunctions.FACTORIAL;
 
 public class CalculateElement {
     /**
@@ -30,14 +29,14 @@ public class CalculateElement {
                 while (i < elementList.size()) {
                     element = elementList.get(i);
 
-                    if (element.getTypeElement() == SIGN && element.getValue() == FACTORIAL) {
+                    if (element.getValue() == FACTORIAL) {
 
                         value = (double) function.apply(elementList.get(i-1).getValue(), null);
                         elementList.get(i-1).setValue(value);
 
                         elementList.remove(i);
 
-                    } else if (element.getTypeElement() == SIGN && element.getValue() == function) {
+                    } else if (element.getValue() == function) {
 
                         value = (double) function.apply(elementList.get(i-1).getValue(), elementList.get(i+1).getValue());
 
