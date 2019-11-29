@@ -1,17 +1,44 @@
 package calculate.element;
 
+import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import static calculate.CalculateExample.calculate;
-import static calculate.SymbolType.Symbol.DIGIT;
-import static calculate.SymbolType.getSymbolType;
 import static calculate.functions.CalculateFunction.getFunctionValue;
 import static calculate.functions.MathFunctions.getMathFunction;
+import static java.lang.Character.isDigit;
+import static java.lang.Character.isLetter;
 
 /**
  * Класс методов для распознавания элементов примера
  */
 public class ElementCreator {
+    public static final Function<String, Element> DIGIT_FUNCTION = string -> getExampleNumber(string);
+    public static final Function<String, Element> LETTER_FUNCTION = string -> getExampleFunction(string);
+    public static final Function<String, Element> BRACKET_FUNCTION = string -> getExampleBracket(string);
+    public static final Function<String, Element> SIGN_FUNCTION = string -> getExampleSign(string);
+
+    public static Function<String, Element> getCreateElementFunction(final char symbol) {
+        List<Character> signList = List.of('+', '-', '*', '/', '^', '!');
+
+        if (signList.contains(symbol)) {
+            return SIGN_FUNCTION;
+
+        } else if (isDigit(symbol) || symbol == '.') {
+            return DIGIT_FUNCTION;
+
+        } else if (isLetter(symbol)) {
+            return LETTER_FUNCTION;
+
+        } else if (symbol == '(') {
+            return BRACKET_FUNCTION;
+
+        } else {
+            throw new SecurityException("Неизестный символ " + symbol);
+        }
+    }
+
     /**
      * Распознаёт и выцепляет из примера первое число
      * @param subExample - пример
@@ -19,9 +46,18 @@ public class ElementCreator {
      */
     public static Element<Double> getExampleNumber(final String subExample) {
         int lastNumberIndex = 0;
+        char symbol;
 
-        while (lastNumberIndex < subExample.length() && getSymbolType(subExample.charAt(lastNumberIndex)) == DIGIT) {
-            lastNumberIndex++;
+        while (lastNumberIndex < subExample.length()) {
+            symbol = subExample.charAt(lastNumberIndex);
+
+            if (isDigit(symbol) || symbol == '.') {
+                lastNumberIndex++;
+
+            } else {
+                break;
+            }
+
         }
 
         String stringValue = subExample.substring(0, lastNumberIndex);

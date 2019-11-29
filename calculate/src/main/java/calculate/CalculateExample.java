@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.function.Function;
 
 import static calculate.ExampleValidation.checkExample;
-import static calculate.SymbolType.getCreateElementFunction;
 import static calculate.element.CalculateElement.calculateElement;
 import static calculate.element.Element.TypeElement.SIGN;
+import static calculate.element.ElementCreator.getCreateElementFunction;
 
 public class CalculateExample {
     /**
