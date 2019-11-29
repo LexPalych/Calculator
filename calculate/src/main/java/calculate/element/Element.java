@@ -1,7 +1,11 @@
 package calculate.element;
 
+import java.util.List;
+import java.util.function.BiFunction;
+
 import static calculate.element.Element.TypeElement.NUMBER;
 import static calculate.element.Element.TypeElement.SIGN;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Элемент примера: число/знак
@@ -20,7 +24,7 @@ public class Element<T> {
     }
 
 
-    public T getValue() {
+    T getValue() {
         return value;
     }
 
@@ -28,7 +32,7 @@ public class Element<T> {
         return element;
     }
 
-    public void setValue(T value) {
+    void setValue(T value) {
         this.value = value;
     }
 
@@ -36,6 +40,22 @@ public class Element<T> {
         this.element = element;
     }
 
+    /**
+     * Отфильтровывает из списка элементов только знаки
+     * @param elementList - список элементов
+     * @return - возвращает список знаков в виде лямбд
+     */
+    static List<BiFunction> getSignList(final List<Element> elementList) {
+        return elementList
+                .stream()
+                .filter(elem -> elem.getTypeElement() == SIGN)
+                .map(elem -> (BiFunction) elem.getValue())
+                .collect(toList());
+    }
+
+    /**
+     * Возвращает тип элемента
+     */
     public TypeElement getTypeElement() {
         if (getValue().getClass() == Double.class) {
             return NUMBER;
