@@ -4,12 +4,12 @@ import calculate.element.Element;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Function;
 
 import static calculate.ExampleValidation.checkExample;
-import static calculate.SymbolType.getSymbolType;
+import static calculate.SymbolType.getCreateElementFunction;
 import static calculate.element.CalculateElement.calculateElement;
 import static calculate.element.Element.TypeElement.SIGN;
-import static calculate.element.ElementCreator.*;
 
 public class CalculateExample {
     /**
@@ -31,7 +31,7 @@ public class CalculateExample {
      * @return - возвращает список элементов примера, состоящий из числовых значений и знаков (лямбда-функций) между ними
      */
     public static Double calculate(final String subExample) {
-        Element element = new Element();
+        Element element;
 
         List<Element> elementList = new LinkedList<>();
 
@@ -39,39 +39,18 @@ public class CalculateExample {
 
         while (i < subExample.length()) {
             char symbol = subExample.charAt(i);
-            SymbolType.Symbol symbolType = getSymbolType(symbol);
 
-            switch (symbolType) {
-                case DIGIT:
-                    element = getExampleNumber(subExample.substring(i));
-                    break;
-
-                case LETTER:
-                    element = getExampleFunction(subExample.substring(i));
-                    break;
-
-                case BRACKET:
-                    element = getExampleBracket(subExample.substring(i));
-                    break;
-
-                case SIGN:
-                    element = getExampleSign(subExample.substring(i,i+1));
-                    break;
-            }
+            Function<String, Element> createElement = getCreateElementFunction(symbol);
+            element = createElement.apply(subExample.substring(i));
 
             elementList.add(element);
             i += element.getElement().length();
-
         }
 
         //Если первый элемент примера (подпримера главного примера) является знаком действия (впереди стоит минус "-"),
         //То на нулевую позицию помещается ноль ("0.0"),
         //Чтобы сохранялся принцип "число-знак-число-знак-число"
         if (elementList.get(0).getTypeElement() == SIGN) {
-//            Element<Double> firstElement = new Element<>();
-//            firstElement.setElement("0.0");
-//            firstElement.setValue(0.0);
-
             elementList.add(0, new Element<>("0.0", 0.0));
         }
 

@@ -19,7 +19,6 @@ public class ElementCreator {
      */
     public static Element<Double> getExampleNumber(final String subExample) {
         int lastNumberIndex = 0;
-        Element<Double> element = new Element<>();
 
         while (lastNumberIndex < subExample.length() && getSymbolType(subExample.charAt(lastNumberIndex)) == DIGIT) {
             lastNumberIndex++;
@@ -28,10 +27,6 @@ public class ElementCreator {
         String stringValue = subExample.substring(0, lastNumberIndex);
         Double numericValue = Double.parseDouble(stringValue);
 
-//        element.setElement(stringValue);
-//        element.setValue(numericValue);
-
-//        return element;
         return new Element<>(stringValue, numericValue);
     }
 
@@ -41,53 +36,42 @@ public class ElementCreator {
      * @return - возвращает елемент примера (число)
      */
     public static Element<Double> getExampleFunction(final String subExample) {
-        Element<Double> element = new Element<>();
-
         int lastFunctionIndex = getClosingBracketIndex(subExample);
 
         String stringValue = subExample.substring(0, lastFunctionIndex+1);
         Double numericValue = getFunctionValue(stringValue);
 
-//        element.setElement(stringValue);
-//        element.setValue(numericValue);
-
-//        return element;
         return new Element<>(stringValue, numericValue);
     }
 
     /**
-     * Распознаёт и выцепляет из примера выражение, заключённое во внешние скобочки
+     * Распознаёт и выцепляет из примера выражение, заключённое в скобки
      * @param subExample - пример
      * @return - возвращает елемент примера (число)
      */
     public static Element<Double> getExampleBracket(final String subExample) {
-        Element<Double> element = new Element<>();
-
         int lastFunctionIndex = getClosingBracketIndex(subExample);
 
         String stringValue = subExample.substring(0, lastFunctionIndex+1);
         Double numericValue = calculate(subExample.substring(1, lastFunctionIndex));
 
-//        element.setElement(subExample);
-//        element.setElement(subExample.substring(0, lastFunctionIndex+1));
-//        element.setValue(numericValue);
-
-//        return element;
         return new Element<>(stringValue, numericValue);
     }
 
-    public static Element<BiFunction> getExampleSign(final String sign) {
-        Element<BiFunction> element = new Element<>();
+    /**
+     * Распознаёт и выцепляет из примера знак математического дейстия (!,^, /, *, -, +)
+     * @param subExample - пример
+     * @return - возвращает елемент примера (знак)
+     */
+    public static Element<BiFunction> getExampleSign(final String subExample) {
+        String stringValue = subExample.substring(0, 1);
+        BiFunction mathFunctionValue = getMathFunction(stringValue);
 
-//        element.setElement(sign);
-//        element.setValue(getMathFunction(sign));
-
-//        return element;
-        return new Element<>(sign, getMathFunction(sign));
+        return new Element<>(stringValue, mathFunctionValue);
     }
 
     /**
-     * Находит индекс скобочки, закрыающей перую открывающую скобочку
+     * Находит индекс скобки, закрывающей перую открывающую скобку
      * @param subExample - пример
      * @return - возвращает индекс закрывающей скобочки
      */
