@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 import static calculate.element.Element.TypeElement.SIGN;
-import static calculate.element.Element.getSignList;
-import static calculate.functions.MathFunctions.*;
-import static java.util.stream.Collectors.toList;
+import static calculate.functions.MathFunctions.FACTORIAL;
+import static calculate.functions.ActionPriority.getPriorityList;
 
 public class CalculateElement {
     /**
@@ -20,14 +19,7 @@ public class CalculateElement {
         int i;
         Element element;
 
-        //Формируем порядок, в котором будут выполняться действия:
-        //Из общего списка знаков, идущих по порядку приоритета от большего к меньшему,
-        //Оставляем только те, которые присутствуют в списке элементов.
-        //Нужно для ускорения работы и чтобы избежать лишних проходов по всему списку элементов
-        List<BiFunction> prioritySignList = List.of(FACTORIAL, EXPONENTIATION, DIVISION, MULTIPLICATION, SUBTRACTION, ADDITIONAL)
-                .stream()
-                .filter(sign -> getSignList(elementList).contains(sign))
-                .collect(toList());
+        List<BiFunction> prioritySignList = getPriorityList(elementList);
 
         //Если получившийся список знаков, выполняемых по порядку, получился не пустой, выполняем расчёт элементов
         //Если пустой, значит в списке элементов лишь одно единственно число, которое и возвращаем
