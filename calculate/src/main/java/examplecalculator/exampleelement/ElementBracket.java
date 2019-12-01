@@ -1,14 +1,15 @@
 package examplecalculator.exampleelement;
 
-import static examplecalculator.exampleelement.IElement.TypeElement.NUMBER;
+import static examplecalculator.ExampleCalculator.calculate;
+import static examplecalculator.exampleelement.IElement.TypeElement.BRACKET;
 
 public class ElementBracket implements IElement<Double> {
     private String element;
     private Double value;
 
-    public ElementBracket(String element, Double value) {
+    public ElementBracket(String element) {
         this.element = element;
-        this.value = value;
+        this.value = calculate(element.substring(1, element.length()-1));
     }
 
     @Override
@@ -33,6 +34,6 @@ public class ElementBracket implements IElement<Double> {
 
     @Override
     public TypeElement getTypeElement() {
-        return NUMBER;
+        return BRACKET;
     }
 }

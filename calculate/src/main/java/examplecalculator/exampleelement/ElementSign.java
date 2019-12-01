@@ -3,14 +3,15 @@ package examplecalculator.exampleelement;
 import java.util.function.BiFunction;
 
 import static examplecalculator.exampleelement.IElement.TypeElement.SIGN;
+import static examplecalculator.examplefunctions.MathFunctions.getMathFunction;
 
 public class ElementSign implements IElement<BiFunction> {
     private String element;
     private BiFunction value;
 
-    public ElementSign(String element, BiFunction value) {
+    public ElementSign(String element) {
         this.element = element;
-        this.value = value;
+        this.value = getMathFunction(element);
     }
 
     @Override

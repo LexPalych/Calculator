@@ -12,7 +12,9 @@ public interface IElement<T> {
     TypeElement getTypeElement();
 
     enum TypeElement {
+        SIGN,
         NUMBER,
-        SIGN
+        FUNCTION,
+        BRACKET
     }
 }

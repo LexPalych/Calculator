@@ -1,14 +1,15 @@
 package examplecalculator.exampleelement;
 
-import static examplecalculator.exampleelement.IElement.TypeElement.NUMBER;
+import static examplecalculator.exampleelement.IElement.TypeElement.FUNCTION;
+import static examplecalculator.examplefunctions.CalculateFunction.getFunctionValue;
 
 public class ElementFunction implements IElement<Double> {
     private String element;
     private Double value;
 
-    public ElementFunction(String element, Double value) {
+    public ElementFunction(String element) {
         this.element = element;
-        this.value = value;
+        this.value = getFunctionValue(element);
     }
 
     @Override
@@ -33,6 +34,6 @@ public class ElementFunction implements IElement<Double> {
 
     @Override
     public TypeElement getTypeElement() {
-        return NUMBER;
+        return FUNCTION;
     }
 }

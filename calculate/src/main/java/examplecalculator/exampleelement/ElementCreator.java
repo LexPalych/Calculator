@@ -3,13 +3,9 @@ package examplecalculator.exampleelement;
 import examplecalculator.ExampleException;
 
 import java.util.List;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static examplecalculator.ExampleCalculator.calculate;
 import static examplecalculator.exampleelement.ElementCreator.SymbolType.*;
-import static examplecalculator.examplefunctions.CalculateFunction.getFunctionValue;
-import static examplecalculator.examplefunctions.MathFunctions.getMathFunction;
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 
@@ -37,9 +33,9 @@ public class ElementCreator {
         }
 
         String stringValue = example.substring(0, lastNumberIndex);
-        Double numericValue = Double.parseDouble(stringValue);
+//        Double numericValue = Double.parseDouble(stringValue);
 
-        return new ElementNumber(stringValue, numericValue);
+        return new ElementNumber(stringValue);
     };
 
     /**
@@ -49,9 +45,9 @@ public class ElementCreator {
         int lastFunctionIndex = getClosingBracketIndex(example);
 
         String stringValue = example.substring(0, lastFunctionIndex+1);
-        Double numericValue = getFunctionValue(stringValue);
+//        Double numericValue = getFunctionValue(stringValue);
 
-        return new ElementNumber(stringValue, numericValue);
+        return new ElementFunction(stringValue);
     };
 
     /**
@@ -61,9 +57,9 @@ public class ElementCreator {
         int lastFunctionIndex = getClosingBracketIndex(example);
 
         String stringValue = example.substring(0, lastFunctionIndex+1);
-        Double numericValue = calculate(example.substring(1, lastFunctionIndex));
+//        Double numericValue = calculate(example.substring(1, lastFunctionIndex));
 
-        return new ElementNumber(stringValue, numericValue);
+        return new ElementBracket(stringValue);
     };
 
     /**
@@ -71,9 +67,9 @@ public class ElementCreator {
      */
     private static final Function<String, IElement> SIGN_CREATOR = example -> {
         String stringValue = example.substring(0, 1);
-        BiFunction mathFunctionValue = getMathFunction(stringValue);
+//        BiFunction mathFunctionValue = getMathFunction(stringValue);
 
-        return new ElementSign(stringValue, mathFunctionValue);
+        return new ElementSign(stringValue);
     };
 
     /**

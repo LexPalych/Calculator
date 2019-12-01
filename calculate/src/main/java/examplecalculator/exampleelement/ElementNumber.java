@@ -6,9 +6,9 @@ public class ElementNumber implements IElement<Double> {
     private String element;
     private Double value;
 
-    public ElementNumber(String element, Double value) {
+    public ElementNumber(String element) {
         this.element = element;
-        this.value = value;
+        this.value = Double.parseDouble(element);
     }
 
     @Override

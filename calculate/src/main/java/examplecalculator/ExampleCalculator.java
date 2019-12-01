@@ -53,7 +53,7 @@ public class ExampleCalculator {
         //“о на нулевую позицию помещаетс€ ноль ("0.0"),
         //„тобы сохран€лс€ принцип "число-знак-число-...-знак-...-число"
         if (elementList.get(0).getTypeElement() == SIGN) {
-            elementList.add(0, new ElementNumber("0.0", 0.0));
+            elementList.add(0, new ElementNumber("0.0"));
         }
 
         return calculateElement(elementList);
