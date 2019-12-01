@@ -5,7 +5,7 @@ import examplecalculator.ExampleException;
 import java.util.List;
 import java.util.function.Function;
 
-import static examplecalculator.exampleelement.ElementCreator.SymbolType.*;
+import static examplecalculator.exampleelement.IElement.TypeElement.*;
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 
@@ -17,7 +17,7 @@ public class ElementCreator {
     /**
      * Распознаёт и выцепляет из примера первое число
      */
-    private static final Function<String, IElement> DIGIT_CREATOR = example -> {
+    private static final Function<String, IElement> NUMBER_CREATOR = example -> {
         int lastNumberIndex = 0;
         char symbol;
 
@@ -32,45 +32,26 @@ public class ElementCreator {
             }
         }
 
-        String stringValue = example.substring(0, lastNumberIndex);
-//        Double numericValue = Double.parseDouble(stringValue);
-
-        return new ElementNumber(stringValue);
+        return new ElementNumber(example.substring(0, lastNumberIndex));
     };
 
     /**
      * Распознаёт и выцепляет из примера первую функцию
      */
-    private static final Function<String, IElement> LETTER_CREATOR = example -> {
-        int lastFunctionIndex = getClosingBracketIndex(example);
-
-        String stringValue = example.substring(0, lastFunctionIndex+1);
-//        Double numericValue = getFunctionValue(stringValue);
-
-        return new ElementFunction(stringValue);
-    };
+    private static final Function<String, IElement> FUNCTION_CREATOR = example ->
+            new ElementFunction(example.substring(0, getClosingBracketIndex(example)+1));
 
     /**
      * Распознаёт и выцепляет из примера выражение, заключённое в скобки
      */
-    private static final Function<String, IElement> BRACKET_CREATOR = example -> {
-        int lastFunctionIndex = getClosingBracketIndex(example);
-
-        String stringValue = example.substring(0, lastFunctionIndex+1);
-//        Double numericValue = calculate(example.substring(1, lastFunctionIndex));
-
-        return new ElementBracket(stringValue);
-    };
+    private static final Function<String, IElement> BRACKET_CREATOR = example ->
+            new ElementBracket(example.substring(0, getClosingBracketIndex(example)+1));
 
     /**
      * Распознаёт и выцепляет из примера знак математического дейстия (!,^, /, *, -, +)
      */
-    private static final Function<String, IElement> SIGN_CREATOR = example -> {
-        String stringValue = example.substring(0, 1);
-//        BiFunction mathFunctionValue = getMathFunction(stringValue);
-
-        return new ElementSign(stringValue);
-    };
+    private static final Function<String, IElement> SIGN_CREATOR = example ->
+            new ElementSign(example.substring(0, 1));
 
     /**
      * Определяет функцию для создания элемента примера в зависимости от типа символа примера (знак, число, буква, скобка)
@@ -82,11 +63,11 @@ public class ElementCreator {
             case SIGN:
                 return SIGN_CREATOR;
 
-            case DIGIT:
-                return DIGIT_CREATOR;
+            case NUMBER:
+                return NUMBER_CREATOR;
 
-            case LETTER:
-                return LETTER_CREATOR;
+            case FUNCTION:
+                return FUNCTION_CREATOR;
 
             case BRACKET:
                 return BRACKET_CREATOR;
@@ -127,17 +108,17 @@ public class ElementCreator {
      * @param symbol - символ
      * @return - возвращает тип символа
      */
-    private static SymbolType getSymbolType(final char symbol) {
+    private static IElement.TypeElement getSymbolType(final char symbol) {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '!');
 
         if (signList.contains(symbol)) {
             return SIGN;
 
         } else if (isDigit(symbol) || symbol == '.') {
-            return DIGIT;
+            return NUMBER;
 
         } else if (isLetter(symbol)) {
-            return LETTER;
+            return FUNCTION;
 
         } else if (symbol == '(') {
             return BRACKET;
@@ -145,12 +126,5 @@ public class ElementCreator {
         } else {
             throw new ExampleException("Неизестный сивол " + symbol);
         }
-    }
-
-    protected enum SymbolType {
-        SIGN,
-        DIGIT,
-        LETTER,
-        BRACKET,
     }
 }
