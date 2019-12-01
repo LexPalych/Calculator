@@ -24,7 +24,7 @@ public class ElementCreator {
         while (lastNumberIndex < example.length()) {
             symbol = example.charAt(lastNumberIndex);
 
-            if (isDigit(symbol) || symbol == '.') {
+            if (getSymbolType(symbol) == NUMBER) {
                 lastNumberIndex++;
 
             } else {
