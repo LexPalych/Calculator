@@ -1,8 +1,8 @@
 package examplecalculator.exampleelement;
 
-import static examplecalculator.exampleelement.IElement.TypeElement.NUMBER;
+import static examplecalculator.exampleelement.Element.TypeElement.NUMBER;
 
-public class ElementNumber implements IElement<Double> {
+public class ElementNumber implements Element<Double> {
     private String element;
     private Double value;
 

@@ -13,7 +13,7 @@ public class CalculateElement {
      * @param elementList - список элементов примера
      * @return - возвращает значение примера
      */
-    public static double calculateElement(final List<IElement> elementList) {
+    public static double calculateElement(final List<Element> elementList) {
         Double value;
         Double first;
         Double second;

@@ -1,9 +1,9 @@
 package examplecalculator.exampleelement;
 
 import static examplecalculator.ExampleCalculator.calculate;
-import static examplecalculator.exampleelement.IElement.TypeElement.BRACKET;
+import static examplecalculator.exampleelement.Element.TypeElement.BRACKET;
 
-public class ElementBracket implements IElement<Double> {
+public class ElementBracket implements Element<Double> {
     private String element;
     private Double value;
 

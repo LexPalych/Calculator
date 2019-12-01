@@ -5,7 +5,7 @@ import examplecalculator.ExampleException;
 import java.util.List;
 import java.util.function.Function;
 
-import static examplecalculator.exampleelement.IElement.TypeElement.*;
+import static examplecalculator.exampleelement.Element.TypeElement.*;
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 
@@ -17,7 +17,7 @@ public class ElementCreator {
     /**
      * Распознаёт и выцепляет из примера первое число
      */
-    private static final Function<String, IElement> NUMBER_CREATOR = example -> {
+    private static final Function<String, Element> NUMBER_CREATOR = example -> {
         int lastNumberIndex = 0;
         char symbol;
 
@@ -38,19 +38,19 @@ public class ElementCreator {
     /**
      * Распознаёт и выцепляет из примера первую функцию
      */
-    private static final Function<String, IElement> FUNCTION_CREATOR = example ->
+    private static final Function<String, Element> FUNCTION_CREATOR = example ->
             new ElementFunction(example.substring(0, getClosingBracketIndex(example)+1));
 
     /**
      * Распознаёт и выцепляет из примера выражение, заключённое в скобки
      */
-    private static final Function<String, IElement> BRACKET_CREATOR = example ->
+    private static final Function<String, Element> BRACKET_CREATOR = example ->
             new ElementBracket(example.substring(0, getClosingBracketIndex(example)+1));
 
     /**
      * Распознаёт и выцепляет из примера знак математического дейстия (!,^, /, *, -, +)
      */
-    private static final Function<String, IElement> SIGN_CREATOR = example ->
+    private static final Function<String, Element> SIGN_CREATOR = example ->
             new ElementSign(example.substring(0, 1));
 
     /**
@@ -58,7 +58,7 @@ public class ElementCreator {
      * @param symbol - текущий символ
      * @return - возвращает функцию создания элемента примера
      */
-    public static Function<String, IElement> createElementFunction(final char symbol) {
+    public static Function<String, Element> createElementFunction(final char symbol) {
         switch (getSymbolType(symbol)) {
             case SIGN:
                 return SIGN_CREATOR;
@@ -108,7 +108,7 @@ public class ElementCreator {
      * @param symbol - символ
      * @return - возвращает тип символа
      */
-    private static IElement.TypeElement getSymbolType(final char symbol) {
+    private static Element.TypeElement getSymbolType(final char symbol) {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '!');
 
         if (signList.contains(symbol)) {

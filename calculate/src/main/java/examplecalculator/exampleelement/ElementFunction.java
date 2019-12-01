@@ -1,9 +1,9 @@
 package examplecalculator.exampleelement;
 
-import static examplecalculator.exampleelement.IElement.TypeElement.FUNCTION;
+import static examplecalculator.exampleelement.Element.TypeElement.FUNCTION;
 import static examplecalculator.examplefunctions.CalculateFunction.getFunctionValue;
 
-public class ElementFunction implements IElement<Double> {
+public class ElementFunction implements Element<Double> {
     private String element;
     private Double value;
 

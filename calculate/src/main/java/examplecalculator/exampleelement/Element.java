@@ -1,6 +1,6 @@
 package examplecalculator.exampleelement;
 
-public interface IElement<T> {
+public interface Element<T> {
     T getValue();
 
     String getElement();

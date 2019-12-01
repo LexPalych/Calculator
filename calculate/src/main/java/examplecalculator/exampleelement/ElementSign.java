@@ -2,10 +2,10 @@ package examplecalculator.exampleelement;
 
 import java.util.function.BiFunction;
 
-import static examplecalculator.exampleelement.IElement.TypeElement.SIGN;
+import static examplecalculator.exampleelement.Element.TypeElement.SIGN;
 import static examplecalculator.examplefunctions.MathFunctions.getMathFunction;
 
-public class ElementSign implements IElement<BiFunction> {
+public class ElementSign implements Element<BiFunction> {
     private String element;
     private BiFunction value;
 
