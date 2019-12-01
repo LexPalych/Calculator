@@ -43,4 +43,5 @@ public class CalculateFunction {
         String functionName = getFunctionName(example);
         return example.substring(functionName.length()+1, example.length()-1);
     }
+
 }
