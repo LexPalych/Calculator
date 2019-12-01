@@ -1,7 +1,9 @@
-package calculate.element;
+package examplecalculator.exampleelement;
 
-import static calculate.element.Element.TypeElement.NUMBER;
-import static calculate.element.Element.TypeElement.SIGN;
+import examplecalculator.ExampleException;
+
+import static examplecalculator.exampleelement.Element.TypeElement.NUMBER;
+import static examplecalculator.exampleelement.Element.TypeElement.SIGN;
 
 /**
  * Элемент примера: число/знак
@@ -9,10 +11,6 @@ import static calculate.element.Element.TypeElement.SIGN;
 public class Element<T> {
     private String element;
     private T value;
-
-    public Element() {
-
-    }
 
     public Element(String element, T value) {
         this.element = element;
@@ -47,7 +45,7 @@ public class Element<T> {
             return SIGN;
 
         } else
-            throw new SecurityException("Неизестный тип элемента" + getValue());
+            throw new ExampleException("Неизестный тип элемента" + getValue());
     }
 
     public enum TypeElement {

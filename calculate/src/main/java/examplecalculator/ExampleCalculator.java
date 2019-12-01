@@ -1,17 +1,17 @@
-package calculate;
+package examplecalculator;
 
-import calculate.element.Element;
+import examplecalculator.exampleelement.Element;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
-import static calculate.ExampleValidation.assertExample;
-import static calculate.element.CalculateElement.calculateElement;
-import static calculate.element.Element.TypeElement.SIGN;
-import static calculate.element.ElementCreator.createElementFunction;
+import static examplecalculator.ExampleValidation.assertExample;
+import static examplecalculator.exampleelement.CalculateElement.calculateElement;
+import static examplecalculator.exampleelement.Element.TypeElement.SIGN;
+import static examplecalculator.exampleelement.ElementCreator.createElementFunction;
 
-public class CalculateExample {
+public class ExampleCalculator {
     /**
      * ѕровер€ет пример на корректность записи и производит его вычисление
      * @param example - пример

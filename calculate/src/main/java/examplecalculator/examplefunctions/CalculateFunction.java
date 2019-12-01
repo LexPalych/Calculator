@@ -1,9 +1,9 @@
-package calculate.functions;
+package examplecalculator.examplefunctions;
 
 import java.util.function.Function;
 
-import static calculate.CalculateExample.calculate;
-import static calculate.functions.TrigonometricFunctions.getFunction;
+import static examplecalculator.ExampleCalculator.calculate;
+import static examplecalculator.examplefunctions.TrigonometricFunctions.getFunction;
 
 public class CalculateFunction {
     /**

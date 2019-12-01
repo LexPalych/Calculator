@@ -1,6 +1,6 @@
-package calculate.functions;
+package examplecalculator.examplefunctions;
 
-import calculate.StringException;
+import examplecalculator.ExampleException;
 
 import java.util.function.BiFunction;
 
@@ -33,7 +33,7 @@ public class MathFunctions {
                 return FACTORIAL;
 
             default:
-                throw new StringException("Неизвестный знак дейстия");
+                throw new ExampleException("Неизвестный знак дейстия");
 
         }
     }

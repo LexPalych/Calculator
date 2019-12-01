@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
 
-import static calculate.CalculateExample.calculateExample;
+import static examplecalculator.ExampleCalculator.calculateExample;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ComplexChecks {

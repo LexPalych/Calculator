@@ -1,6 +1,6 @@
-package calculate.functions;
+package examplecalculator.examplefunctions;
 
-import calculate.StringException;
+import examplecalculator.ExampleException;
 
 import java.util.function.Function;
 
@@ -83,7 +83,7 @@ class TrigonometricFunctions {
                 return SQRT;
 
             default:
-                throw new StringException("Неизвестная функция");
+                throw new ExampleException("Неизвестная функция");
         }
     }
 

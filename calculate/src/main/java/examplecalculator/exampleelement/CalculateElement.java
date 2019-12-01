@@ -1,10 +1,10 @@
-package calculate.element;
+package examplecalculator.exampleelement;
 
 import java.util.List;
 import java.util.function.BiFunction;
 
-import static calculate.functions.ActionPriority.getPriorityList;
-import static calculate.functions.MathFunctions.FACTORIAL;
+import static examplecalculator.examplefunctions.ActionPriority.getPriorityList;
+import static examplecalculator.examplefunctions.MathFunctions.FACTORIAL;
 
 public class CalculateElement {
     /**
@@ -15,7 +15,6 @@ public class CalculateElement {
      */
     public static double calculateElement(final List<Element> elementList) {
         double value;
-        int i;
         Double first;
         Double second;
 
@@ -25,7 +24,7 @@ public class CalculateElement {
         //Если пустой, значит в списке элементов лишь одно единственно число, которое и возвращаем
         if (prioritySignList.size() != 0) {
             for (BiFunction function : prioritySignList) {
-                i = 0;
+                int i = 0;
 
                 while (i < elementList.size()) {
                     if (elementList.get(i).getValue() == function) {
@@ -40,7 +39,7 @@ public class CalculateElement {
                         }
                         elementList.remove(i);
 
-                        value = (double) function.apply(first, second);
+                        value = (Double) function.apply(first, second);
                         elementList.get(i-1).setValue(value);
 
                     } else {
