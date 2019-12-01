@@ -21,7 +21,7 @@ public class ElementCreator {
     /**
      * Распознаёт и выцепляет из примера первое число
      */
-    private static final Function<String, Element> DIGIT_CREATOR = example -> {
+    private static final Function<String, IElement> DIGIT_CREATOR = example -> {
         int lastNumberIndex = 0;
         char symbol;
 
@@ -39,41 +39,41 @@ public class ElementCreator {
         String stringValue = example.substring(0, lastNumberIndex);
         Double numericValue = Double.parseDouble(stringValue);
 
-        return new Element<>(stringValue, numericValue);
+        return new ElementNumber(stringValue, numericValue);
     };
 
     /**
      * Распознаёт и выцепляет из примера первую функцию
      */
-    private static final Function<String, Element> LETTER_CREATOR = example -> {
+    private static final Function<String, IElement> LETTER_CREATOR = example -> {
         int lastFunctionIndex = getClosingBracketIndex(example);
 
         String stringValue = example.substring(0, lastFunctionIndex+1);
         Double numericValue = getFunctionValue(stringValue);
 
-        return new Element<>(stringValue, numericValue);
+        return new ElementNumber(stringValue, numericValue);
     };
 
     /**
      * Распознаёт и выцепляет из примера выражение, заключённое в скобки
      */
-    private static final Function<String, Element> BRACKET_CREATOR = example -> {
+    private static final Function<String, IElement> BRACKET_CREATOR = example -> {
         int lastFunctionIndex = getClosingBracketIndex(example);
 
         String stringValue = example.substring(0, lastFunctionIndex+1);
         Double numericValue = calculate(example.substring(1, lastFunctionIndex));
 
-        return new Element<>(stringValue, numericValue);
+        return new ElementNumber(stringValue, numericValue);
     };
 
     /**
      * Распознаёт и выцепляет из примера знак математического дейстия (!,^, /, *, -, +)
      */
-    private static final Function<String, Element> SIGN_CREATOR = example -> {
+    private static final Function<String, IElement> SIGN_CREATOR = example -> {
         String stringValue = example.substring(0, 1);
         BiFunction mathFunctionValue = getMathFunction(stringValue);
 
-        return new Element<>(stringValue, mathFunctionValue);
+        return new ElementSign(stringValue, mathFunctionValue);
     };
 
     /**
@@ -81,7 +81,7 @@ public class ElementCreator {
      * @param symbol - текущий символ
      * @return - возвращает функцию создания элемента примера
      */
-    public static Function<String, Element> createElementFunction(final char symbol) {
+    public static Function<String, IElement> createElementFunction(final char symbol) {
         switch (getSymbolType(symbol)) {
             case SIGN:
                 return SIGN_CREATOR;

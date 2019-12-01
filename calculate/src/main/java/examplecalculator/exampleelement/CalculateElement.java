@@ -13,8 +13,8 @@ public class CalculateElement {
      * @param elementList - список элементов примера
      * @return - возвращает значение примера
      */
-    public static double calculateElement(final List<Element> elementList) {
-        double value;
+    public static double calculateElement(final List<IElement> elementList) {
+        Double value;
         Double first;
         Double second;
 
@@ -49,6 +49,6 @@ public class CalculateElement {
             }
         }
 
-        return (double) elementList.get(0).getValue();
+        return (Double) elementList.get(0).getValue();
     }
 }

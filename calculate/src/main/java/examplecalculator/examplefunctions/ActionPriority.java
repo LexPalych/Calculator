@@ -1,11 +1,11 @@
 package examplecalculator.examplefunctions;
 
-import examplecalculator.exampleelement.Element;
+import examplecalculator.exampleelement.IElement;
 
 import java.util.List;
 import java.util.function.BiFunction;
 
-import static examplecalculator.exampleelement.Element.TypeElement.SIGN;
+import static examplecalculator.exampleelement.IElement.TypeElement.SIGN;
 import static examplecalculator.examplefunctions.MathFunctions.*;
 import static java.util.stream.Collectors.toList;
 
@@ -20,7 +20,7 @@ public class ActionPriority {
      * @param elementList - список элементов
      * @return - возвращает список знаков в виде лямбд
      */
-    private static List<BiFunction> getSignList(final List<Element> elementList) {
+    private static List<BiFunction> getSignList(final List<IElement> elementList) {
         return elementList
                 .stream()
                 .filter(element -> element.getTypeElement() == SIGN)
@@ -34,7 +34,7 @@ public class ActionPriority {
      * Оставляем только те, которые присутствуют в списке элементов.
      * Нужно для ускорения работы и чтобы избежать лишних проходов по всему списку элементов
      */
-    public static List<BiFunction> getPriorityList(final List<Element> elementList) {
+    public static List<BiFunction> getPriorityList(final List<IElement> elementList) {
         List<BiFunction> signList = getSignList(elementList);
 
         return PRIORITY_LIST
