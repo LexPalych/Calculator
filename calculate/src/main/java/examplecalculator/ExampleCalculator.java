@@ -50,14 +50,42 @@ public class ExampleCalculator {
             i += element.getElement().length();
         }
 
-        //Если первый элемент примера (подпримера главного примера) является знаком действия (впереди стоит минус "-"),
-        //То на нулевую позицию помещается ноль ("0"),
-        //Чтобы сохранялся принцип "число-знак-число-...-знак-...-число"
+        return calculateElement(replaceElementList(elementList));
+    }
+
+    private static List<Element> replaceElementList(final List<Element> rowElementList) {
+        replaceFirstElement(rowElementList);
+        replaceFactorialElement(rowElementList);
+
+        return rowElementList;
+    }
+
+    /**
+     * Проверяет, есть ли в начале списка элемент типа SIGN (знак минус "-")
+     * Если есть, то в начало списка помещается ноль ("0")
+     * Нужно для сохранения принципа "число-знак-число-...-знак-...-число"
+     * @param elementList - "сырой" список элементов
+     * @return - исправленный список элементов
+     */
+    private static List<Element> replaceFirstElement(final List<Element> elementList) {
         if (elementList.get(0).getTypeElement() == SIGN) {
             elementList.add(0, new ElementNumber("0"));
         }
 
-        i = 0;
+        return elementList;
+    }
+
+    /**
+     * Проверяет, есть ли в "сыром" списке элементов знак факториала "!"
+     * Если есть, заменяет предыдущий элемент типа NUMBER на элемент типа FACTORIAL
+     * Знак "!" перемещается к новому созданному элементу и затирается в "сыром" списке элементов
+     * Нужно для сохранения принципа "число-знак-число-...-знак-...-число"
+     * @param elementList - "сырой" список элементов
+     * @return - исправленный список элементов
+     */
+    private static List<Element> replaceFactorialElement(final List<Element> elementList) {
+        int i = 0;
+
         while (i < elementList.size()) {
             if (elementList.get(i).getElement().equals("!")) {
                 elementList.set(i-1, new ElementFactorial(elementList.get(i-1).getElement()));
@@ -68,6 +96,7 @@ public class ExampleCalculator {
             }
         }
 
-        return calculateElement(elementList);
+        return elementList;
     }
+
 }
