@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 import static examplecalculator.examplefunctions.ActionPriority.getActionList;
-import static examplecalculator.examplefunctions.MathActions.FACTORIAL;
 
 public class ElementCalculator {
     /**
@@ -28,19 +27,21 @@ public class ElementCalculator {
 
                 while (i < elementList.size()) {
                     if (elementList.get(i).getValue() == action) {
-                        first = (Double) elementList.get(i-1).getValue();
+//                        first = (Double) elementList.get(i-1).getValue();
+//
+//                        if (action == FACTORIAL) {
+//                            second = 0.0;
+//
+//                        } else {
+//                            second = (Double) elementList.get(i+1).getValue();
+//                            elementList.remove(i);
+//                        }
+//                        elementList.remove(i);
 
-                        if (action == FACTORIAL) {
-                            second = 0.0;
-
-                        } else {
-                            second = (Double) elementList.get(i+1).getValue();
-                            elementList.remove(i);
-                        }
-                        elementList.remove(i);
-
-                        value = (Double) action.apply(first, second);
+                        value = (Double) action.apply(elementList.get(i-1).getValue(), elementList.get(i+1).getValue());
                         elementList.get(i-1).setValue(value);
+                        elementList.remove(i);
+                        elementList.remove(i);
 
                     } else {
                         i++;

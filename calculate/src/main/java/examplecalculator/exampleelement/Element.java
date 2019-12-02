@@ -15,6 +15,7 @@ public interface Element<T> {
         SIGN,
         NUMBER,
         FUNCTION,
-        BRACKET
+        BRACKET,
+        FACTORIAL
     }
 }

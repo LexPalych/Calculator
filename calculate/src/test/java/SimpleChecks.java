@@ -49,9 +49,9 @@ class SimpleChecks {
 
     @Test
     void factorial() {
-        String expression = "3!";
+        String expression = "3!+4!";
         double value = calculateExample(expression);
-        double result = 6;
+        double result = 30;
         assertTrue(value == result, "ќжидалось " + result + ", а получилось " + value);
     }
 
