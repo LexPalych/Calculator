@@ -3,7 +3,7 @@ package examplecalculator.examplefunctions;
 import java.util.function.Function;
 
 import static examplecalculator.ExampleCalculator.calculate;
-import static examplecalculator.examplefunctions.TrigonometricFunctions.getFunction;
+import static examplecalculator.examplefunctions.MathFunctions.getFunction;
 
 public class CalculateFunction {
     /**

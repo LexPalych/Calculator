@@ -3,10 +3,10 @@ package examplecalculator.exampleelement;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import static examplecalculator.examplefunctions.ActionPriority.getPriorityList;
-import static examplecalculator.examplefunctions.MathFunctions.FACTORIAL;
+import static examplecalculator.examplefunctions.ActionPriority.getActionList;
+import static examplecalculator.examplefunctions.MathActions.FACTORIAL;
 
-public class CalculateElement {
+public class ElementCalculator {
     /**
      * Выполняет расчёт элементов примера:
      * Выполняет действия между числами примера в соответствии с приоритетом (порядком действия) знаков
@@ -18,19 +18,19 @@ public class CalculateElement {
         Double first;
         Double second;
 
-        List<BiFunction> prioritySignList = getPriorityList(elementList);
+        List<BiFunction> actionList = getActionList(elementList);
 
         //Если получившийся список знаков, выполняемых по порядку, получился не пустой, выполняем расчёт элементов
         //Если пустой, значит в списке элементов лишь одно единственно число, которое и возвращаем
-        if (prioritySignList.size() != 0) {
-            for (BiFunction function : prioritySignList) {
+        if (actionList.size() != 0) {
+            for (BiFunction action : actionList) {
                 int i = 0;
 
                 while (i < elementList.size()) {
-                    if (elementList.get(i).getValue() == function) {
+                    if (elementList.get(i).getValue() == action) {
                         first = (Double) elementList.get(i-1).getValue();
 
-                        if (function == FACTORIAL) {
+                        if (action == FACTORIAL) {
                             second = 0.0;
 
                         } else {
@@ -39,7 +39,7 @@ public class CalculateElement {
                         }
                         elementList.remove(i);
 
-                        value = (Double) function.apply(first, second);
+                        value = (Double) action.apply(first, second);
                         elementList.get(i-1).setValue(value);
 
                     } else {

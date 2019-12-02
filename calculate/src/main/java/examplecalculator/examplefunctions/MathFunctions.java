@@ -2,59 +2,89 @@ package examplecalculator.examplefunctions;
 
 import examplecalculator.ExampleException;
 
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
-public class MathFunctions {
-    public static final BiFunction<Double, Double, Double> ADDITIONAL = Double::sum;
-    public static final BiFunction<Double, Double, Double> SUBTRACTION = (x, y) -> x - y;
-    public static final BiFunction<Double, Double, Double> MULTIPLICATION = (x, y) -> x * y;
-    public static final BiFunction<Double, Double, Double> DIVISION = (x, y) -> x / y;
-    public static final BiFunction<Double, Double, Double> EXPONENTIATION = Math::pow;
-    public static final BiFunction<Double, Double, Double> FACTORIAL = (x, y) -> getFactorial(x);
+class MathFunctions {
+    private static final Double RAD = Math.acos(-1)/180;
 
-    public static BiFunction<Double, Double, Double> getMathFunction(final String sign) {
-        switch (sign) {
-            case "+":
-                return ADDITIONAL;
+    private static final Function<Double, Double> SIN = value -> Math.sin(value * RAD);
+    private static final Function<Double, Double> COS = value -> Math.cos(value * RAD);
+    private static final Function<Double, Double> TAN = value -> Math.tan(value * RAD);
 
-            case "-":
-                return SUBTRACTION;
+    private static final Function<Double, Double> ARCSIN = value -> Math.asin(value) / RAD;
+    private static final Function<Double, Double> ARCCOS = value -> Math.acos(value) / RAD;
+    private static final Function<Double, Double> ARCTAN = value -> Math.atan(value) / RAD;
 
-            case "*":
-                return MULTIPLICATION;
+    private static final Function<Double, Double> SIN_HYPERBOLIC = value -> Math.sin(value * RAD);
+    private static final Function<Double, Double> COS_HYPERBOLIC = value -> Math.cos(value * RAD);
+    private static final Function<Double, Double> TAN_HYPERBOLIC = value -> Math.tan(value * RAD);
 
-            case "/":
-                return DIVISION;
+    private static final Function<Double, Double> NATURAL_LOGARITHM = MathFunctions::getLogarithm;
+    private static final Function<Double, Double> EXP = Math::exp;
+    private static final Function<Double, Double> ABS = Math::abs;
+    private static final Function<Double, Double> SQRT = Math::sqrt;
 
-            case "^":
-                return EXPONENTIATION;
-
-            case "!":
-                return FACTORIAL;
-
-            default:
-                throw new ExampleException("Неизвестный знак дейстия");
-
-        }
+    /**
+     * Находит натуральный логарифм аргумента
+     * @param argument - аргумент
+     * @return - возвращает значение ln
+     */
+    private static Double getLogarithm(final Double argument) {
+        if (argument > 0)
+            return Math.log(argument);
+        else
+            throw new ArithmeticException("Аргумент логарифма должен быть положительным");
     }
 
     /**
-     * Находит факториал числа
-     * @param number - число
-     * @return - возвращает факториал числа типом Double
+     * Распознаёт строку с именем функции и возвращает соответствующую функцию
+     * @param functionName - имя функции
+     * @return - возвращает функцию для расчётов
      */
-    private static Double getFactorial(final double number) {
-        if (number < 0)
-            throw new ArithmeticException("Отрицательный аргумент факториала");
+    static Function<Double, Double> getFunction(final String functionName) {
+        switch (functionName) {
+            case "sin":
+                return SIN;
 
-        if (number % 1 !=0)
-            throw new ArithmeticException("Аргумент факториала не является целым числом");
+            case "cos":
+                return COS;
 
-        if (number == 0 || number == 1)
-            return 1.0;
+            case "tan":
+                return TAN;
 
-        else
-            return number * getFactorial(number-1);
+            case "asin":
+                return ARCSIN;
+
+            case "acos":
+                return ARCCOS;
+
+            case "atan":
+                return ARCTAN;
+
+            case "sinh":
+                return SIN_HYPERBOLIC;
+
+            case "cosh":
+                return COS_HYPERBOLIC;
+
+            case "tanh":
+                return TAN_HYPERBOLIC;
+
+            case "ln":
+                return NATURAL_LOGARITHM;
+
+            case "exp":
+                return EXP;
+
+            case "abs":
+                return ABS;
+
+            case "sqrt":
+                return SQRT;
+
+            default:
+                throw new ExampleException("Неизвестная функция");
+        }
     }
 
 }

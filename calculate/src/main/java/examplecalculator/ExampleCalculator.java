@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import static examplecalculator.ExampleValidation.assertExample;
-import static examplecalculator.exampleelement.CalculateElement.calculateElement;
+import static examplecalculator.exampleelement.ElementCalculator.calculateElement;
 import static examplecalculator.exampleelement.Element.TypeElement.SIGN;
 import static examplecalculator.exampleelement.ElementCreator.createElementFunction;
 
@@ -50,10 +50,10 @@ public class ExampleCalculator {
         }
 
         //≈сли первый элемент примера (подпримера главного примера) €вл€етс€ знаком действи€ (впереди стоит минус "-"),
-        //“о на нулевую позицию помещаетс€ ноль ("0.0"),
+        //“о на нулевую позицию помещаетс€ ноль ("0"),
         //„тобы сохран€лс€ принцип "число-знак-число-...-знак-...-число"
         if (elementList.get(0).getTypeElement() == SIGN) {
-            elementList.add(0, new ElementNumber("0.0"));
+            elementList.add(0, new ElementNumber("0"));
         }
 
         return calculateElement(elementList);
