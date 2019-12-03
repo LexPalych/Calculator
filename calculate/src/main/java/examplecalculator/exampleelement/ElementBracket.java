@@ -7,7 +7,7 @@ public class ElementBracket implements Element<Double> {
     private String element;
     private Double value;
 
-    public ElementBracket(String element) {
+    ElementBracket(String element) {
         this.element = element;
         this.value = calculate(element.substring(1, element.length()-1));
     }

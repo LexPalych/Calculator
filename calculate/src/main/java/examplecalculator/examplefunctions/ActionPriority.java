@@ -42,5 +42,4 @@ public class ActionPriority {
                 .filter(signList::contains)
                 .collect(toList());
     }
-
 }

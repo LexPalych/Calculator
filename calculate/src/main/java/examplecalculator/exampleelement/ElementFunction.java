@@ -7,7 +7,7 @@ public class ElementFunction implements Element<Double> {
     private String element;
     private Double value;
 
-    public ElementFunction(String element) {
+    ElementFunction(String element) {
         this.element = element;
         this.value = getFunctionValue(element);
     }

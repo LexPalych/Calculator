@@ -7,7 +7,7 @@ public class ElementFactorial implements Element<Double> {
     private String element;
     private Double value;
 
-    public ElementFactorial(String element) {
+    ElementFactorial(String element) {
         this.element = element;
     }
 

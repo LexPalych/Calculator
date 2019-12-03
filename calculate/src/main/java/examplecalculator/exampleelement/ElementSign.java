@@ -9,7 +9,7 @@ public class ElementSign implements Element<BiFunction> {
     private String element;
     private BiFunction value;
 
-    public ElementSign(String element) {
+    ElementSign(String element) {
         this.element = element;
         this.value = getMathFunction(element);
     }
