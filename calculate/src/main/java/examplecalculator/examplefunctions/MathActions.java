@@ -5,12 +5,12 @@ import examplecalculator.ExampleException;
 import java.util.function.BiFunction;
 
 public class MathActions {
-    public static final BiFunction<Double, Double, Double> ADDITIONAL = Double::sum;
-    public static final BiFunction<Double, Double, Double> SUBTRACTION = (x, y) -> x - y;
-    public static final BiFunction<Double, Double, Double> MULTIPLICATION = (x, y) -> x * y;
-    public static final BiFunction<Double, Double, Double> DIVISION = (x, y) -> x / y;
-    public static final BiFunction<Double, Double, Double> EXPONENTIATION = Math::pow;
-    public static final BiFunction<Double, Double, Double> FACTORIAL = (x, y) -> getFactorial(x);
+    static final BiFunction<Double, Double, Double> ADDITIONAL = Double::sum;
+    static final BiFunction<Double, Double, Double> SUBTRACTION = (x, y) -> x - y;
+    static final BiFunction<Double, Double, Double> MULTIPLICATION = (x, y) -> x * y;
+    static final BiFunction<Double, Double, Double> DIVISION = (x, y) -> x / y;
+    static final BiFunction<Double, Double, Double> EXPONENTIATION = Math::pow;
+    public static final BiFunction<Double, Double, Double> FIND_FACTORIAL = (x, y) -> getFactorial(x);
 
     public static BiFunction<Double, Double, Double> getMathFunction(final String sign) {
         switch (sign) {
@@ -30,7 +30,7 @@ public class MathActions {
                 return EXPONENTIATION;
 
             case "!":
-                return FACTORIAL;
+                return FIND_FACTORIAL;
 
             default:
                 throw new ExampleException("Неизвестный знак дейстия");
@@ -43,7 +43,7 @@ public class MathActions {
      * @param number - число
      * @return - возвращает факториал числа типом Double
      */
-    public static Double getFactorial(final double number) {
+    private static Double getFactorial(final double number) {
         if (number < 0)
             throw new ArithmeticException("Отрицательный аргумент факториала");
 

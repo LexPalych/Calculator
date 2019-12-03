@@ -14,9 +14,6 @@ public class ElementCalculator {
      */
     public static double calculateElement(final List<Element> elementList) {
         Double value;
-        Double first;
-        Double second;
-
         List<BiFunction> actionList = getActionList(elementList);
 
         //Если получившийся список знаков, выполняемых по порядку, получился не пустой, выполняем расчёт элементов
@@ -27,19 +24,9 @@ public class ElementCalculator {
 
                 while (i < elementList.size()) {
                     if (elementList.get(i).getValue() == action) {
-//                        first = (Double) elementList.get(i-1).getValue();
-//
-//                        if (action == FACTORIAL) {
-//                            second = 0.0;
-//
-//                        } else {
-//                            second = (Double) elementList.get(i+1).getValue();
-//                            elementList.remove(i);
-//                        }
-//                        elementList.remove(i);
-
                         value = (Double) action.apply(elementList.get(i-1).getValue(), elementList.get(i+1).getValue());
                         elementList.get(i-1).setValue(value);
+
                         elementList.remove(i);
                         elementList.remove(i);
 

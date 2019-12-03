@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import static examplecalculator.ExampleValidation.assertExample;
+import static examplecalculator.exampleelement.Element.TypeElement.FACTORIAL;
 import static examplecalculator.exampleelement.Element.TypeElement.SIGN;
 import static examplecalculator.exampleelement.ElementCalculator.calculateElement;
 import static examplecalculator.exampleelement.ElementCreator.createElementFunction;
@@ -53,11 +54,13 @@ public class ExampleCalculator {
         return calculateElement(replaceElementList(elementList));
     }
 
+    /**
+     * Подпрвляет "сырой" список элементов, убирая "!" во всём списке и "-" в начале списка
+     * @param rowElementList - "сырой" список элементов
+     * @return - полностью исправленный список элементов
+     */
     private static List<Element> replaceElementList(final List<Element> rowElementList) {
-        replaceFirstElement(rowElementList);
-        replaceFactorialElement(rowElementList);
-
-        return rowElementList;
+        return replaceFactorialElement(replaceFirstElement(rowElementList));
     }
 
     /**
@@ -87,8 +90,8 @@ public class ExampleCalculator {
         int i = 0;
 
         while (i < elementList.size()) {
-            if (elementList.get(i).getElement().equals("!")) {
-                elementList.set(i-1, new ElementFactorial(elementList.get(i-1).getElement()));
+            if (elementList.get(i).getTypeElement() == FACTORIAL) {
+                elementList.set(i-1, new ElementFactorial((Double) elementList.get(i-1).getValue()));
                 elementList.remove(i);
 
             } else {

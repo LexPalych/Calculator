@@ -1,15 +1,19 @@
 package examplecalculator.exampleelement;
 
 import static examplecalculator.exampleelement.Element.TypeElement.FACTORIAL;
-import static examplecalculator.examplefunctions.MathActions.getFactorial;
+import static examplecalculator.examplefunctions.MathActions.FIND_FACTORIAL;
 
 public class ElementFactorial implements Element<Double> {
     private String element;
     private Double value;
 
     public ElementFactorial(String element) {
-        this.element = element + "!";
-        this.value = getFactorial(Double.parseDouble(element));
+        this.element = element;
+    }
+
+    public ElementFactorial(Double elementValue) {
+//        this.value = getFactorial(elementValue);
+        this.value = FIND_FACTORIAL.apply(elementValue, null);
     }
 
     @Override

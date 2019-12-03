@@ -13,7 +13,7 @@ import static java.util.stream.Collectors.toList;
  * Класс, содержащий информацио о приоритете выполняемых математических действий
  */
 public class ActionPriority {
-    private static final List<BiFunction> PRIORITY_LIST =  List.of(FACTORIAL, EXPONENTIATION, DIVISION, MULTIPLICATION, SUBTRACTION, ADDITIONAL);
+    private static final List<BiFunction> PRIORITY_LIST =  List.of(EXPONENTIATION, DIVISION, MULTIPLICATION, SUBTRACTION, ADDITIONAL);
 
     /**
      * Отфильтровывает из списка элементов только знаки
