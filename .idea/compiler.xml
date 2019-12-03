@@ -2,10 +2,28 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="Calculate.Calculate.main" target="12" />
-      <module name="Calculate.Calculate.test" target="12" />
+      <module name="Calculate.calculate.main" target="12" />
+      <module name="Calculate.calculate.test" target="12" />
       <module name="Calculate.main" target="11" />
       <module name="Calculate.test" target="11" />
+      <module name="GradlePCalculate.calculate.main" target="12" />
+      <module name="GradlePCalculate.calculate.test" target="12" />
+      <module name="GradlePCalculate.main" target="11" />
+      <module name="GradlePCalculate.test" target="11" />
+      <module name="GradleProjeCalculate.calculate.main" target="12" />
+      <module name="GradleProjeCalculate.calculate.test" target="12" />
+      <module name="GradleProjeCalculate.main" target="11" />
+      <module name="GradleProjeCalculate.test" target="11" />
+      <module name="GradleProject.Calculate.Calculate.main" target="11" />
+      <module name="GradleProject.Calculate.calculate.main" target="12" />
+      <module name="GradleProject.Calculate.Calculate.test" target="11" />
+      <module name="GradleProject.Calculate.calculate.test" target="12" />
+      <module name="GradleProject.Calculate.main" target="11" />
+      <module name="GradleProject.Calculate.test" target="11" />
+      <module name="GradleProjectCalculate.calculate.main" target="12" />
+      <module name="GradleProjectCalculate.calculate.test" target="12" />
+      <module name="GradleProjectCalculate.main" target="11" />
+      <module name="GradleProjectCalculate.test" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

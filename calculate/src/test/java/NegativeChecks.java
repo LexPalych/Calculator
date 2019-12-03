@@ -10,7 +10,7 @@ class NegativeChecks {
         String expression = "+1%^&(((()))";
         double value = calculateExample(expression);
         double result = 3;
-        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+        assertTrue(value == result, "РћР¶РёРґР°Р»РѕСЃСЊ " + result + ", Р° РїРѕР»СѓС‡РёР»РѕСЃСЊ " + value);
     }
 
 }

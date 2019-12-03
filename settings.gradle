@@ -1,4 +1,3 @@
-rootProject.name = 'Calculate'
-include 'calculate'
-findProject(':calculate')?.name = 'Calculate'
+rootProject.name = 'GradleProject.Calculate'
 
+include ':calculate'
