@@ -4,3 +4,4 @@
 .allure/
 *.iml
 */build/**
+gradle/**
