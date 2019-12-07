@@ -18,7 +18,7 @@ plugins {
 group 'Calculate'
 version '1.0'
 
-sourceCompatibility = 11
+sourceCompatibility = 13
 
 repositories {
     mavenCentral()
