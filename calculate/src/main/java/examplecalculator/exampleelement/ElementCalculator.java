@@ -23,12 +23,10 @@ public class ElementCalculator {
                 int i = 0;
 
                 while (i < elementList.size()) {
-                    if (elementList.get(i).getValue() == action) {
-                        value = (Double) action.apply(elementList.get(i-1).getValue(), elementList.get(i+1).getValue());
-                        elementList.get(i-1).setValue(value);
+                    var qqq = elementList.get(i).getValue();
 
-                        elementList.remove(i);
-                        elementList.remove(i);
+                    if (qqq == action) {
+                        action.apply(elementList, i);
 
                     } else {
                         i++;

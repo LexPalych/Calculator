@@ -1,4 +1,4 @@
-import io.qameta.allure.Description;
+import jdk.jfr.Description;
 import org.junit.jupiter.api.Test;
 
 import static examplecalculator.ExampleCalculator.calculateExample;

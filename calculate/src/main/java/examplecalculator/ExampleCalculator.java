@@ -1,7 +1,6 @@
 package examplecalculator;
 
 import examplecalculator.exampleelement.Element;
-import examplecalculator.exampleelement.ElementFactorial;
 import examplecalculator.exampleelement.ElementNumber;
 
 import java.util.LinkedList;
@@ -9,7 +8,6 @@ import java.util.List;
 import java.util.function.Function;
 
 import static examplecalculator.ExampleValidation.assertExample;
-import static examplecalculator.exampleelement.Element.TypeElement.FACTORIAL;
 import static examplecalculator.exampleelement.Element.TypeElement.SIGN;
 import static examplecalculator.exampleelement.ElementCalculator.calculateElement;
 import static examplecalculator.exampleelement.ElementCreator.createElementFunction;
@@ -60,7 +58,7 @@ public class ExampleCalculator {
      * @return - полностью исправленный список элементов
      */
     private static List<Element> replaceElementList(final List<Element> rowElementList) {
-        return replaceFactorialElement(replaceFirstElement(rowElementList));
+        return replaceFirstElement(rowElementList);
     }
 
     /**
@@ -78,28 +76,28 @@ public class ExampleCalculator {
         return elementList;
     }
 
-    /**
-     * Проверяет, есть ли в "сыром" списке элементов знак факториала "!"
-     * Если есть, заменяет предыдущий элемент типа NUMBER на элемент типа FACTORIAL
-     * Знак "!" перемещается к новому созданному элементу и затирается в "сыром" списке элементов
-     * Нужно для сохранения принципа "число-знак-число-...-знак-...-число"
-     * @param elementList - "сырой" список элементов
-     * @return - исправленный список элементов
-     */
-    private static List<Element> replaceFactorialElement(final List<Element> elementList) {
-        int i = 0;
-
-        while (i < elementList.size()) {
-            if (elementList.get(i).getTypeElement() == FACTORIAL) {
-                elementList.set(i-1, new ElementFactorial((Double) elementList.get(i-1).getValue()));
-                elementList.remove(i);
-
-            } else {
-                i++;
-            }
-        }
-
-        return elementList;
-    }
+//    /**
+//     * Проверяет, есть ли в "сыром" списке элементов знак факториала "!"
+//     * Если есть, заменяет предыдущий элемент типа NUMBER на элемент типа FACTORIAL
+//     * Знак "!" перемещается к новому созданному элементу и затирается в "сыром" списке элементов
+//     * Нужно для сохранения принципа "число-знак-число-...-знак-...-число"
+//     * @param elementList - "сырой" список элементов
+//     * @return - исправленный список элементов
+//     */
+//    private static List<Element> replaceFactorialElement(final List<Element> elementList) {
+//        int i = 0;
+//
+//        while (i < elementList.size()) {
+//            if (elementList.get(i).getTypeElement() == FACTORIAL) {
+//                elementList.set(i-1, new ElementFactorial((Double) elementList.get(i-1).getValue()));
+//                elementList.remove(i);
+//
+//            } else {
+//                i++;
+//            }
+//        }
+//
+//        return elementList;
+//    }
 
 }
