@@ -23,9 +23,7 @@ public class ElementCalculator {
                 int i = 0;
 
                 while (i < elementList.size()) {
-                    var qqq = elementList.get(i).getValue();
-
-                    if (qqq == action) {
+                    if (elementList.get(i).getValue() == action) {
                         action.apply(elementList, i);
 
                     } else {

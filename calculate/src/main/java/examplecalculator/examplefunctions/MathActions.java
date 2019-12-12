@@ -45,27 +45,21 @@ public class MathActions {
 
 
     static final BiFunction<List<Element>, Integer, List<Element>> FIND_FACTORIAL = (list, i) -> {
-        List<Element> newElementList = list;
-
         Double value = getFactorial((Double) list.get(i-1).getValue());
-        newElementList.get(i-1).setValue(value);
-        newElementList.remove(i);
+        list.get(i-1).setValue(value);
+        list.remove(list.get(i));
 
-        newElementList.clear();
-
-        return newElementList;
+        return list;
     };
 
 
     private static List<Element> refreshList(final Double value, final List<Element> elementList, final Integer index) {
-        List<Element> newElementList = elementList;
+        elementList.get(index-1).setValue(value);
 
-        newElementList.get(index-1).setValue(value);
+        elementList.remove(elementList.get(index));
+        elementList.remove(elementList.get(index));
 
-        newElementList.remove(index);
-        newElementList.remove(index);
-
-        return newElementList;
+        return elementList;
     }
 
     public static BiFunction<List<Element>, Integer, List<Element>> getMathFunction(final String sign) {
