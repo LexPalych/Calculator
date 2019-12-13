@@ -80,7 +80,7 @@ public class ExampleCalculator {
 
     /**
      * Проверяет, есть ли в "сыром" списке элементов знак факториала "!"
-     * Если есть, заменяет предыдущий элемент типа NUMBER на элемент типа FACTORIAL
+     * Если есть, заменяет предыдущий элемент элементом типа FACTORIAL
      * Знак "!" перемещается к новому созданному элементу и затирается в "сыром" списке элементов
      * Нужно для сохранения принципа "число-знак-число-...-знак-...-число"
      * @param elementList - "сырой" список элементов
@@ -91,7 +91,10 @@ public class ExampleCalculator {
 
         while (i < elementList.size()) {
             if (elementList.get(i).getTypeElement() == FACTORIAL) {
-                elementList.set(i-1, new ElementFactorial((Double) elementList.get(i-1).getValue()));
+                String element = elementList.get(i-1).getElement() + elementList.get(i).getElement();
+                Double value = (Double) elementList.get(i-1).getValue();
+
+                elementList.set(i-1, new ElementFactorial(element, value));
                 elementList.remove(i);
 
             } else {
