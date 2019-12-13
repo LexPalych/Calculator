@@ -1,4 +1,4 @@
-package examplecalculator.examplefunctions;
+package examplecalculator.functions;
 
 import examplecalculator.ExampleException;
 

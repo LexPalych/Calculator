@@ -1,19 +1,15 @@
-package examplecalculator.exampleelement;
+package examplecalculator.objectmodel;
 
-import static examplecalculator.exampleelement.Element.TypeElement.FACTORIAL;
-import static examplecalculator.examplefunctions.MathActions.getFactorial;
+import static examplecalculator.objectmodel.Element.TypeElement.FUNCTION;
+import static examplecalculator.functions.CalculateFunction.getFunctionValue;
 
-public class ElementFactorial implements Element<Double> {
+public class ElementFunction implements Element<Double> {
     private String element;
     private Double value;
 
-    ElementFactorial(String element) {
+    public ElementFunction(String element) {
         this.element = element;
-    }
-
-    public ElementFactorial(String element, Double value) {
-        this.element = element;
-        this.value = getFactorial(value);
+        this.value = getFunctionValue(element);
     }
 
     @Override
@@ -38,6 +34,6 @@ public class ElementFactorial implements Element<Double> {
 
     @Override
     public TypeElement getTypeElement() {
-        return FACTORIAL;
+        return FUNCTION;
     }
 }

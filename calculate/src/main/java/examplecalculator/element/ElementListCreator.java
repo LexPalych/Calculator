@@ -1,20 +1,20 @@
-package examplecalculator;
+package examplecalculator.element;
 
-import examplecalculator.exampleelement.Element;
-import examplecalculator.exampleelement.ElementFactorial;
-import examplecalculator.exampleelement.ElementNumber;
+import examplecalculator.objectmodel.Element;
+import examplecalculator.objectmodel.ElementFactorial;
+import examplecalculator.objectmodel.ElementNumber;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
-import static examplecalculator.ExampleElementListCreator.ElementListReplacer.replaceElementList;
-import static examplecalculator.exampleelement.Element.TypeElement.FACTORIAL;
-import static examplecalculator.exampleelement.Element.TypeElement.SIGN;
-import static examplecalculator.exampleelement.ElementCalculator.calculateElement;
-import static examplecalculator.exampleelement.ElementCreator.createElementFunction;
+import static examplecalculator.element.ElementListCreator.ElementListReplacer.replaceElementList;
+import static examplecalculator.objectmodel.Element.TypeElement.FACTORIAL;
+import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
+import static examplecalculator.element.ElementCalculator.calculateElement;
+import static examplecalculator.element.ElementCreator.createElementFunction;
 
-public class ExampleElementListCreator {
+public class ElementListCreator {
     /**
      * Разбивает пример (подпример главного примера) на элементы:
      * Числа, знаки математических действий, выражения в скобках, функции

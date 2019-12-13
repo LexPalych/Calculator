@@ -1,9 +1,7 @@
-package examplecalculator.examplefunctions;
+package examplecalculator.functions;
 
 import examplecalculator.ExampleException;
 
-import examplecalculator.exampleelement.Element;
-import java.util.List;
 import java.util.function.BiFunction;
 
 public class MathActions {

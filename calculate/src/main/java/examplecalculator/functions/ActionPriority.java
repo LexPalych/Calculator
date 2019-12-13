@@ -1,12 +1,12 @@
-package examplecalculator.examplefunctions;
+package examplecalculator.functions;
 
-import examplecalculator.exampleelement.Element;
+import examplecalculator.objectmodel.Element;
 
 import java.util.List;
 import java.util.function.BiFunction;
 
-import static examplecalculator.exampleelement.Element.TypeElement.SIGN;
-import static examplecalculator.examplefunctions.MathActions.*;
+import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
+import static examplecalculator.functions.MathActions.*;
 import static java.util.stream.Collectors.toList;
 
 /**

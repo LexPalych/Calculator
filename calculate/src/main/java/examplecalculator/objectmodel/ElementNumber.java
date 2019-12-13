@@ -1,6 +1,6 @@
-package examplecalculator.exampleelement;
+package examplecalculator.objectmodel;
 
-import static examplecalculator.exampleelement.Element.TypeElement.NUMBER;
+import static examplecalculator.objectmodel.Element.TypeElement.NUMBER;
 
 public class ElementNumber implements Element<Double> {
     private String element;

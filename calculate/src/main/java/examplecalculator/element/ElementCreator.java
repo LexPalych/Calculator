@@ -1,18 +1,19 @@
-package examplecalculator.exampleelement;
+package examplecalculator.element;
 
 import examplecalculator.ExampleException;
+import examplecalculator.objectmodel.*;
 
 import java.util.List;
 import java.util.function.Function;
 
-import static examplecalculator.exampleelement.Element.TypeElement.*;
+import static examplecalculator.objectmodel.Element.TypeElement.*;
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 
 /**
  * Класс методов для распознавания элементов примера
  */
-public class ElementCreator {
+class ElementCreator {
 
     /**
      * Распознаёт и выцепляет из примера первое число
@@ -64,7 +65,7 @@ public class ElementCreator {
      * @param symbol - текущий символ
      * @return - возвращает функцию создания элемента примера
      */
-    public static Function<String, Element> createElementFunction(final char symbol) {
+    static Function<String, Element> createElementFunction(final char symbol) {
         switch (getSymbolType(symbol)) {
             case SIGN:
                 return SIGN_CREATOR;

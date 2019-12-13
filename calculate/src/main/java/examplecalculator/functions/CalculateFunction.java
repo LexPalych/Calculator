@@ -1,9 +1,9 @@
-package examplecalculator.examplefunctions;
+package examplecalculator.functions;
 
 import java.util.function.Function;
 
-import static examplecalculator.ExampleElementListCreator.createElementList;
-import static examplecalculator.examplefunctions.MathFunctions.getFunction;
+import static examplecalculator.element.ElementListCreator.createElementList;
+import static examplecalculator.functions.MathFunctions.getFunction;
 
 public class CalculateFunction {
     /**

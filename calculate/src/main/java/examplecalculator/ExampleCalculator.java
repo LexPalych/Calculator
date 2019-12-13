@@ -1,6 +1,6 @@
 package examplecalculator;
 
-import static examplecalculator.ExampleElementListCreator.createElementList;
+import static examplecalculator.element.ElementListCreator.createElementList;
 import static examplecalculator.ExampleValidation.assertExample;
 
 public class ExampleCalculator {

@@ -1,13 +1,13 @@
-package examplecalculator.exampleelement;
+package examplecalculator.objectmodel;
 
-import static examplecalculator.ExampleElementListCreator.createElementList;
-import static examplecalculator.exampleelement.Element.TypeElement.BRACKET;
+import static examplecalculator.element.ElementListCreator.createElementList;
+import static examplecalculator.objectmodel.Element.TypeElement.BRACKET;
 
 public class ElementBracket implements Element<Double> {
     private String element;
     private Double value;
 
-    ElementBracket(String element) {
+    public ElementBracket(String element) {
         this.element = element;
         this.value = createElementList(element.substring(1, element.length()-1));
     }
