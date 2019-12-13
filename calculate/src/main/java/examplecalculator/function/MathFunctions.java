@@ -4,7 +4,7 @@ import examplecalculator.ExampleException;
 
 import java.util.function.Function;
 
-public class MathFunctions {
+class MathFunctions {
     private static final Double RAD = Math.acos(-1)/180;
 
     private static final Function<Double, Double> SIN = value -> Math.sin(value * RAD);
@@ -29,37 +29,6 @@ public class MathFunctions {
         else
             throw new ArithmeticException("Аргумент логарифма должен быть положительным");
     };
-
-//    /**
-//     * Находит натуральный логарифм аргумента
-//     * @param argument - аргумент
-//     * @return - возвращает значение ln
-//     */
-//    private static Double getLogarithm(final Double argument) {
-//        if (argument > 0)
-//            return Math.log(argument);
-//        else
-//            throw new ArithmeticException("Аргумент логарифма должен быть положительным");
-//    }
-
-//    /**
-//     * Находит факториал числа
-//     * @param number - число
-//     * @return - возвращает факториал числа типом Double
-//     */
-//    public static Double getFactorial(final Double number) {
-//        if (number < 0)
-//            throw new ArithmeticException("Отрицательный аргумент факториала");
-//
-//        if (number % 1 !=0)
-//            throw new ArithmeticException("Аргумент факториала не является целым числом");
-//
-//        if (number == 0 || number == 1)
-//            return 1.0;
-//
-//        else
-//            return number * getFactorial(number-1);
-//    }
 
     /**
      * Распознаёт строку с именем функции и возвращает соответствующую функцию
