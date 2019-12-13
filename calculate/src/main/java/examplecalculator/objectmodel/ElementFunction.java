@@ -1,7 +1,7 @@
 package examplecalculator.objectmodel;
 
 import static examplecalculator.objectmodel.Element.TypeElement.FUNCTION;
-import static examplecalculator.functions.CalculateFunction.getFunctionValue;
+import static examplecalculator.function.FunctionCalculator.getFunctionValue;
 
 public class ElementFunction implements Element<Double> {
     private String element;

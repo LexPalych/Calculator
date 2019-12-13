@@ -19,21 +19,13 @@ class ElementCreator {
      * Распознаёт и выцепляет из примера первое число
      */
     private static final Function<String, Element> NUMBER_CREATOR = example -> {
-        int lastNumberIndex = 0;
-        char symbol;
+        int i = 0;
 
-        while (lastNumberIndex < example.length()) {
-            symbol = example.charAt(lastNumberIndex);
-
-            if (getSymbolType(symbol) == NUMBER) {
-                lastNumberIndex++;
-
-            } else {
-                break;
-            }
+        while (i < example.length() && getSymbolType(example.charAt(i)) == NUMBER) {
+            i++;
         }
 
-        return new ElementNumber(example.substring(0, lastNumberIndex));
+        return new ElementNumber(example.substring(0, i));
     };
 
     /**
@@ -88,32 +80,6 @@ class ElementCreator {
     }
 
     /**
-     * Находит индекс скобки, закрывающей перую открывающую скобку
-     * @param subExample - пример
-     * @return - возвращает индекс закрывающей скобочки
-     */
-    private static int getClosingBracketIndex(final String subExample) {
-        int bracketAmount = 0;
-        int lastBracketIndex = 0;
-        char currentChar;
-
-        do {
-            currentChar = subExample.charAt(lastBracketIndex++);
-
-            if (currentChar == '(') {
-                bracketAmount++;
-
-            } else if (currentChar == ')') {
-                bracketAmount--;
-            }
-
-        } while (!(bracketAmount == 0 && currentChar == ')'));
-        lastBracketIndex--;
-
-        return lastBracketIndex;
-    }
-
-    /**
      * Определяет тип символа (знак, число, буква, скобка)
      * @param symbol - символ
      * @return - возвращает тип символа
@@ -139,5 +105,30 @@ class ElementCreator {
         } else {
             throw new ExampleException("Неизестный сивол " + symbol);
         }
+    }
+
+    /**
+     * Находит индекс скобки, закрывающей перую открывающую скобку
+     * @param subExample - пример
+     * @return - возвращает индекс закрывающей скобочки
+     */
+    private static int getClosingBracketIndex(final String subExample) {
+        int bracketAmount = 0;
+        int lastBracketIndex = 0;
+        char currentChar;
+
+        do {
+            currentChar = subExample.charAt(lastBracketIndex++);
+
+            if (currentChar == '(') {
+                bracketAmount++;
+
+            } else if (currentChar == ')') {
+                bracketAmount--;
+            }
+
+        } while (!(bracketAmount == 0 && currentChar == ')'));
+
+        return --lastBracketIndex;
     }
 }

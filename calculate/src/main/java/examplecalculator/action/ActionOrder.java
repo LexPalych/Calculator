@@ -1,4 +1,4 @@
-package examplecalculator.functions;
+package examplecalculator.action;
 
 import examplecalculator.objectmodel.Element;
 
@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
-import static examplecalculator.functions.MathActions.*;
+import static examplecalculator.action.ActionFunction.*;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Класс, содержащий информацио о приоритете выполняемых математических действий
+ * Класс, содержащий информацио о порядке выполнения математических действий
  */
-public class ActionPriority {
+public class ActionOrder {
     private static final List<BiFunction> PRIORITY_ORDER =  List.of(EXPONENTIATION, DIVISION, MULTIPLICATION, SUBTRACTION, ADDITIONAL);
 
     /**

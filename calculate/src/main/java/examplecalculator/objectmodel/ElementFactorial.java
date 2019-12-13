@@ -1,7 +1,6 @@
 package examplecalculator.objectmodel;
 
 import static examplecalculator.objectmodel.Element.TypeElement.FACTORIAL;
-import static examplecalculator.functions.MathActions.getFactorial;
 
 public class ElementFactorial implements Element<Double> {
     private String element;
@@ -39,5 +38,24 @@ public class ElementFactorial implements Element<Double> {
     @Override
     public TypeElement getTypeElement() {
         return FACTORIAL;
+    }
+
+    /**
+     * Ќаходит факториал числа
+     * @param number - число
+     * @return - возвращает факториал числа типом Double
+     */
+    private static Double getFactorial(final Double number) {
+        if (number < 0)
+            throw new ArithmeticException("ќтрицательный аргумент факториала");
+
+        if (number % 1 !=0)
+            throw new ArithmeticException("јргумент факториала не €вл€етс€ целым числом");
+
+        if (number == 0 || number == 1)
+            return 1.0;
+
+        else
+            return number * getFactorial(number-1);
     }
 }

@@ -1,11 +1,11 @@
-package examplecalculator.functions;
+package examplecalculator.function;
 
 import java.util.function.Function;
 
 import static examplecalculator.element.ElementListCreator.createElementList;
-import static examplecalculator.functions.MathFunctions.getFunction;
+import static examplecalculator.function.MathFunctions.getFunction;
 
-public class CalculateFunction {
+public class FunctionCalculator {
     /**
      * Нахождит значение тригонометрической функции
      */
