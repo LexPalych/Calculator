@@ -3,7 +3,7 @@ package examplecalculator.objectmodel;
 import static examplecalculator.objectmodel.Element.TypeElement.FUNCTION;
 import static examplecalculator.function.FunctionCalculator.getFunctionValue;
 
-public class ElementFunction implements Element<Double> {
+public final class ElementFunction implements Element<Double> {
     private String element;
     private Double value;
 

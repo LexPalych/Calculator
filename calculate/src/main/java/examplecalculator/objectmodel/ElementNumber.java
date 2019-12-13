@@ -2,7 +2,7 @@ package examplecalculator.objectmodel;
 
 import static examplecalculator.objectmodel.Element.TypeElement.NUMBER;
 
-public class ElementNumber implements Element<Double> {
+public final class ElementNumber implements Element<Double> {
     private String element;
     private Double value;
 

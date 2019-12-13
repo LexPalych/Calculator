@@ -3,7 +3,7 @@ package examplecalculator;
 import static examplecalculator.element.ElementListCreator.createElementList;
 import static examplecalculator.ExampleValidation.assertExample;
 
-public class ExampleCalculator {
+public final class ExampleCalculator {
     /**
      * ѕровер€ет пример на корректность записи и производит его вычисление
      * ¬ынесен отдельно, чтобы в итоговой библиотеке был всего один публичный метод

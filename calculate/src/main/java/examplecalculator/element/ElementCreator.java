@@ -13,7 +13,7 @@ import static java.lang.Character.isLetter;
 /**
  * Класс методов для распознавания элементов примера
  */
-class ElementCreator {
+final class ElementCreator {
 
     /**
      * Распознаёт и выцепляет из примера первое число

@@ -14,7 +14,7 @@ import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
 import static examplecalculator.element.ElementCalculator.calculateElement;
 import static examplecalculator.element.ElementCreator.createElementFunction;
 
-public class ElementListCreator {
+public final class ElementListCreator {
     /**
      * Разбивает пример (подпример главного примера) на элементы:
      * Числа, знаки математических действий, выражения в скобках, функции

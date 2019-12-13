@@ -5,7 +5,7 @@ import java.util.function.Function;
 import static examplecalculator.element.ElementListCreator.createElementList;
 import static examplecalculator.function.MathFunctions.getFunction;
 
-public class FunctionCalculator {
+public final class FunctionCalculator {
     /**
      * Нахождит значение тригонометрической функции
      */

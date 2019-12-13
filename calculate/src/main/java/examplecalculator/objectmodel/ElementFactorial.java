@@ -2,7 +2,7 @@ package examplecalculator.objectmodel;
 
 import static examplecalculator.objectmodel.Element.TypeElement.FACTORIAL;
 
-public class ElementFactorial implements Element<Double> {
+public final class ElementFactorial implements Element<Double> {
     private String element;
     private Double value;
 

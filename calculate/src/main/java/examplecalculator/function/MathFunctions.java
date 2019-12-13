@@ -4,7 +4,7 @@ import examplecalculator.ExampleException;
 
 import java.util.function.Function;
 
-class MathFunctions {
+final class MathFunctions {
     private static final Double RAD = Math.acos(-1)/180;
 
     private static final Function<Double, Double> SIN = value -> Math.sin(value * RAD);

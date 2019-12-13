@@ -3,7 +3,7 @@ package examplecalculator.objectmodel;
 import static examplecalculator.element.ElementListCreator.createElementList;
 import static examplecalculator.objectmodel.Element.TypeElement.BRACKET;
 
-public class ElementBracket implements Element<Double> {
+public final class ElementBracket implements Element<Double> {
     private String element;
     private Double value;
 

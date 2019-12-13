@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Класс для валидации примера на корректность записи
  */
-class ExampleValidation {
+final class ExampleValidation {
     /**
      * Проверяет выражение на правильность записи
      */

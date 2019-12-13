@@ -12,7 +12,7 @@ import static java.util.stream.Collectors.toList;
 /**
  * Класс, содержащий информацио о порядке выполнения математических действий
  */
-public class ActionOrder {
+public final class ActionOrder {
     private static final List<BiFunction> PRIORITY_ORDER =  List.of(EXPONENTIATION, DIVISION, MULTIPLICATION, SUBTRACTION, ADDITIONAL);
 
     /**

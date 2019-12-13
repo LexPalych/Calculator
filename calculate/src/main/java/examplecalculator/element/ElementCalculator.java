@@ -7,7 +7,7 @@ import java.util.function.BiFunction;
 
 import static examplecalculator.action.ActionOrder.getActionOrderList;
 
-class ElementCalculator {
+final class ElementCalculator {
     /**
      * Выполняет расчёт элементов примера:
      * Выполняет действия между числами примера в соответствии с приоритетом (порядком действия) знаков
