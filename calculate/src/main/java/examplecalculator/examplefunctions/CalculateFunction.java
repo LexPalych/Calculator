@@ -2,7 +2,7 @@ package examplecalculator.examplefunctions;
 
 import java.util.function.Function;
 
-import static examplecalculator.ExampleCalculator.calculate;
+import static examplecalculator.ExampleElementListCreator.createElementList;
 import static examplecalculator.examplefunctions.MathFunctions.getFunction;
 
 public class CalculateFunction {
@@ -14,7 +14,7 @@ public class CalculateFunction {
         Function<Double, Double> function = getFunction(functionName);
 
         String functionArgument = getFunctionArgument(example);
-        double functionArgumentValue = calculate(functionArgument);
+        double functionArgumentValue = createElementList(functionArgument);
 
         return function.apply(functionArgumentValue);
     }

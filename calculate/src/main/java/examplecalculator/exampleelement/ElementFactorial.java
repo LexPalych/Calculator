@@ -11,13 +11,8 @@ public class ElementFactorial implements Element<Double> {
         this.element = element;
     }
 
-//    public ElementFactorial(Double elementValue) {
-//        this.value = FIND_FACTORIAL.apply(elementValue, null);
-//    }
-
     public ElementFactorial(String element, Double value) {
         this.element = element;
-//        this.value = FIND_FACTORIAL.apply(value, null);
         this.value = getFactorial(value);
     }
 
