@@ -53,11 +53,11 @@ public class ElementCreator {
     private static final Function<String, Element> SIGN_CREATOR = example ->
             new ElementSign(example.substring(0, 1));
 
-//    /**
-//     * Распознаёт и выцепляет из примера знак факторила (!)
-//     */
-//    private static final Function<String, Element> FACTORIAL_CREATOR = example ->
-//            new ElementFactorial(example.substring(0, 1));
+    /**
+     * Распознаёт и выцепляет из примера знак факторила (!)
+     */
+    private static final Function<String, Element> FACTORIAL_CREATOR = example ->
+            new ElementFactorial(example.substring(0, 1));
 
     /**
      * Определяет функцию для создания элемента примера в зависимости от типа символа примера (знак, число, буква, скобка)
@@ -78,8 +78,8 @@ public class ElementCreator {
             case BRACKET:
                 return BRACKET_CREATOR;
 
-//            case FACTORIAL:
-//                return FACTORIAL_CREATOR;
+            case FACTORIAL:
+                return FACTORIAL_CREATOR;
 
             default:
                 throw new ExampleException("Отсутствует условие для символа " + symbol);
@@ -118,7 +118,7 @@ public class ElementCreator {
      * @return - возвращает тип символа
      */
     private static Element.TypeElement getSymbolType(final char symbol) {
-        List<Character> signList = List.of('+', '-', '*', '/', '^', '!');
+        List<Character> signList = List.of('+', '-', '*', '/', '^');
 
         if (signList.contains(symbol)) {
             return SIGN;
@@ -132,10 +132,10 @@ public class ElementCreator {
         } else if (symbol == '(') {
             return BRACKET;
 
-        } /*else if (symbol == '!') {
+        } else if (symbol == '!') {
             return FACTORIAL;
 
-        }*/ else {
+        } else {
             throw new ExampleException("Неизестный сивол " + symbol);
         }
     }
