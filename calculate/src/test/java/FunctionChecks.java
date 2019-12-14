@@ -4,20 +4,22 @@ import static examplecalculator.ExampleCalculator.calculateExample;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FunctionChecks {
+    Double INACCURACY = 0.00000000000001;
+    
     @Test
     void sin() {
         String expression = "sin(30)";
         double value = calculateExample(expression);
-        double result = 0.49999999999999994;
-        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+        double result = 0.5;
+        assertTrue((Math.abs(value - result) < INACCURACY), "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
     void cos() {
         String expression = "cos(60)";
         double value = calculateExample(expression);
-        double result = 0.5000000000000001;
-        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+        double result = 0.5;
+        assertTrue((Math.abs(value - result) < INACCURACY), "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -25,7 +27,7 @@ class FunctionChecks {
         String expression = "tan(45)";
         double value = calculateExample(expression);
         double result = 1;
-        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+        assertTrue((Math.abs(value - result) < INACCURACY), "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -33,7 +35,8 @@ class FunctionChecks {
         String expression = "asin(0.5)";
         double value = calculateExample(expression);
         double result = 30;
-        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+        double INACCURACY = 0.01;
+        assertTrue((Math.abs(value - result) < INACCURACY), "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -41,7 +44,7 @@ class FunctionChecks {
         String expression = "acos(0.5)";
         double value = calculateExample(expression);
         double result = 60;
-        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+        assertTrue((Math.abs(value - result) < INACCURACY), "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -49,7 +52,7 @@ class FunctionChecks {
         String expression = "atan(1)";
         double value = calculateExample(expression);
         double result = 45;
-        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+        assertTrue((Math.abs(value - result) < INACCURACY), "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -57,7 +60,7 @@ class FunctionChecks {
         String expression = "sinh(0)";
         double value = calculateExample(expression);
         double result = 0.0;
-        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+        assertTrue((Math.abs(value - result) < INACCURACY), "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -65,7 +68,7 @@ class FunctionChecks {
         String expression = "cosh(0)";
         double value = calculateExample(expression);
         double result = 1.0;
-        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+        assertTrue((Math.abs(value - result) < INACCURACY), "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -73,7 +76,7 @@ class FunctionChecks {
         String expression = "tanh(0)";
         double value = calculateExample(expression);
         double result = 0.0;
-        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+        assertTrue((Math.abs(value - result) < INACCURACY), "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -81,7 +84,7 @@ class FunctionChecks {
         String expression = "exp(0)";
         double value = calculateExample(expression);
         double result = 1;
-        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+        assertTrue((Math.abs(value - result) < INACCURACY), "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -89,7 +92,7 @@ class FunctionChecks {
         String expression = "ln(1)";
         double value = calculateExample(expression);
         double result = 0;
-        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+        assertTrue((Math.abs(value - result) < INACCURACY), "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -97,7 +100,7 @@ class FunctionChecks {
         String expression = "abs(-10)";
         double value = calculateExample(expression);
         double result = 10;
-        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+        assertTrue((Math.abs(value - result) < INACCURACY), "Ожидалось " + result + ", а получилось " + value);
     }
 
     @Test
@@ -105,7 +108,7 @@ class FunctionChecks {
         String expression = "sqrt(16)";
         double value = calculateExample(expression);
         double result = 4;
-        assertTrue(value == result, "Ожидалось " + result + ", а получилось " + value);
+        assertTrue((Math.abs(value - result) < INACCURACY), "Ожидалось " + result + ", а получилось " + value);
     }
 
 }
