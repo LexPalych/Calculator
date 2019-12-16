@@ -7,29 +7,6 @@ import java.util.function.Function;
 final class MathFunctions {
     private static final Double RAD = Math.acos(-1)/180;
 
-    private static final Function<Double, Double> SIN = value -> Math.sin(value * RAD);
-    private static final Function<Double, Double> COS = value -> Math.cos(value * RAD);
-    private static final Function<Double, Double> TAN = value -> Math.tan(value * RAD);
-
-    private static final Function<Double, Double> ARCSIN = value -> Math.asin(value) / RAD;
-    private static final Function<Double, Double> ARCCOS = value -> Math.acos(value) / RAD;
-    private static final Function<Double, Double> ARCTAN = value -> Math.atan(value) / RAD;
-
-    private static final Function<Double, Double> SIN_HYPERBOLIC = value -> Math.sin(value * RAD);
-    private static final Function<Double, Double> COS_HYPERBOLIC = value -> Math.cos(value * RAD);
-    private static final Function<Double, Double> TAN_HYPERBOLIC = value -> Math.tan(value * RAD);
-
-    private static final Function<Double, Double> EXP = Math::exp;
-    private static final Function<Double, Double> ABS = Math::abs;
-    private static final Function<Double, Double> SQRT = Math::sqrt;
-
-    private static final Function<Double, Double> NATURAL_LOGARITHM = value -> {
-        if (value > 0)
-            return Math.log(value);
-        else
-            throw new ArithmeticException("Аргумент логарифма должен быть положительным");
-    };
-
     /**
      * Распознаёт строку с именем функции и возвращает соответствующую функцию
      * @param functionName - имя функции
@@ -38,43 +15,48 @@ final class MathFunctions {
     static Function<Double, Double> getFunction(final String functionName) {
         switch (functionName) {
             case "sin":
-                return SIN;
+                return value -> Math.sin(value * RAD);
 
             case "cos":
-                return COS;
+                return value -> Math.cos(value * RAD);
 
             case "tan":
-                return TAN;
+                return value -> Math.tan(value * RAD);
 
             case "asin":
-                return ARCSIN;
+                return value -> Math.asin(value) / RAD;
 
             case "acos":
-                return ARCCOS;
+                return value -> Math.acos(value) / RAD;
 
             case "atan":
-                return ARCTAN;
+                return value -> Math.atan(value) / RAD;
 
             case "sinh":
-                return SIN_HYPERBOLIC;
+                return value -> Math.sinh(value * RAD);
 
             case "cosh":
-                return COS_HYPERBOLIC;
+                return value -> Math.cosh(value * RAD);
 
             case "tanh":
-                return TAN_HYPERBOLIC;
-
-            case "ln":
-                return NATURAL_LOGARITHM;
+                return value -> Math.tanh(value * RAD);
 
             case "exp":
-                return EXP;
+                return Math::exp;
 
             case "abs":
-                return ABS;
+                return Math::abs;
 
             case "sqrt":
-                return SQRT;
+                return Math::sqrt;
+
+            case "ln":
+                return value -> {
+                    if (value > 0)
+                        return Math.log(value);
+                    else
+                        throw new ArithmeticException("Аргумент логарифма должен быть положительным");
+                };
 
             default:
                 throw new ExampleException("Неизвестная функция");
