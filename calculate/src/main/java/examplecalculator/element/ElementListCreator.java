@@ -8,11 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
+import static examplecalculator.element.ElementCalculator.calculateElement;
+import static examplecalculator.element.ElementCreator.getElementCreator;
 import static examplecalculator.element.ElementListCreator.ElementListReplacer.replaceElementList;
 import static examplecalculator.objectmodel.Element.TypeElement.FACTORIAL;
 import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
-import static examplecalculator.element.ElementCalculator.calculateElement;
-import static examplecalculator.element.ElementCreator.createElementFunction;
 
 public final class ElementListCreator {
     /**
@@ -32,8 +32,8 @@ public final class ElementListCreator {
             char currentSymbol = subExample.charAt(i);
 
             //В зависимости от того, какой текущий символ, выбирается функция, которая создаёт элемент примера
-            Function<String, Element> createElementFunction = createElementFunction(currentSymbol);
-            element = createElementFunction.apply(subExample.substring(i));
+            Function<String, Element> elementCreator = getElementCreator(currentSymbol);
+            element = elementCreator.apply(subExample.substring(i));
             elementList.add(element);
 
             //Итератор переносится на индекс символа, стоящего сразу после последнего символа элемента примера

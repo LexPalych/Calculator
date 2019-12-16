@@ -18,9 +18,9 @@ public final class MathFunction {
         String functionArgument = getFunctionArgument(example);
 
         Function<Double, Double> mathFunction = getMathFunction(functionName);
-        Double functionArgumentValue = createElementList(functionArgument);
+        Double functionValue = createElementList(functionArgument);
 
-        return mathFunction.apply(functionArgumentValue);
+        return mathFunction.apply(functionValue);
     }
 
     /**
@@ -29,13 +29,13 @@ public final class MathFunction {
      * @return - возвращет строку с именем функции
      */
     private static String getFunctionName(final String example) {
-        int lastLetterIndex = 0;
+        int i = 0;
 
-        while (example.charAt(lastLetterIndex) != '(') {
-            lastLetterIndex++;
+        while (example.charAt(i) != '(') {
+            i++;
         }
 
-        return example.substring(0, lastLetterIndex);
+        return example.substring(0, i);
     }
 
     /**

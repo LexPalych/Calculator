@@ -19,10 +19,13 @@ final class ElementCreator {
      * @param symbol - текущий символ
      * @return - возвращает функцию создания элемента примера
      */
-    static Function<String, Element> createElementFunction(final char symbol) {
-        switch (getSymbolType(symbol)) {
+    static Function<String, Element> getElementCreator(final char symbol) {
+        switch (getTypeElement(symbol)) {
             case SIGN:
                 return example -> new ElementSign(example.substring(0, 1));
+
+            case FACTORIAL:
+                return example -> new ElementFactorial(example.substring(0, 1));
 
             case FUNCTION:
                 return example -> new ElementFunction(example.substring(0, getClosingBracketIndex(example)+1));
@@ -30,18 +33,15 @@ final class ElementCreator {
             case BRACKET:
                 return example -> new ElementBracket(example.substring(0, getClosingBracketIndex(example)+1));
 
-            case FACTORIAL:
-                return example -> new ElementFactorial(example.substring(0, 1));
-
             case NUMBER:
                 return example -> {
-                    int i = 0;
+                    int lastNumeralIndex = 0;
 
-                    while (i < example.length() && getSymbolType(example.charAt(i)) == NUMBER) {
-                        i++;
+                    while (lastNumeralIndex < example.length() && getTypeElement(example.charAt(lastNumeralIndex)) == NUMBER) {
+                        lastNumeralIndex++;
                     }
 
-                    return new ElementNumber(example.substring(0, i));
+                    return new ElementNumber(example.substring(0, lastNumeralIndex));
                 };
 
             default:
@@ -54,7 +54,7 @@ final class ElementCreator {
      * @param symbol - символ
      * @return - возвращает тип символа
      */
-    private static Element.TypeElement getSymbolType(final char symbol) {
+    private static Element.TypeElement getTypeElement(final char symbol) {
         List<Character> signList = List.of('+', '-', '*', '/', '^');
 
         if (signList.contains(symbol)) {
@@ -83,8 +83,8 @@ final class ElementCreator {
      * @return - возвращает индекс закрывающей скобочки
      */
     private static int getClosingBracketIndex(final String subExample) {
-        int bracketAmount = 0;
         int lastBracketIndex = 0;
+        int bracketAmount = 0;
         char currentChar;
 
         do {
