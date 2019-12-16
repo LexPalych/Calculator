@@ -5,9 +5,10 @@ import examplecalculator.ExampleException;
 import java.util.function.Function;
 
 import static examplecalculator.element.ElementListCreator.createElementList;
+import static java.lang.StrictMath.PI;
 
 public final class MathFunction {
-    private static final Double RAD = Math.acos(-1)/180;
+    private static final Double RAD = PI/180;
 
     /**
      * Нахождит значение тригонометрической функции
