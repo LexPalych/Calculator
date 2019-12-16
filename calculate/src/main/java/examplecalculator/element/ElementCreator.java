@@ -7,50 +7,12 @@ import java.util.List;
 import java.util.function.Function;
 
 import static examplecalculator.objectmodel.Element.TypeElement.*;
-import static java.lang.Character.isDigit;
-import static java.lang.Character.isLetter;
+import static java.lang.Character.*;
 
 /**
  * Класс методов для распознавания элементов примера
  */
 final class ElementCreator {
-
-    /**
-     * Распознаёт и выцепляет из примера первое число
-     */
-    private static final Function<String, Element> NUMBER_CREATOR = example -> {
-        int i = 0;
-
-        while (i < example.length() && getSymbolType(example.charAt(i)) == NUMBER) {
-            i++;
-        }
-
-        return new ElementNumber(example.substring(0, i));
-    };
-
-    /**
-     * Распознаёт и выцепляет из примера первую функцию
-     */
-    private static final Function<String, Element> FUNCTION_CREATOR = example ->
-            new ElementFunction(example.substring(0, getClosingBracketIndex(example)+1));
-
-    /**
-     * Распознаёт и выцепляет из примера выражение, заключённое в скобки
-     */
-    private static final Function<String, Element> BRACKET_CREATOR = example ->
-            new ElementBracket(example.substring(0, getClosingBracketIndex(example)+1));
-
-    /**
-     * Распознаёт и выцепляет из примера знак математического дейстия (^, /, *, -, +)
-     */
-    private static final Function<String, Element> SIGN_CREATOR = example ->
-            new ElementSign(example.substring(0, 1));
-
-    /**
-     * Распознаёт и выцепляет из примера знак факторила (!)
-     */
-    private static final Function<String, Element> FACTORIAL_CREATOR = example ->
-            new ElementFactorial(example.substring(0, 1));
 
     /**
      * Определяет функцию для создания элемента примера в зависимости от типа символа примера (знак, число, буква, скобка)
@@ -60,19 +22,27 @@ final class ElementCreator {
     static Function<String, Element> createElementFunction(final char symbol) {
         switch (getSymbolType(symbol)) {
             case SIGN:
-                return SIGN_CREATOR;
-
-            case NUMBER:
-                return NUMBER_CREATOR;
+                return example -> new ElementSign(example.substring(0, 1));
 
             case FUNCTION:
-                return FUNCTION_CREATOR;
+                return example -> new ElementFunction(example.substring(0, getClosingBracketIndex(example)+1));
 
             case BRACKET:
-                return BRACKET_CREATOR;
+                return example -> new ElementBracket(example.substring(0, getClosingBracketIndex(example)+1));
 
             case FACTORIAL:
-                return FACTORIAL_CREATOR;
+                return example -> new ElementFactorial(example.substring(0, 1));
+
+            case NUMBER:
+                return example -> {
+                    int i = 0;
+
+                    while (i < example.length() && getSymbolType(example.charAt(i)) == NUMBER) {
+                        i++;
+                    }
+
+                    return new ElementNumber(example.substring(0, i));
+                };
 
             default:
                 throw new ExampleException("Отсутствует условие для символа " + symbol);
