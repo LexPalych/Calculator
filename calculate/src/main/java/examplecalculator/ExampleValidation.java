@@ -24,21 +24,34 @@ final class ExampleValidation {
                 .mapToObj(c -> (char) c)
                 .collect(toList());
 
+        List<List<Executable>> executableList = List.of(
+                checkIncorrectSigns(expressionCharList),
+                checkBracketAmount(expressionCharList),
+                checkBracketOrder(expressionCharList),
+                checkArgumentBracket(expressionCharList),
+                checkExpressionInBracketIsCorrect(expressionCharList),
+                checkSymbolBeforeFunction(expressionCharList),
+                checkSymbolAfterFunction(expressionCharList),
+                checkSeveralSignConsecutive(expressionCharList),
+                checkFirstSymbol(expressionCharList),
+                checkLastSymbol(expressionCharList),
+                checkNoOnlyLetter(expressionCharList)
+        );
+
+        assertAll(getExecutableList(executableList));
+    }
+
+    /**
+     * Помещает список списков с Executable`ми в один большой список
+     */
+    private static List<Executable> getExecutableList(List<List<Executable>> lists) {
         List<Executable> executableList = new LinkedList<>();
 
-        executableList.addAll(checkIncorrectSigns(expressionCharList));
-        executableList.add(checkBracketAmount(expressionCharList));
-        executableList.addAll(checkBracketOrder(expressionCharList));
-        executableList.addAll(checkArgumentBracket(expressionCharList));
-        executableList.addAll(checkExpressionInBracketIsCorrect(expressionCharList));
-        executableList.addAll(checkSymbolBeforeFunction(expressionCharList));
-        executableList.addAll(checkSymbolAfterFunction(expressionCharList));
-        executableList.addAll(checkSeveralSignConsecutive(expressionCharList));
-        executableList.add(checkFirstSymbol(expressionCharList));
-        executableList.add(checkLastSymbol(expressionCharList));
-        executableList.add(checkNoOnlyLetter(expressionCharList));
+        for (List<Executable> executable : lists) {
+            executableList.addAll(executable);
+        }
 
-        assertAll(executableList);
+        return executableList;
     }
 
     /**
@@ -59,7 +72,9 @@ final class ExampleValidation {
     /**
      * Проверяет совпадение в количестве открывающий и закрывающих скобочек
      */
-    private static Executable checkBracketAmount(final List<Character> expressionCharList) {
+    private static List<Executable> checkBracketAmount(final List<Character> expressionCharList) {
+        List<Executable> executableList = new LinkedList<>();
+
         int openingBracket = (int) expressionCharList
                 .stream()
                 .filter(symbol -> symbol.equals('('))
@@ -70,7 +85,9 @@ final class ExampleValidation {
                 .filter(symbol -> symbol.equals(')'))
                 .count();
 
-        return () -> assertEquals(openingBracket, closingBracket, "Неверное количество скобочек");
+        executableList.add(()-> assertEquals(openingBracket, closingBracket, "Неверное количество скобочек"));
+
+        return executableList;
     }
 
     /**
@@ -201,26 +218,36 @@ final class ExampleValidation {
     /**
      * Проверяет наличие некорректных символов в начале выражения
      */
-    private static Executable checkFirstSymbol(final List<Character> expressionCharList) {
+    private static List<Executable> checkFirstSymbol(final List<Character> expressionCharList) {
+        List<Executable> executableList = new LinkedList<>();
+
         List<Character> signList = List.of('+', '*', '/', '!', '^', '.');
 
-        return () -> assertFalse(signList.contains(expressionCharList.get(0)), "Некорректный первый символ выражения");
+        executableList.add(() -> assertFalse(signList.contains(expressionCharList.get(0)), "Некорректный первый символ выражения"));
+
+        return executableList;
     }
 
     /**
      * Проверяет наличие некорректных символов в конце выражения
      */
-    private static Executable checkLastSymbol(final List<Character> expressionCharList) {
+    private static List<Executable> checkLastSymbol(final List<Character> expressionCharList) {
+        List<Executable> executableList = new LinkedList<>();
         List<Character> signList = List.of('+', '-', '*', '/', '^', '.');
 
-        return () -> assertFalse(signList.contains(expressionCharList.get(expressionCharList.size()-1)), "Некорректный последний символ выражения");
+        executableList.add(() -> assertFalse(signList.contains(expressionCharList.get(expressionCharList.size()-1)), "Некорректный последний символ выражения"));
+
+        return executableList;
     }
 
     /**
      * Проверяет наличие в выражении чисел
      */
-    private static Executable checkNoOnlyLetter(final List<Character> expressionCharList) {
-        return () -> assertTrue((int) expressionCharList.stream().filter(Character::isDigit).count() != 0, "В выражении отсутствуют числа");
+    private static List<Executable> checkNoOnlyLetter(final List<Character> expressionCharList) {
+        List<Executable> executableList = new LinkedList<>();
+        executableList.add(() -> assertTrue((int) expressionCharList.stream().filter(Character::isDigit).count() != 0, "В выражении отсутствуют числа"));
+
+        return executableList;
     }
 
 }
