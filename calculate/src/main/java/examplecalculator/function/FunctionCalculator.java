@@ -1,9 +1,10 @@
 package examplecalculator.function;
 
+import examplecalculator.ExampleException;
+
 import java.util.function.Function;
 
 import static examplecalculator.element.ElementListCreator.createElementList;
-import static examplecalculator.function.MathFunctions.getFunction;
 
 public final class FunctionCalculator {
     /**
@@ -11,12 +12,12 @@ public final class FunctionCalculator {
      */
     public static double getFunctionValue(final String example) {
         String functionName = getFunctionName(example);
-        Function<Double, Double> function = getFunction(functionName);
-
         String functionArgument = getFunctionArgument(example);
+
+        Function<Double, Double> mathFunction = getMathFunction(functionName);
         Double functionArgumentValue = createElementList(functionArgument);
 
-        return function.apply(functionArgumentValue);
+        return mathFunction.apply(functionArgumentValue);
     }
 
     /**
@@ -42,5 +43,63 @@ public final class FunctionCalculator {
     private static String getFunctionArgument(final String example) {
         String functionName = getFunctionName(example);
         return example.substring(functionName.length()+1, example.length()-1);
+    }
+
+    private static final Double RAD = Math.acos(-1)/180;
+
+    /**
+     * Распознаёт строку с именем функции и возвращает соответствующую функцию
+     * @param functionName - имя функции
+     * @return - возвращает функцию для расчётов
+     */
+    private static Function<Double, Double> getMathFunction(final String functionName) {
+        switch (functionName) {
+            case "sin":
+                return value -> Math.sin(value * RAD);
+
+            case "cos":
+                return value -> Math.cos(value * RAD);
+
+            case "tan":
+                return value -> Math.tan(value * RAD);
+
+            case "asin":
+                return value -> Math.asin(value) / RAD;
+
+            case "acos":
+                return value -> Math.acos(value) / RAD;
+
+            case "atan":
+                return value -> Math.atan(value) / RAD;
+
+            case "sinh":
+                return value -> Math.sinh(value * RAD);
+
+            case "cosh":
+                return value -> Math.cosh(value * RAD);
+
+            case "tanh":
+                return value -> Math.tanh(value * RAD);
+
+            case "exp":
+                return Math::exp;
+
+            case "abs":
+                return Math::abs;
+
+            case "sqrt":
+                return Math::sqrt;
+
+            case "ln":
+                return value -> {
+                    if (value > 0)
+                        return Math.log(value);
+                    else
+                        throw new ArithmeticException("Аргумент логарифма должен быть положительным");
+                };
+
+            default:
+                throw new ExampleException("Неизвестная функция");
+        }
     }
 }
