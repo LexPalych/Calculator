@@ -20,10 +20,6 @@ version '1.0'
 
 sourceCompatibility = 13
 
-repositories {
-    mavenCentral()
-}
-
 ext {
     jupiterVersion = '5.5.0'
 }
@@ -50,9 +46,23 @@ subprojects {
         compile "org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}"
     }
 
+    repositories {
+        mavenCentral()
+    }
+
     test {
+        systemProperties['junit.jupiter.execution.parallel.enabled'] = true
+        systemProperties['junit.jupiter.execution.parallel.mode.default'] = 'concurrent'
+        maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+        useJUnitPlatform()
+
         useJUnitPlatform()
     }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
 }
 
 

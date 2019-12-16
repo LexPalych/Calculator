@@ -1,17 +1,17 @@
-package examplecalculator.exampleelement;
+package examplecalculator.objectmodel;
 
 import java.util.function.BiFunction;
 
-import static examplecalculator.exampleelement.Element.TypeElement.SIGN;
-import static examplecalculator.examplefunctions.MathActions.getMathFunction;
+import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
+import static examplecalculator.action.ActionFunction.getMathAction;
 
-public class ElementSign implements Element<BiFunction> {
+public final class ElementSign implements Element<BiFunction> {
     private String element;
     private BiFunction value;
 
-    ElementSign(String element) {
+    public ElementSign(String element) {
         this.element = element;
-        this.value = getMathFunction(element);
+        this.value = getMathAction(element);
     }
 
     @Override

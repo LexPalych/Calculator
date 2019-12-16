@@ -1,4 +1,4 @@
-package examplecalculator.exampleelement;
+package examplecalculator.objectmodel;
 
 public interface Element<T> {
     T getValue();

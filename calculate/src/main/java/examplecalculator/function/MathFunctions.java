@@ -1,10 +1,10 @@
-package examplecalculator.examplefunctions;
+package examplecalculator.function;
 
 import examplecalculator.ExampleException;
 
 import java.util.function.Function;
 
-class MathFunctions {
+final class MathFunctions {
     private static final Double RAD = Math.acos(-1)/180;
 
     private static final Function<Double, Double> SIN = value -> Math.sin(value * RAD);
@@ -19,22 +19,16 @@ class MathFunctions {
     private static final Function<Double, Double> COS_HYPERBOLIC = value -> Math.cos(value * RAD);
     private static final Function<Double, Double> TAN_HYPERBOLIC = value -> Math.tan(value * RAD);
 
-    private static final Function<Double, Double> NATURAL_LOGARITHM = MathFunctions::getLogarithm;
     private static final Function<Double, Double> EXP = Math::exp;
     private static final Function<Double, Double> ABS = Math::abs;
     private static final Function<Double, Double> SQRT = Math::sqrt;
 
-    /**
-     * Находит натуральный логарифм аргумента
-     * @param argument - аргумент
-     * @return - возвращает значение ln
-     */
-    private static Double getLogarithm(final Double argument) {
-        if (argument > 0)
-            return Math.log(argument);
+    private static final Function<Double, Double> NATURAL_LOGARITHM = value -> {
+        if (value > 0)
+            return Math.log(value);
         else
             throw new ArithmeticException("Аргумент логарифма должен быть положительным");
-    }
+    };
 
     /**
      * Распознаёт строку с именем функции и возвращает соответствующую функцию

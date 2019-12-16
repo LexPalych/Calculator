@@ -1,19 +1,14 @@
-package examplecalculator.exampleelement;
+package examplecalculator.objectmodel;
 
-import static examplecalculator.exampleelement.Element.TypeElement.FACTORIAL;
-import static examplecalculator.examplefunctions.MathActions.FIND_FACTORIAL;
+import static examplecalculator.objectmodel.Element.TypeElement.NUMBER;
 
-public class ElementFactorial implements Element<Double> {
+public final class ElementNumber implements Element<Double> {
     private String element;
     private Double value;
 
-    ElementFactorial(String element) {
+    public ElementNumber(String element) {
         this.element = element;
-    }
-
-    public ElementFactorial(Double elementValue) {
-//        this.value = getFactorial(elementValue);
-        this.value = FIND_FACTORIAL.apply(elementValue, null);
+        this.value = Double.parseDouble(element);
     }
 
     @Override
@@ -38,6 +33,6 @@ public class ElementFactorial implements Element<Double> {
 
     @Override
     public TypeElement getTypeElement() {
-        return FACTORIAL;
+        return NUMBER;
     }
 }

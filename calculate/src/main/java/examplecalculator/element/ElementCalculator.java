@@ -1,25 +1,27 @@
-package examplecalculator.exampleelement;
+package examplecalculator.element;
+
+import examplecalculator.objectmodel.Element;
 
 import java.util.List;
 import java.util.function.BiFunction;
 
-import static examplecalculator.examplefunctions.ActionPriority.getActionList;
+import static examplecalculator.action.ActionOrder.getActionOrderList;
 
-public class ElementCalculator {
+final class ElementCalculator {
     /**
      * Выполняет расчёт элементов примера:
      * Выполняет действия между числами примера в соответствии с приоритетом (порядком действия) знаков
      * @param elementList - список элементов примера
      * @return - возвращает значение примера
      */
-    public static double calculateElement(final List<Element> elementList) {
+    static double calculateElement(final List<Element> elementList) {
         Double value;
-        List<BiFunction> actionList = getActionList(elementList);
+        List<BiFunction> actionOrderList = getActionOrderList(elementList);
 
         //Если получившийся список знаков, выполняемых по порядку, получился не пустой, выполняем расчёт элементов
         //Если пустой, значит в списке элементов лишь одно единственно число, которое и возвращаем
-        if (actionList.size() != 0) {
-            for (BiFunction action : actionList) {
+        if (actionOrderList.size() != 0) {
+            for (BiFunction action : actionOrderList) {
                 int i = 0;
 
                 while (i < elementList.size()) {

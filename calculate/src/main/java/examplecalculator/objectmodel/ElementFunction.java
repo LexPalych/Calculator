@@ -1,15 +1,15 @@
-package examplecalculator.exampleelement;
+package examplecalculator.objectmodel;
 
-import static examplecalculator.ExampleCalculator.calculate;
-import static examplecalculator.exampleelement.Element.TypeElement.BRACKET;
+import static examplecalculator.objectmodel.Element.TypeElement.FUNCTION;
+import static examplecalculator.function.FunctionCalculator.getFunctionValue;
 
-public class ElementBracket implements Element<Double> {
+public final class ElementFunction implements Element<Double> {
     private String element;
     private Double value;
 
-    ElementBracket(String element) {
+    public ElementFunction(String element) {
         this.element = element;
-        this.value = calculate(element.substring(1, element.length()-1));
+        this.value = getFunctionValue(element);
     }
 
     @Override
@@ -34,6 +34,6 @@ public class ElementBracket implements Element<Double> {
 
     @Override
     public TypeElement getTypeElement() {
-        return BRACKET;
+        return FUNCTION;
     }
 }
