@@ -14,7 +14,7 @@ public final class FunctionCalculator {
         Function<Double, Double> function = getFunction(functionName);
 
         String functionArgument = getFunctionArgument(example);
-        double functionArgumentValue = createElementList(functionArgument);
+        Double functionArgumentValue = createElementList(functionArgument);
 
         return function.apply(functionArgumentValue);
     }

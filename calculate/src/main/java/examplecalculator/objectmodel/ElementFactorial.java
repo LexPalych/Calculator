@@ -41,16 +41,16 @@ public final class ElementFactorial implements Element<Double> {
     }
 
     /**
-     * Находит факториал числа
-     * @param number - число
-     * @return - возвращает факториал числа типом Double
+     * РќР°С…РѕРґРёС‚ С„Р°РєС‚РѕСЂРёР°Р» С‡РёСЃР»Р°
+     * @param number - С‡РёСЃР»Рѕ
+     * @return - РІРѕР·РІСЂР°С‰Р°РµС‚ С„Р°РєС‚РѕСЂРёР°Р» С‡РёСЃР»Р° С‚РёРїРѕРј Double
      */
     private static Double getFactorial(final Double number) {
         if (number < 0)
-            throw new ArithmeticException("Отрицательный аргумент факториала");
+            throw new ArithmeticException("РћС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Р№ Р°СЂРіСѓРјРµРЅС‚ С„Р°РєС‚РѕСЂРёР°Р»Р°");
 
         if (number % 1 !=0)
-            throw new ArithmeticException("Аргумент факториала не является целым числом");
+            throw new ArithmeticException("РђСЂРіСѓРјРµРЅС‚ С„Р°РєС‚РѕСЂРёР°Р»Р° РЅРµ СЏРІР»СЏРµС‚СЃСЏ С†РµР»С‹Рј С‡РёСЃР»РѕРј");
 
         if (number == 0 || number == 1)
             return 1.0;

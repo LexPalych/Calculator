@@ -11,7 +11,7 @@ public final class ActionFunction {
     static final BiFunction<Double, Double, Double> DIVISION = (x, y) -> x / y;
     static final BiFunction<Double, Double, Double> EXPONENTIATION = Math::pow;
 
-    public static BiFunction<Double, Double, Double> getMathFunction(final String sign) {
+    public static BiFunction<Double, Double, Double> getMathAction(final String sign) {
         switch (sign) {
             case "+":
                 return ADDITIONAL;

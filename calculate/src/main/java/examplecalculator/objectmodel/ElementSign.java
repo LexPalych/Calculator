@@ -3,7 +3,7 @@ package examplecalculator.objectmodel;
 import java.util.function.BiFunction;
 
 import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
-import static examplecalculator.action.ActionFunction.getMathFunction;
+import static examplecalculator.action.ActionFunction.getMathAction;
 
 public final class ElementSign implements Element<BiFunction> {
     private String element;
@@ -11,7 +11,7 @@ public final class ElementSign implements Element<BiFunction> {
 
     public ElementSign(String element) {
         this.element = element;
-        this.value = getMathFunction(element);
+        this.value = getMathAction(element);
     }
 
     @Override
