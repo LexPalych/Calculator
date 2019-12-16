@@ -204,7 +204,7 @@ final class ExampleValidation {
     private static Executable checkFirstSymbol(final List<Character> expressionCharList) {
         List<Character> signList = List.of('+', '*', '/', '!', '^', '.');
 
-        return () -> assertFalse(signList.contains(expressionCharList.get(0)), "Íåêîððåêòíûé ïåðâûé ñèìâîë âûðàæåíèÿ");
+        return () -> assertFalse(signList.contains(expressionCharList.get(0)), "Некорректный первый символ выражения");
     }
 
     /**

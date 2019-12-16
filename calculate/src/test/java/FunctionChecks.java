@@ -4,7 +4,7 @@ import static examplecalculator.ExampleCalculator.calculateExample;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FunctionChecks {
-    Double INACCURACY = 0.00000000000001;
+    private Double INACCURACY = 0.00000000000001;
     
     @Test
     void sin() {
