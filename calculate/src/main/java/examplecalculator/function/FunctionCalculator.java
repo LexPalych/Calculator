@@ -7,6 +7,8 @@ import java.util.function.Function;
 import static examplecalculator.element.ElementListCreator.createElementList;
 
 public final class FunctionCalculator {
+    private static final Double RAD = Math.acos(-1)/180;
+
     /**
      * Нахождит значение тригонометрической функции
      */
@@ -44,8 +46,6 @@ public final class FunctionCalculator {
         String functionName = getFunctionName(example);
         return example.substring(functionName.length()+1, example.length()-1);
     }
-
-    private static final Double RAD = Math.acos(-1)/180;
 
     /**
      * Распознаёт строку с именем функции и возвращает соответствующую функцию

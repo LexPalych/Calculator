@@ -5,7 +5,7 @@ import examplecalculator.objectmodel.Element;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import static examplecalculator.action.ActionOrder.getActionOrderList;
+import static examplecalculator.action.ActionFunction.ACTION_ORDER;
 
 final class ElementCalculator {
     /**
@@ -16,12 +16,11 @@ final class ElementCalculator {
      */
     static double calculateElement(final List<Element> elementList) {
         Double value;
-        List<BiFunction> actionOrderList = getActionOrderList(elementList);
 
         //Если получившийся список знаков, выполняемых по порядку, получился не пустой, выполняем расчёт элементов
         //Если пустой, значит в списке элементов лишь одно единственно число, которое и возвращаем
-        if (actionOrderList.size() != 0) {
-            for (BiFunction action : actionOrderList) {
+        if (elementList.size() != 0) {
+            for (BiFunction action : ACTION_ORDER) {
                 int i = 0;
 
                 while (i < elementList.size()) {
