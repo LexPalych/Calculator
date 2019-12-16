@@ -223,7 +223,8 @@ final class ExampleValidation {
 
         List<Character> signList = List.of('+', '*', '/', '!', '^', '.');
 
-        executableList.add(() -> assertFalse(signList.contains(expressionCharList.get(0)), "Некорректный первый символ выражения"));
+        executableList.add(() -> assertFalse(signList.contains(expressionCharList.get(0)),
+                "Некорректный первый символ выражения"));
 
         return executableList;
     }
@@ -235,7 +236,8 @@ final class ExampleValidation {
         List<Executable> executableList = new LinkedList<>();
         List<Character> signList = List.of('+', '-', '*', '/', '^', '.');
 
-        executableList.add(() -> assertFalse(signList.contains(expressionCharList.get(expressionCharList.size()-1)), "Некорректный последний символ выражения"));
+        executableList.add(() -> assertFalse(signList.contains(expressionCharList.get(expressionCharList.size()-1)),
+                "Некорректный последний символ выражения"));
 
         return executableList;
     }
@@ -245,7 +247,8 @@ final class ExampleValidation {
      */
     private static List<Executable> checkNoOnlyLetter(final List<Character> expressionCharList) {
         List<Executable> executableList = new LinkedList<>();
-        executableList.add(() -> assertTrue((int) expressionCharList.stream().filter(Character::isDigit).count() != 0, "В выражении отсутствуют числа"));
+        executableList.add(() -> assertTrue((int) expressionCharList.stream().filter(Character::isDigit).count() != 0,
+                "В выражении отсутствуют числа"));
 
         return executableList;
     }
