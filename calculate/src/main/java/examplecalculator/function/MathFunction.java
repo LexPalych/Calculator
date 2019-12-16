@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 import static examplecalculator.element.ElementListCreator.createElementList;
 
-public final class FunctionCalculator {
+public final class MathFunction {
     private static final Double RAD = Math.acos(-1)/180;
 
     /**

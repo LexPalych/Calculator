@@ -5,7 +5,7 @@ import examplecalculator.objectmodel.Element;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import static examplecalculator.action.ActionFunction.ACTION_ORDER;
+import static examplecalculator.function.ActionFunction.ACTION_ORDER;
 
 final class ElementCalculator {
     /**
