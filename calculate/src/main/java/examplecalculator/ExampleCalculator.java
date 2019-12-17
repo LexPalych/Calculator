@@ -1,7 +1,7 @@
 package examplecalculator;
 
-import static examplecalculator.element.ElementListCreator.createElementList;
 import static examplecalculator.ExampleValidation.assertExample;
+import static examplecalculator.element.ElementCalculator.calculateExample;
 
 public final class ExampleCalculator {
     /**
@@ -10,8 +10,8 @@ public final class ExampleCalculator {
      * @param example - пример
      * @return - возвращает итоговый результат вычислений
      */
-    public static Double calculateExample(final String example) {
+    public static Double calculate(final String example) {
         assertExample(example);
-        return createElementList(example);
+        return calculateExample(example);
     }
 }

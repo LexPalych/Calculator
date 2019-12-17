@@ -8,13 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
-import static examplecalculator.element.ElementCalculator.calculateElement;
 import static examplecalculator.element.ElementCreator.getElementCreator;
 import static examplecalculator.element.ElementListCreator.ElementListReplacer.replaceElementList;
 import static examplecalculator.objectmodel.Element.TypeElement.FACTORIAL;
 import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
 
-public final class ElementListCreator {
+final class ElementListCreator {
     /**
      * Разбивает пример (подпример главного примера) на элементы:
      * Числа, знаки математических действий, выражения в скобках, функции
@@ -23,7 +22,7 @@ public final class ElementListCreator {
      * @param subExample - пример (подпример главного примера)
      * @return - возвращает список элементов примера, состоящий из числовых значений и знаков (лямбда-функций) между ними
      */
-    public static Double createElementList(final String subExample) {
+    static List<Element> createElementList(final String subExample) {
         List<Element> elementList = new LinkedList<>();
         Element element;
         int i = 0;
@@ -40,7 +39,7 @@ public final class ElementListCreator {
             i += element.getElement().length();
         }
 
-        return calculateElement(replaceElementList(elementList));
+        return replaceElementList(elementList);
     }
 
     static class ElementListReplacer {
