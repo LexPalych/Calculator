@@ -4,7 +4,7 @@ import examplecalculator.ExampleException;
 
 import java.util.function.Function;
 
-import static examplecalculator.element.ElementCalculator.calculateExample;
+import static examplecalculator.element.ElementCalculator.getExampleValue;
 import static java.lang.StrictMath.PI;
 
 public final class MathFunction {
@@ -18,7 +18,7 @@ public final class MathFunction {
         String functionArgument = getFunctionArgument(example);
 
         Function<Double, Double> mathFunction = getMathFunction(functionName);
-        Double functionValue = calculateExample(functionArgument);
+        Double functionValue = getExampleValue(functionArgument);
 
         return mathFunction.apply(functionValue);
     }

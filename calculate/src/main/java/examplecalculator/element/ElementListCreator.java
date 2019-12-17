@@ -22,7 +22,7 @@ final class ElementListCreator {
      * @param subExample - пример (подпример главного примера)
      * @return - возвращает список элементов примера, состоящий из числовых значений и знаков (лямбда-функций) между ними
      */
-    static List<Element> createElementList(final String subExample) {
+    static List<Element> getElementList(final String subExample) {
         List<Element> elementList = new LinkedList<>();
         Element element;
         int i = 0;

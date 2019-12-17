@@ -1,7 +1,7 @@
 package examplecalculator;
 
 import static examplecalculator.ExampleValidation.assertExample;
-import static examplecalculator.element.ElementCalculator.calculateExample;
+import static examplecalculator.element.ElementCalculator.getExampleValue;
 
 public final class ExampleCalculator {
     /**
@@ -12,6 +12,6 @@ public final class ExampleCalculator {
      */
     public static Double calculate(final String example) {
         assertExample(example);
-        return calculateExample(example);
+        return getExampleValue(example);
     }
 }
