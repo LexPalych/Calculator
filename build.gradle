@@ -1,44 +1,102 @@
+import java.time.Duration
+
 buildscript {
     repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-    dependencies {
-        classpath "io.qameta.allure:allure-gradle:2.8.1"
+        mavenCentral()
     }
 }
 
 plugins {
+    id 'de.marcphilipp.nexus-publish' version '0.4.0'
+    id 'io.codearte.nexus-staging' version '0.21.1'
+    id 'com.diffplug.gradle.spotless' version '3.26.1'
+
     id 'groovy'
     id 'idea'
-    id 'io.qameta.allure' version '2.5'
 }
 
-group 'Calculate'
-version '1.0'
+allprojects {
+    group = 'com.github.lexshcherbinin'
+    version = '1.0.0'
+}
 
-sourceCompatibility = 13
+//sourceCompatibility = 13
 
 ext {
     jupiterVersion = '5.5.0'
 }
 
 subprojects {
+    apply plugin: 'de.marcphilipp.nexus-publish'
+    apply plugin: 'com.diffplug.gradle.spotless'
+    apply plugin: 'signing'
     apply plugin: 'java'
-    apply plugin: 'maven'
-    apply plugin: 'maven-publish'
-    apply plugin: 'io.qameta.allure'
+//    apply plugin: 'maven'
+//    apply plugin: 'maven-publish'
 
-    allure {
-        autoconfigure = true
+    nexusPublishing {
+        Duration duration = Duration.ofMinutes(5)
+        connectTimeout = duration
+        clientTimeout = duration
 
-        version = '2.12.1'
-
-        useJUnit5 {
-            version = '2.12.1'
+        repositories {
+            sonatype {
+                username = "${nexusUsername}"
+                password = "${nexusPassword}"
+            }
         }
     }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                group = project.group
+                artifactId = project.name
+                version = project.version
+
+                from components.java
+
+                pom {
+                    name = project.name
+                    description = 'Project to ease pain of test automation'
+                    url = 'https://github.com/LexShcherbinin/Calculator'
+                    inceptionYear = '2020'
+
+                    licenses {
+                        license {
+                            name = 'GNU General Public License v3.0'
+                            url = 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+                            distribution = 'repo'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id = 'LexShcherbinin'
+                            name = 'Alexandr Shcherbinin'
+                            email = 'lexshcherbinin@gmail.com'
+                        }
+                    }
+
+                    scm {
+                        url = 'https://github.com/LexShcherbinin/Calculator'
+                        connection = 'scm:https://github.com/LexShcherbinin/Calculator.git'
+                        developerConnection = 'scm:https://github.com/LexShcherbinin/Calculator.git'
+                    }
+                }
+            }
+        }
+    }
+
+    signing {
+        sign publishing.publications.mavenJava
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceCompatibility = 13
 
     dependencies {
         compile "org.junit.jupiter:junit-jupiter-api:${jupiterVersion}"
@@ -53,8 +111,6 @@ subprojects {
     test {
         systemProperties['junit.jupiter.execution.parallel.enabled'] = true
         systemProperties['junit.jupiter.execution.parallel.mode.default'] = 'concurrent'
-        maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
-        useJUnitPlatform()
 
         useJUnitPlatform()
     }
