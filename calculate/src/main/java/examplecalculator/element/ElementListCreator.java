@@ -8,13 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
+import static examplecalculator.element.ElementCreator.getElementCreator;
 import static examplecalculator.element.ElementListCreator.ElementListReplacer.replaceElementList;
 import static examplecalculator.objectmodel.Element.TypeElement.FACTORIAL;
 import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
-import static examplecalculator.element.ElementCalculator.calculateElement;
-import static examplecalculator.element.ElementCreator.createElementFunction;
 
-public final class ElementListCreator {
+final class ElementListCreator {
     /**
      * Разбивает пример (подпример главного примера) на элементы:
      * Числа, знаки математических действий, выражения в скобках, функции
@@ -23,7 +22,7 @@ public final class ElementListCreator {
      * @param subExample - пример (подпример главного примера)
      * @return - возвращает список элементов примера, состоящий из числовых значений и знаков (лямбда-функций) между ними
      */
-    public static Double createElementList(final String subExample) {
+    static List<Element> getElementList(final String subExample) {
         List<Element> elementList = new LinkedList<>();
         Element element;
         int i = 0;
@@ -32,15 +31,15 @@ public final class ElementListCreator {
             char currentSymbol = subExample.charAt(i);
 
             //В зависимости от того, какой текущий символ, выбирается функция, которая создаёт элемент примера
-            Function<String, Element> createElementFunction = createElementFunction(currentSymbol);
-            element = createElementFunction.apply(subExample.substring(i));
+            Function<String, Element> elementCreator = getElementCreator(currentSymbol);
+            element = elementCreator.apply(subExample.substring(i));
             elementList.add(element);
 
             //Итератор переносится на индекс символа, стоящего сразу после последнего символа элемента примера
             i += element.getElement().length();
         }
 
-        return calculateElement(replaceElementList(elementList));
+        return replaceElementList(elementList);
     }
 
     static class ElementListReplacer {

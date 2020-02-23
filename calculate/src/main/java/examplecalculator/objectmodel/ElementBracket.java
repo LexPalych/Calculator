@@ -1,6 +1,6 @@
 package examplecalculator.objectmodel;
 
-import static examplecalculator.element.ElementListCreator.createElementList;
+import static examplecalculator.element.ElementCalculator.getExampleValue;
 import static examplecalculator.objectmodel.Element.TypeElement.BRACKET;
 
 public final class ElementBracket implements Element<Double> {
@@ -9,7 +9,7 @@ public final class ElementBracket implements Element<Double> {
 
     public ElementBracket(String element) {
         this.element = element;
-        this.value = createElementList(element.substring(1, element.length()-1));
+        this.value = getExampleValue(element.substring(1, element.length()-1));
     }
 
     @Override
