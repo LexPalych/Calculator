@@ -34,7 +34,7 @@ apply plugin: 'signing'
 apply plugin: 'java'
 //apply plugin: 'maven'
 apply plugin: 'maven-publish'
-apply plugin: 'android-reporting'
+//apply plugin: 'android-reporting'
 //apply plugin: 'com.android.library'
 
 //android {
@@ -42,7 +42,12 @@ apply plugin: 'android-reporting'
 //    buildToolsVersion "21.1.2"
 //}
 
-apply from: '/maven_push.gradle'
+//apply from: '/maven_push.gradle'
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
 
 nexusPublishing {
     Duration duration = Duration.ofMinutes(5)

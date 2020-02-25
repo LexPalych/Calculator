@@ -35,7 +35,7 @@ final class ElementListCreator {
             element = elementCreator.apply(subExample.substring(i));
             elementList.add(element);
 
-            //Итератор переносится на индекс символа, стоящего сразу после последнего символа элемента примера
+
             i += element.getElement().length();
         }
 
