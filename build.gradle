@@ -1,8 +1,16 @@
 import java.time.Duration
 
+def isReleaseBuild() {
+    return version.contains("SNAPSHOT") == false
+}
+
 buildscript {
     repositories {
         mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.1.0'
     }
 }
 
@@ -15,110 +23,95 @@ plugins {
     id 'idea'
 }
 
-allprojects {
-    group = 'com.github.lexshcherbinin'
-    version = '1.0.0'
-}
+group = 'com.github.lexshcherbinin'
+version = '1.0.0'
 
-//sourceCompatibility = 13
+sourceCompatibility = 13
 
-ext {
-    jupiterVersion = '5.5.0'
-}
+apply plugin: 'de.marcphilipp.nexus-publish'
+apply plugin: 'com.diffplug.gradle.spotless'
+apply plugin: 'signing'
+apply plugin: 'java'
+//apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'android-reporting'
+//apply plugin: 'com.android.library'
 
-subprojects {
-    apply plugin: 'de.marcphilipp.nexus-publish'
-    apply plugin: 'com.diffplug.gradle.spotless'
-    apply plugin: 'signing'
-    apply plugin: 'java'
-//    apply plugin: 'maven'
-//    apply plugin: 'maven-publish'
+//android {
+//    compileSdkVersion 21
+//    buildToolsVersion "21.1.2"
+//}
 
-    nexusPublishing {
-        Duration duration = Duration.ofMinutes(5)
-        connectTimeout = duration
-        clientTimeout = duration
+apply from: '/maven_push.gradle'
 
-        repositories {
-            sonatype {
-                username = "${nexusUsername}"
-                password = "${nexusPassword}"
-            }
+nexusPublishing {
+    Duration duration = Duration.ofMinutes(5)
+    connectTimeout = duration
+    clientTimeout = duration
+
+    repositories {
+        sonatype {
+            username = "${nexusUsername}"
+            password = "${nexusPassword}"
         }
     }
+}
 
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                group = project.group
-                artifactId = project.name
-                version = project.version
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            group = project.group
+            artifactId = project.name
+            version = project.version
 
-                from components.java
+            from components.java
 
-                pom {
-                    name = project.name
-                    description = 'Project to ease pain of test automation'
+            pom {
+                name = project.name
+                description = 'Project to ease pain of test automation'
+                url = 'https://github.com/LexShcherbinin/Calculator'
+                inceptionYear = '2020'
+
+                licenses {
+                    license {
+                        name = 'GNU General Public License v3.0'
+                        url = 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+                        distribution = 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'LexShcherbinin'
+                        name = 'Alexandr Shcherbinin'
+                        email = 'lexshcherbinin@gmail.com'
+                    }
+                }
+
+                scm {
                     url = 'https://github.com/LexShcherbinin/Calculator'
-                    inceptionYear = '2020'
-
-                    licenses {
-                        license {
-                            name = 'GNU General Public License v3.0'
-                            url = 'https://www.gnu.org/licenses/gpl-3.0.en.html'
-                            distribution = 'repo'
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id = 'LexShcherbinin'
-                            name = 'Alexandr Shcherbinin'
-                            email = 'lexshcherbinin@gmail.com'
-                        }
-                    }
-
-                    scm {
-                        url = 'https://github.com/LexShcherbinin/Calculator'
-                        connection = 'scm:https://github.com/LexShcherbinin/Calculator.git'
-                        developerConnection = 'scm:https://github.com/LexShcherbinin/Calculator.git'
-                    }
+                    connection = 'scm:https://github.com/LexShcherbinin/Calculator.git'
+                    developerConnection = 'scm:https://github.com/LexShcherbinin/Calculator.git'
                 }
             }
         }
     }
-
-    signing {
-        sign publishing.publications.mavenJava
-    }
-
-    repositories {
-        mavenCentral()
-    }
-
-    sourceCompatibility = 13
-
-    dependencies {
-        compile "org.junit.jupiter:junit-jupiter-api:${jupiterVersion}"
-        compile "org.junit.jupiter:junit-jupiter-params:${jupiterVersion}"
-        compile "org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}"
-    }
-
-    repositories {
-        mavenCentral()
-    }
-
-    test {
-        systemProperties['junit.jupiter.execution.parallel.enabled'] = true
-        systemProperties['junit.jupiter.execution.parallel.mode.default'] = 'concurrent'
-
-        useJUnitPlatform()
-    }
-
-    tasks.withType(JavaCompile) {
-        options.encoding = 'UTF-8'
-    }
-
 }
 
+signing {
+    sign publishing.publications.mavenJava
+}
 
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.junit.jupiter:junit-jupiter-api:5.5.0"
+    compile "org.junit.jupiter:junit-jupiter-params:5.5.0"
+    compile "org.junit.jupiter:junit-jupiter-engine:5.5.0"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
