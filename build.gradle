@@ -1,16 +1,8 @@
 import java.time.Duration
 
-def isReleaseBuild() {
-    return version.contains("SNAPSHOT") == false
-}
-
 buildscript {
     repositories {
         mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.0'
     }
 }
 
@@ -24,7 +16,7 @@ plugins {
 }
 
 group = 'com.github.lexshcherbinin'
-version = '1.0.1'
+version = '1.0.2'
 
 sourceCompatibility = 13
 
