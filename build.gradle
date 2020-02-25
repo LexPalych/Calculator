@@ -32,17 +32,7 @@ apply plugin: 'de.marcphilipp.nexus-publish'
 apply plugin: 'com.diffplug.gradle.spotless'
 apply plugin: 'signing'
 apply plugin: 'java'
-//apply plugin: 'maven'
 apply plugin: 'maven-publish'
-//apply plugin: 'android-reporting'
-//apply plugin: 'com.android.library'
-
-//android {
-//    compileSdkVersion 21
-//    buildToolsVersion "21.1.2"
-//}
-
-//apply from: '/maven_push.gradle'
 
 java {
     withJavadocJar()
@@ -112,9 +102,9 @@ repositories {
 }
 
 dependencies {
-    compile "org.junit.jupiter:junit-jupiter-api:5.5.0"
-    compile "org.junit.jupiter:junit-jupiter-params:5.5.0"
-    compile "org.junit.jupiter:junit-jupiter-engine:5.5.0"
+    compile "org.junit.jupiter:junit-jupiter-api:${jupiterVersion}"
+    compile "org.junit.jupiter:junit-jupiter-params:${jupiterVersion}"
+    compile "org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}"
 }
 
 tasks.withType(JavaCompile) {
