@@ -22,6 +22,6 @@ jobs:
           publishAllPublicationsToSonatypeRepository
           -PnexusUsername=${{ secrets.nexusUsername }}
           -PnexusPassword=${{ secrets.nexusPassword }}
-          -Psigning.keyId=${{ secrets.signingKeyId }}
-          -Psigning.password=${{ secrets.signingPassword }}
-          -Psigning.secretKeyRingFile=$GITHUB_WORKSPACE/keys.gpg
+          -Psigning.keyId=${{ secrets.signing.keyId }}
+          -Psigning.password=${{ secrets.signing.password }}
+          -Psigning.secretKeyRingFile=${{ secrets.signing.secretKeyRingFile }}
