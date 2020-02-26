@@ -19,9 +19,4 @@ jobs:
       - name: Test, coverage and release
         shell: bash
         run: ./gradlew
-          publishAllPublicationsToSonatypeRepository
-          -PnexusUsername=${{ secrets.nexusUsername }}
-          -PnexusPassword=${{ secrets.nexusPassword }}
-          -Psigning.keyId=${{ secrets.signing.keyId }}
-          -Psigning.password=${{ secrets.signing.password }}
-          -Psigning.secretKeyRingFile=${{ secrets.signing.secretKeyRingFile }}
+          test
