@@ -19,7 +19,6 @@ jobs:
       - name: Test, coverage and release
         shell: bash
         run: ./gradlew
-          test
           publishAllPublicationsToSonatypeRepository
           closeAndReleaseRepository
           -PnexusUsername=${{ secrets.nexusUsername }}
