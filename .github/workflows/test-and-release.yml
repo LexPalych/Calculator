@@ -25,4 +25,4 @@ jobs:
           -PnexusPassword=${{ secrets.nexusPassword }}
           -Psigning.keyId=${{ secrets.signingKeyId }}
           -Psigning.password=${{ secrets.signingPassword }}
-#          -Psigning.secretKeyRingFile=${signing.secretKeyRingFile}
+          -Psigning.secretKeyRingFile=${ signing.secretKeyRingFile}
