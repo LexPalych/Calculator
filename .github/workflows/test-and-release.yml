@@ -20,6 +20,8 @@ jobs:
         shell: bash
         run: ./gradlew
           test
+          spotlessJavaCheck
+          jacocoTestCoverageVerification
           signMavenJavaPublication
           publishAllPublicationsToSonatypeRepository
           closeAndReleaseRepository
@@ -27,4 +29,4 @@ jobs:
           -PnexusPassword=${{ secrets.nexusPassword }}
           -Psigning.keyId=${{ secrets.signingKeyId }}
           -Psigning.password=${{ secrets.signingPassword }}
-          -Psigning.secretKeyRingFile=$GITHUB_WORKSPACE/key.gpg
+          -Psigning.secretKeyRingFile=$GITHUB_WORKSPACE/keys.gpg
