@@ -20,3 +20,11 @@ jobs:
         shell: bash
         run: ./gradlew
           test
+          signMavenJavaPublication
+          publishAllPublicationsToSonatypeRepository
+          closeAndReleaseRepository
+          -PnexusUsername=${{ secrets.nexusUsername }}
+          -PnexusPassword=${{ secrets.nexusPassword }}
+          -Psigning.keyId=${{ secrets.signingKeyId }}
+          -Psigning.password=${{ secrets.signingPassword }}
+          -Psigning.secretKeyRingFile=$GITHUB_WORKSPACE/key.gpg
