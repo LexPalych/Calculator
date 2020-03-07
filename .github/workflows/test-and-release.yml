@@ -29,4 +29,4 @@ jobs:
           -PnexusPassword=${{ secrets.nexusPassword }}
           -Psigning.keyId=${{ secrets.signingKeyId }}
           -Psigning.password=${{ secrets.signingPassword }}
-          -Psigning.secretKeyRingFile=$GITHUB_WORKSPACE/keys.gpg
+          -Psigning.secretKeyRingFile=keys.gpg
