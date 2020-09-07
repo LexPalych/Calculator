@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.function.Function;
 
 import static examplecalculator.element.ElementCreator.getElementCreator;
-import static examplecalculator.element.ElementListCreator.ElementListReplacer.replaceElementList;
 import static examplecalculator.objectmodel.Element.TypeElement.FACTORIAL;
 import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
 
@@ -22,7 +21,7 @@ final class ElementListCreator {
      * @param subExample - пример (подпример главного примера)
      * @return - возвращает список элементов примера, состоящий из числовых значений и знаков (лямбда-функций) между ними
      */
-    static List<Element> getElementList(final String subExample) {
+    List<Element> getElementList(final String subExample) {
         List<Element> elementList = new LinkedList<>();
         Element element;
         int i = 0;
@@ -39,16 +38,16 @@ final class ElementListCreator {
             i += element.getElement().length();
         }
 
-        return replaceElementList(elementList);
+        return new ElementListReplacer().replaceElementList(elementList);
     }
 
-    static class ElementListReplacer {
+    private static class ElementListReplacer {
         /**
          * Подпрвляет "сырой" список элементов, убирая "!" во всём списке и "-" в начале списка
          * @param rowElementList - "сырой" список элементов
          * @return - полностью исправленный список элементов
          */
-        static List<Element> replaceElementList(final List<Element> rowElementList) {
+        List<Element> replaceElementList(final List<Element> rowElementList) {
             return replaceFactorialElement(replaceFirstElement(rowElementList));
         }
 
@@ -59,7 +58,7 @@ final class ElementListCreator {
          * @param elementList - "сырой" список элементов
          * @return - исправленный список элементов
          */
-        private static List<Element> replaceFirstElement(final List<Element> elementList) {
+        private List<Element> replaceFirstElement(final List<Element> elementList) {
             if (elementList.get(0).getTypeElement() == SIGN) {
                 elementList.add(0, new ElementNumber("0"));
             }
@@ -75,7 +74,7 @@ final class ElementListCreator {
          * @param elementList - "сырой" список элементов
          * @return - исправленный список элементов
          */
-        private static List<Element> replaceFactorialElement(final List<Element> elementList) {
+        private List<Element> replaceFactorialElement(final List<Element> elementList) {
             int i = 0;
 
             while (i < elementList.size()) {
@@ -94,5 +93,4 @@ final class ElementListCreator {
             return elementList;
         }
     }
-
 }

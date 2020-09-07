@@ -8,16 +8,14 @@ import static examplecalculator.element.ElementCalculator.getExampleValue;
 import static java.lang.StrictMath.PI;
 
 public final class MathFunction {
-    private static final Double RAD = PI/180;
-
     /**
      * Нахождит значение тригонометрической функции
      */
     public static double getFunctionValue(final String example) {
-        String functionName = getFunctionName(example);
+//        String functionName = getFunctionName(example);
+        Function<Double, Double> mathFunction = getMathFunction(example);
         String functionArgument = getFunctionArgument(example);
 
-        Function<Double, Double> mathFunction = getMathFunction(functionName);
         Double functionValue = getExampleValue(functionArgument);
 
         return mathFunction.apply(functionValue);
@@ -50,37 +48,40 @@ public final class MathFunction {
 
     /**
      * Распознаёт строку с именем функции и возвращает соответствующую функцию
-     * @param functionName - имя функции
+     * @param example - пример
      * @return - возвращает функцию для расчётов
      */
-    private static Function<Double, Double> getMathFunction(final String functionName) {
+    private static Function<Double, Double> getMathFunction(final String example) {
+        Double rad = PI/180;
+        String functionName = getFunctionName(example);
+
         switch (functionName) {
             case "sin":
-                return value -> Math.sin(value * RAD);
+                return value -> Math.sin(value * rad);
 
             case "cos":
-                return value -> Math.cos(value * RAD);
+                return value -> Math.cos(value * rad);
 
             case "tan":
-                return value -> Math.tan(value * RAD);
+                return value -> Math.tan(value * rad);
 
             case "asin":
-                return value -> Math.asin(value) / RAD;
+                return value -> Math.asin(value) / rad;
 
             case "acos":
-                return value -> Math.acos(value) / RAD;
+                return value -> Math.acos(value) / rad;
 
             case "atan":
-                return value -> Math.atan(value) / RAD;
+                return value -> Math.atan(value) / rad;
 
             case "sinh":
-                return value -> Math.sinh(value * RAD);
+                return value -> Math.sinh(value * rad);
 
             case "cosh":
-                return value -> Math.cosh(value * RAD);
+                return value -> Math.cosh(value * rad);
 
             case "tanh":
-                return value -> Math.tanh(value * RAD);
+                return value -> Math.tanh(value * rad);
 
             case "exp":
                 return Math::exp;
