@@ -11,13 +11,12 @@ import static java.util.stream.Collectors.toList;
  * Класс для валидации примера на корректность записи
  */
 final class ExampleValidation2 {
-    private List<String> errorList = new ArrayList<>();
-    private boolean isCorrect = true;
-    private String example;
-    private List<Character> expressionCharList;
-    private int length;
+    private static final List<String> errorList = new ArrayList<>();
+    private static boolean isCorrect = true;
+    private final List<Character> expressionCharList;
+    private final int length;
 
-    public ExampleValidation2(String example) {
+    private ExampleValidation2(String example) {
         expressionCharList = example
             .chars()
             .mapToObj(c -> (char) c)
@@ -26,18 +25,20 @@ final class ExampleValidation2 {
         length = expressionCharList.size();
     }
 
-    public boolean isCorrect() {
-        checkIncorrectSigns();
-        checkBracketAmount();
-        checkBracketOrder();
-        checkArgumentBracket();
-        checkExpressionInBracketIsCorrect();
-        checkSymbolBeforeFunction();
-        checkSymbolAfterFunction();
-        checkSeveralSignConsecutive();
-        checkFirstSymbol();
-        checkLastSymbol();
-        checkNoOnlyLetter();
+    public static void isCorrect(String example) {
+        ExampleValidation2 exampleValidation2 = new ExampleValidation2(example);
+
+        exampleValidation2.checkIncorrectSigns();
+        exampleValidation2.checkBracketAmount();
+        exampleValidation2.checkBracketOrder();
+        exampleValidation2.checkArgumentBracket();
+        exampleValidation2.checkExpressionInBracketIsCorrect();
+        exampleValidation2.checkSymbolBeforeFunction();
+        exampleValidation2.checkSymbolAfterFunction();
+        exampleValidation2.checkSeveralSignConsecutive();
+        exampleValidation2.checkFirstSymbol();
+        exampleValidation2.checkLastSymbol();
+        exampleValidation2.checkNoOnlyLetter();
 
         if (!isCorrect) {
             for (String error : errorList) {
@@ -46,9 +47,6 @@ final class ExampleValidation2 {
 
             throw new ExampleException("Выражение некорректно");
         }
-
-        return true;
-
     }
 
     /**
@@ -114,7 +112,6 @@ final class ExampleValidation2 {
      */
     private void checkArgumentBracket() {
         for (int i = 1; i < length; i++) {
-
             if (isDigit(expressionCharList.get(i)) && isLetter(expressionCharList.get(i - 1)))
                 addError("Отсутствует скобочка перед аргументом функции на позиции " + i);
         }
