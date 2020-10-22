@@ -3,10 +3,11 @@ package examplecalculator.element;
 import examplecalculator.objectmodel.Element;
 
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiFunction;
 
 import static examplecalculator.element.ElementListCreator.getElementList;
-import static examplecalculator.function.ActionFunction.ACTION_ORDER;
+import static examplecalculator.function.ActionFunction.*;
 
 public final class ElementCalculator {
     /**
@@ -22,9 +23,12 @@ public final class ElementCalculator {
         Double rightElement;
         Double value;
 
+//        List<BiFunction> ACTION_ORDER =  List.of(EXPONENTIATION, DIVISION, MULTIPLICATION, SUBTRACTION, ADDITIONAL);
+        Set<BiFunction<Double, Double, Double>> actionOrder = Set.of(EXPONENTIATION, DIVISION, MULTIPLICATION, SUBTRACTION, ADDITIONAL);
+
         //Если получившийся список знаков, выполняемых по порядку, получился не пустой, выполняем расчёт элементов
         //Если пустой, значит в списке элементов лишь одно единственно число, которое и возвращаем
-        for (BiFunction action : ACTION_ORDER) {
+        for (BiFunction action : actionOrder) {
             int i = 0;
 
             while (i < elementList.size()) {
