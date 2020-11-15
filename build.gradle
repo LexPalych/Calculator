@@ -18,7 +18,7 @@ plugins {
 group = 'com.github.lexshcherbinin'
 version = '1.0.4'
 
-sourceCompatibility = 13
+sourceCompatibility = JavaVersion.VERSION_15
 
 apply plugin: 'de.marcphilipp.nexus-publish'
 apply plugin: 'com.diffplug.gradle.spotless'

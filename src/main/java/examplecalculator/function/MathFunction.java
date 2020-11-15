@@ -12,11 +12,10 @@ public final class MathFunction {
      * Нахождит значение тригонометрической функции
      */
     public static double getFunctionValue(final String example) {
-//        String functionName = getFunctionName(example);
         Function<Double, Double> mathFunction = getMathFunction(example);
         String functionArgument = getFunctionArgument(example);
 
-        Double functionValue = getExampleValue(functionArgument);
+        double functionValue = getExampleValue(functionArgument);
 
         return mathFunction.apply(functionValue);
     }
@@ -29,9 +28,8 @@ public final class MathFunction {
     private static String getFunctionName(final String example) {
         int i = 0;
 
-        while (example.charAt(i) != '(') {
+        while (example.charAt(i) != '(')
             i++;
-        }
 
         return example.substring(0, i);
     }
@@ -43,7 +41,7 @@ public final class MathFunction {
      */
     private static String getFunctionArgument(final String example) {
         String functionName = getFunctionName(example);
-        return example.substring(functionName.length()+1, example.length()-1);
+        return example.substring(functionName.length() + 1, example.length() - 1);
     }
 
     /**
@@ -52,56 +50,24 @@ public final class MathFunction {
      * @return - возвращает функцию для расчётов
      */
     private static Function<Double, Double> getMathFunction(final String example) {
-        Double rad = PI/180;
         String functionName = getFunctionName(example);
+        double rad = PI/180;
 
-        switch (functionName) {
-            case "sin":
-                return value -> Math.sin(value * rad);
-
-            case "cos":
-                return value -> Math.cos(value * rad);
-
-            case "tan":
-                return value -> Math.tan(value * rad);
-
-            case "asin":
-                return value -> Math.asin(value) / rad;
-
-            case "acos":
-                return value -> Math.acos(value) / rad;
-
-            case "atan":
-                return value -> Math.atan(value) / rad;
-
-            case "sinh":
-                return value -> Math.sinh(value * rad);
-
-            case "cosh":
-                return value -> Math.cosh(value * rad);
-
-            case "tanh":
-                return value -> Math.tanh(value * rad);
-
-            case "exp":
-                return Math::exp;
-
-            case "abs":
-                return Math::abs;
-
-            case "sqrt":
-                return Math::sqrt;
-
-            case "ln":
-                return value -> {
-                    if (value > 0)
-                        return Math.log(value);
-                    else
-                        throw new ArithmeticException("Аргумент логарифма должен быть положительным");
-                };
-
-            default:
-                throw new ExampleException("Неизвестная функция");
-        }
+        return switch (functionName) {
+            case "sin" -> value -> Math.sin(value * rad);
+            case "cos" -> value -> Math.cos(value * rad);
+            case "tan" -> value -> Math.tan(value * rad);
+            case "asin" -> value -> Math.asin(value) / rad;
+            case "acos" -> value -> Math.acos(value) / rad;
+            case "atan" -> value -> Math.atan(value) / rad;
+            case "sinh" -> value -> Math.sinh(value * rad);
+            case "cosh" -> value -> Math.cosh(value * rad);
+            case "tanh" -> value -> Math.tanh(value * rad);
+            case "exp" -> Math::exp;
+            case "abs" -> Math::abs;
+            case "sqrt" -> Math::sqrt;
+            case "ln" -> Math::log;
+            default -> throw new ExampleException("Неизвестная функция");
+        };
     }
 }

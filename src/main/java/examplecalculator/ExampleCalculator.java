@@ -10,8 +10,7 @@ public final class ExampleCalculator {
      * @return - возвращает итоговый результат вычислений
      */
     public static Double calculate(final String example) {
-        ExampleValidation2.isCorrect(example);
-//        assertExample(example);
+        ExampleValidation.isCorrect(example);
         return getExampleValue(example);
     }
 }

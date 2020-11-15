@@ -5,11 +5,11 @@ import java.util.function.BiFunction;
 import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
 import static examplecalculator.function.ActionFunction.getMathAction;
 
-public final class ElementSign implements Element<BiFunction> {
+public final class SignElement implements Element<BiFunction> {
     private String element;
     private BiFunction value;
 
-    public ElementSign(String element) {
+    public SignElement(String element) {
         this.element = element;
         this.value = getMathAction(element);
     }

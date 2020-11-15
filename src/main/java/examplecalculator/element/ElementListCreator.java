@@ -1,10 +1,10 @@
 package examplecalculator.element;
 
 import examplecalculator.objectmodel.Element;
-import examplecalculator.objectmodel.ElementFactorial;
-import examplecalculator.objectmodel.ElementNumber;
+import examplecalculator.objectmodel.FactorialElement;
+import examplecalculator.objectmodel.NumberElement;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -22,7 +22,7 @@ final class ElementListCreator {
      * @return - возвращает список элементов примера, состоящий из числовых значений и знаков (лямбда-функций) между ними
      */
     static List<Element> getElementList(final String subExample) {
-        List<Element> elementList = new LinkedList<>();
+        List<Element> elementList = new ArrayList<>();
         Element element;
         int i = 0;
 
@@ -33,7 +33,6 @@ final class ElementListCreator {
             Function<String, Element> elementCreator = getElementCreator(currentSymbol);
             element = elementCreator.apply(subExample.substring(i));
             elementList.add(element);
-
 
             i += element.getElement().length();
         }
@@ -60,7 +59,7 @@ final class ElementListCreator {
          */
         private List<Element> replaceFirstElement(final List<Element> elementList) {
             if (elementList.get(0).getTypeElement() == SIGN) {
-                elementList.add(0, new ElementNumber("0"));
+                elementList.add(0, new NumberElement("0"));
             }
 
             return elementList;
@@ -79,10 +78,10 @@ final class ElementListCreator {
 
             while (i < elementList.size()) {
                 if (elementList.get(i).getTypeElement() == FACTORIAL) {
-                    String element = elementList.get(i-1).getElement() + elementList.get(i).getElement();
-                    Double value = (Double) elementList.get(i-1).getValue();
+                    String element = elementList.get(i - 1).getElement() + elementList.get(i).getElement();
+                    double value = (double) elementList.get(i - 1).getValue();
 
-                    elementList.set(i-1, new ElementFactorial(element, value));
+                    elementList.set(i - 1, new FactorialElement(element, value));
                     elementList.remove(i);
 
                 } else {

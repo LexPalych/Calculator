@@ -1,15 +1,14 @@
 package examplecalculator.objectmodel;
 
-import static examplecalculator.element.ElementCalculator.getExampleValue;
-import static examplecalculator.objectmodel.Element.TypeElement.BRACKET;
+import static examplecalculator.objectmodel.Element.TypeElement.NUMBER;
 
-public final class ElementBracket implements Element<Double> {
+public final class NumberElement implements Element<Double> {
     private String element;
     private Double value;
 
-    public ElementBracket(String element) {
+    public NumberElement(String element) {
         this.element = element;
-        this.value = getExampleValue(element.substring(1, element.length()-1));
+        this.value = Double.parseDouble(element);
     }
 
     @Override
@@ -34,6 +33,6 @@ public final class ElementBracket implements Element<Double> {
 
     @Override
     public TypeElement getTypeElement() {
-        return BRACKET;
+        return NUMBER;
     }
 }

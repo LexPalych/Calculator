@@ -2,15 +2,15 @@ package examplecalculator.objectmodel;
 
 import static examplecalculator.objectmodel.Element.TypeElement.FACTORIAL;
 
-public final class ElementFactorial implements Element<Double> {
+public final class FactorialElement implements Element<Double> {
     private String element;
     private Double value;
 
-    public ElementFactorial(String element) {
+    public FactorialElement(String element) {
         this.element = element;
     }
 
-    public ElementFactorial(String element, Double value) {
+    public FactorialElement(String element, Double value) {
         this.element = element;
         this.value = getFactorial(value);
     }
@@ -45,17 +45,17 @@ public final class ElementFactorial implements Element<Double> {
      * @param number - число
      * @return - возвращает факториал числа типом Double
      */
-    private static Double getFactorial(final Double number) {
+    private static double getFactorial(final double number) {
         if (number < 0)
             throw new ArithmeticException("Отрицательный аргумент факториала");
 
-        if (number % 1 !=0)
+        if (number % 1 != 0)
             throw new ArithmeticException("Аргумент факториала не является целым числом");
 
         if (number == 0 || number == 1)
             return 1.0;
 
         else
-            return number * getFactorial(number-1);
+            return number * getFactorial(number - 1);
     }
 }

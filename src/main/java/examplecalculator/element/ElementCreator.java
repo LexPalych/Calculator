@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.function.Function;
 
 import static examplecalculator.objectmodel.Element.TypeElement.*;
-import static java.lang.Character.*;
+import static java.lang.Character.isDigit;
+import static java.lang.Character.isLetter;
 
 /**
  * Класс методов для распознавания элементов примера
@@ -19,33 +20,20 @@ final class ElementCreator {
      * @return - возвращает функцию создания элемента примера
      */
     static Function<String, Element> getElementCreator(final char symbol) {
-        switch (getTypeElement(symbol)) {
-            case SIGN:
-                return example -> new ElementSign(example.substring(0, 1));
+        return switch (getTypeElement(symbol)) {
+            case SIGN -> example -> new SignElement(example.substring(0, 1));
+            case FACTORIAL -> example -> new FactorialElement(example.substring(0, 1));
+            case FUNCTION -> example -> new FunctionElement(example.substring(0, getClosingBracketIndex(example) + 1));
+            case BRACKET -> example -> new BracketElement(example.substring(0, getClosingBracketIndex(example) + 1));
+            case NUMBER -> example -> {
+                int lastNumeralIndex = 0;
 
-            case FACTORIAL:
-                return example -> new ElementFactorial(example.substring(0, 1));
+                while (lastNumeralIndex < example.length() && getTypeElement(example.charAt(lastNumeralIndex)) == NUMBER)
+                    lastNumeralIndex++;
 
-            case FUNCTION:
-                return example -> new ElementFunction(example.substring(0, getClosingBracketIndex(example)+1));
-
-            case BRACKET:
-                return example -> new ElementBracket(example.substring(0, getClosingBracketIndex(example)+1));
-
-            case NUMBER:
-                return example -> {
-                    int lastNumeralIndex = 0;
-
-                    while (lastNumeralIndex < example.length() && getTypeElement(example.charAt(lastNumeralIndex)) == NUMBER) {
-                        lastNumeralIndex++;
-                    }
-
-                    return new ElementNumber(example.substring(0, lastNumeralIndex));
-                };
-
-            default:
-                throw new ExampleException("Отсутствует условие для символа " + symbol);
-        }
+                return new NumberElement(example.substring(0, lastNumeralIndex));
+            };
+        };
     }
 
     /**

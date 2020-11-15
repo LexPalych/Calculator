@@ -3,11 +3,11 @@ package examplecalculator.objectmodel;
 import static examplecalculator.objectmodel.Element.TypeElement.FUNCTION;
 import static examplecalculator.function.MathFunction.getFunctionValue;
 
-public final class ElementFunction implements Element<Double> {
+public final class FunctionElement implements Element<Double> {
     private String element;
     private Double value;
 
-    public ElementFunction(String element) {
+    public FunctionElement(String element) {
         this.element = element;
         this.value = getFunctionValue(element);
     }
