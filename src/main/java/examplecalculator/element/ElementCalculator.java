@@ -33,13 +33,19 @@ public final class ElementCalculator {
             int i = 0;
 
             while (i < elementList.size()) {
-                if (elementList.get(i).getValue() == action) {
+                Element currentElement = elementList.get(i);
+
+                if (currentElement.getValue() == action) {
                     Element leftElement = elementList.get(i - 1);
                     Element rightElement = elementList.get(i + 1);
 
                     double value = (double) action.apply(leftElement.getValue(), rightElement.getValue());
+                    String element = leftElement.getElement() + currentElement.getElement() + rightElement.getElement();
+
                     elementList.get(i - 1).setValue(value);
-                    elementList.removeAll(List.of(rightElement, elementList.get(i)));
+                    elementList.get(i - 1).setElement(element);
+
+                    elementList.removeAll(List.of(currentElement, rightElement));
 
                 } else
                     i++;
