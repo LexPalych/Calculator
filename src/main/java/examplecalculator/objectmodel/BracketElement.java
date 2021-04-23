@@ -4,6 +4,7 @@ import static examplecalculator.element.ElementCalculator.getExampleValue;
 import static examplecalculator.objectmodel.Element.TypeElement.BRACKET;
 
 public final class BracketElement implements Element<Double> {
+
     private String element;
     private Double value;
 
@@ -18,13 +19,13 @@ public final class BracketElement implements Element<Double> {
     }
 
     @Override
-    public String getElement() {
-        return element;
+    public void setValue(Double value) {
+        this.value = value;
     }
 
     @Override
-    public void setValue(Double value) {
-        this.value = value;
+    public String getElement() {
+        return element;
     }
 
     @Override

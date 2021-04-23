@@ -3,6 +3,7 @@ package examplecalculator.objectmodel;
 import static examplecalculator.objectmodel.Element.TypeElement.NUMBER;
 
 public final class NumberElement implements Element<Double> {
+
     private String element;
     private Double value;
 
@@ -17,13 +18,13 @@ public final class NumberElement implements Element<Double> {
     }
 
     @Override
-    public String getElement() {
-        return element;
+    public void setValue(Double value) {
+        this.value = value;
     }
 
     @Override
-    public void setValue(Double value) {
-        this.value = value;
+    public String getElement() {
+        return element;
     }
 
     @Override

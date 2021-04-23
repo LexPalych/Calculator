@@ -1,21 +1,32 @@
 package examplecalculator.element;
 
-import examplecalculator.ExampleException;
-import examplecalculator.objectmodel.*;
-
-import java.util.List;
-import java.util.function.Function;
-
-import static examplecalculator.objectmodel.Element.TypeElement.*;
+import static examplecalculator.objectmodel.Element.TypeElement.BRACKET;
+import static examplecalculator.objectmodel.Element.TypeElement.FACTORIAL;
+import static examplecalculator.objectmodel.Element.TypeElement.FUNCTION;
+import static examplecalculator.objectmodel.Element.TypeElement.NUMBER;
+import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
+
+import examplecalculator.ExampleException;
+import examplecalculator.objectmodel.BracketElement;
+import examplecalculator.objectmodel.Element;
+import examplecalculator.objectmodel.FactorialElement;
+import examplecalculator.objectmodel.FunctionElement;
+import examplecalculator.objectmodel.NumberElement;
+import examplecalculator.objectmodel.SignElement;
+import java.util.List;
+import java.util.function.Function;
 
 /**
  * Класс методов для распознавания элементов примера
  */
 final class ElementCreator {
+
     /**
-     * Определяет функцию для создания элемента примера в зависимости от типа символа примера (знак, число, буква, скобка)
+     * Определяет функцию для создания элемента примера в зависимости от типа символа примера (знак,
+     * число, буква, скобка)
+     *
      * @param symbol - текущий символ
      * @return - возвращает функцию создания элемента примера
      */
@@ -28,8 +39,10 @@ final class ElementCreator {
             case NUMBER -> example -> {
                 int lastNumeralIndex = 0;
 
-                while (lastNumeralIndex < example.length() && getTypeElement(example.charAt(lastNumeralIndex)) == NUMBER)
+                while (lastNumeralIndex < example.length()
+                    && getTypeElement(example.charAt(lastNumeralIndex)) == NUMBER) {
                     lastNumeralIndex++;
+                }
 
                 return new NumberElement(example.substring(0, lastNumeralIndex));
             };
@@ -38,6 +51,7 @@ final class ElementCreator {
 
     /**
      * Определяет тип символа (знак, число, буква, скобка)
+     *
      * @param symbol - символ
      * @return - возвращает тип символа
      */
@@ -66,6 +80,7 @@ final class ElementCreator {
 
     /**
      * Находит индекс скобки, закрывающей перую открывающую скобку
+     *
      * @param subExample - пример
      * @return - возвращает индекс закрывающей скобочки
      */

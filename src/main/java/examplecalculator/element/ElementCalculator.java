@@ -1,35 +1,27 @@
 package examplecalculator.element;
 
-import examplecalculator.objectmodel.Element;
-
-import java.util.List;
-import java.util.Stack;
-import java.util.function.BiFunction;
-
 import static examplecalculator.element.ElementListCreator.getElementList;
-import static examplecalculator.function.ActionFunction.*;
+import static examplecalculator.function.ActionFunction.ACTION_STACK;
+
+import examplecalculator.function.ActionFunction;
+import examplecalculator.objectmodel.Element;
+import java.util.List;
 
 public final class ElementCalculator {
+
     /**
-     * Выполняет расчёт примера (подпримера главного примера):
-     * Переводит пример в список элементов примера и
-     * Выполняет действия между числами примера в соответствии с порядком действия знаков
+     * Выполняет расчёт примера (подпримера главного примера): Переводит пример в список элементов
+     * примера и Выполняет действия между числами примера в соответствии с порядком действия знаков
+     *
      * @param subExample - пример (подпример главного примера)
      * @return - возвращает значение примера (подпримера главного примера)
      */
     public static Double getExampleValue(final String subExample) {
         List<Element> elementList = getElementList(subExample);
 
-        Stack<BiFunction<Double, Double, Double>> actionStack = new Stack<>();
-        actionStack.push(EXPONENTIATION);
-        actionStack.push(DIVISION);
-        actionStack.push(MULTIPLICATION);
-        actionStack.push(SUBTRACTION);
-        actionStack.push(ADDITIONAL);
-
         //Если получившийся список знаков, выполняемых по порядку, получился не пустой, выполняем расчёт элементов
         //Если пустой, значит в списке элементов лишь одно единственно число, которое и возвращаем
-        for (BiFunction action : actionStack) {
+        for (ActionFunction.Actions action : ACTION_STACK) {
             int i = 0;
 
             while (i < elementList.size()) {
@@ -39,16 +31,19 @@ public final class ElementCalculator {
                     Element leftElement = elementList.get(i - 1);
                     Element rightElement = elementList.get(i + 1);
 
-                    double value = (double) action.apply(leftElement.getValue(), rightElement.getValue());
-                    String element = leftElement.getElement() + currentElement.getElement() + rightElement.getElement();
+                    double value = action.getAction().apply((double) leftElement.getValue(), (double) rightElement.getValue());
+                    String element = leftElement.getElement()
+                        + currentElement.getElement()
+                        + rightElement.getElement();
 
                     elementList.get(i - 1).setValue(value);
                     elementList.get(i - 1).setElement(element);
 
                     elementList.removeAll(List.of(currentElement, rightElement));
 
-                } else
+                } else {
                     i++;
+                }
             }
         }
 

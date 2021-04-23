@@ -1,25 +1,27 @@
 package examplecalculator.element;
 
-import examplecalculator.objectmodel.Element;
-import examplecalculator.objectmodel.FactorialElement;
-import examplecalculator.objectmodel.NumberElement;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
 import static examplecalculator.element.ElementCreator.getElementCreator;
 import static examplecalculator.objectmodel.Element.TypeElement.FACTORIAL;
 import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
 
+import examplecalculator.objectmodel.Element;
+import examplecalculator.objectmodel.FactorialElement;
+import examplecalculator.objectmodel.NumberElement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+
 final class ElementListCreator {
+
     /**
-     * Разбивает пример (подпример главного примера) на элементы:
-     * Числа, знаки математических действий, выражения в скобках, функции
-     * Значения таких элементов, как выражения в скобках и функции, рекурсивно высчитываются
-     * Помещает полученные элементы в список для дальнейшего расчёта значения примера (подпримера главного примера)
+     * Разбивает пример (подпример главного примера) на элементы: Числа, знаки математических
+     * действий, выражения в скобках, функции Значения таких элементов, как выражения в скобках и
+     * функции, рекурсивно высчитываются Помещает полученные элементы в список для дальнейшего
+     * расчёта значения примера (подпримера главного примера)
+     *
      * @param subExample - пример (подпример главного примера)
-     * @return - возвращает список элементов примера, состоящий из числовых значений и знаков (лямбда-функций) между ними
+     * @return - возвращает список элементов примера, состоящий из числовых значений и знаков
+     * (лямбда-функций) между ними
      */
     static List<Element> getElementList(final String subExample) {
         List<Element> elementList = new ArrayList<>();
@@ -41,8 +43,10 @@ final class ElementListCreator {
     }
 
     private static class ElementListReplacer {
+
         /**
          * Подпрвляет "сырой" список элементов, убирая "!" во всём списке и "-" в начале списка
+         *
          * @param rowElementList - "сырой" список элементов
          * @return - полностью исправленный список элементов
          */
@@ -51,9 +55,10 @@ final class ElementListCreator {
         }
 
         /**
-         * Проверяет, есть ли в начале списка элемент типа SIGN (знак минус "-")
-         * Если есть, то в начало списка помещается ноль ("0")
-         * Нужно для сохранения принципа "число-знак-число-...-знак-...-число"
+         * Проверяет, есть ли в начале списка элемент типа SIGN (знак минус "-") Если есть, то в
+         * начало списка помещается ноль ("0") Нужно для сохранения принципа
+         * "число-знак-число-...-знак-...-число"
+         *
          * @param elementList - "сырой" список элементов
          * @return - исправленный список элементов
          */
@@ -66,10 +71,11 @@ final class ElementListCreator {
         }
 
         /**
-         * Проверяет, есть ли в "сыром" списке элементов знак факториала "!"
-         * Если есть, заменяет предыдущий элемент элементом типа FACTORIAL
-         * Знак "!" перемещается к новому созданному элементу и затирается в "сыром" списке элементов
-         * Нужно для сохранения принципа "число-знак-число-...-знак-...-число"
+         * Проверяет, есть ли в "сыром" списке элементов знак факториала "!" Если есть, заменяет
+         * предыдущий элемент элементом типа FACTORIAL Знак "!" перемещается к новому созданному
+         * элементу и затирается в "сыром" списке элементов Нужно для сохранения принципа
+         * "число-знак-число-...-знак-...-число"
+         *
          * @param elementList - "сырой" список элементов
          * @return - исправленный список элементов
          */

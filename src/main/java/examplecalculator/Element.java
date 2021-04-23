@@ -1,6 +1,7 @@
 package examplecalculator;
 
 public class Element {
+
     private final String element;
     private TypeElement typeElement;
     private double value;

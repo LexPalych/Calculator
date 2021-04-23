@@ -1,13 +1,13 @@
 package examplecalculator.function;
 
-import examplecalculator.ExampleException;
-
-import java.util.function.Function;
-
 import static examplecalculator.element.ElementCalculator.getExampleValue;
 import static java.lang.StrictMath.PI;
 
+import examplecalculator.ExampleException;
+import java.util.function.Function;
+
 public final class MathFunction {
+
     /**
      * Нахождит значение тригонометрической функции
      */
@@ -22,20 +22,23 @@ public final class MathFunction {
 
     /**
      * Находит в переданном примере первую функцию и выцепляет её имя
+     *
      * @param example - пример
      * @return - возвращет строку с именем функции
      */
     private static String getFunctionName(final String example) {
         int i = 0;
 
-        while (example.charAt(i) != '(')
+        while (example.charAt(i) != '(') {
             i++;
+        }
 
         return example.substring(0, i);
     }
 
     /**
      * Находит в переданном примере перую функцию и выцепляет её аргумент
+     *
      * @param example - пример
      * @return - возвращет строку с аргументом функции
      */
@@ -46,12 +49,13 @@ public final class MathFunction {
 
     /**
      * Распознаёт строку с именем функции и возвращает соответствующую функцию
+     *
      * @param example - пример
      * @return - возвращает функцию для расчётов
      */
     private static Function<Double, Double> getMathFunction(final String example) {
         String functionName = getFunctionName(example);
-        double rad = PI/180;
+        double rad = PI / 180;
 
         return switch (functionName) {
             case "sin" -> value -> Math.sin(value * rad);

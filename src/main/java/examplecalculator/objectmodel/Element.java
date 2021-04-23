@@ -1,11 +1,12 @@
 package examplecalculator.objectmodel;
 
 public interface Element<T> {
+
     T getValue();
 
-    String getElement();
-
     void setValue(T value);
+
+    String getElement();
 
     void setElement(String element);
 

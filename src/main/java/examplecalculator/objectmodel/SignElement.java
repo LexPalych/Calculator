@@ -1,13 +1,14 @@
 package examplecalculator.objectmodel;
 
-import java.util.function.BiFunction;
-
-import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
 import static examplecalculator.function.ActionFunction.getMathAction;
+import static examplecalculator.objectmodel.Element.TypeElement.SIGN;
 
-public final class SignElement implements Element<BiFunction> {
+import examplecalculator.function.ActionFunction;
+
+public final class SignElement implements Element<ActionFunction.Actions> {
+
     private String element;
-    private BiFunction value;
+    private ActionFunction.Actions value;
 
     public SignElement(String element) {
         this.element = element;
@@ -15,18 +16,18 @@ public final class SignElement implements Element<BiFunction> {
     }
 
     @Override
-    public BiFunction getValue() {
+    public ActionFunction.Actions getValue() {
         return value;
+    }
+
+    @Override
+    public void setValue(ActionFunction.Actions value) {
+        this.value = value;
     }
 
     @Override
     public String getElement() {
         return element;
-    }
-
-    @Override
-    public void setValue(BiFunction value) {
-        this.value = value;
     }
 
     @Override

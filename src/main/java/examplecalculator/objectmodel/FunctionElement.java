@@ -1,9 +1,10 @@
 package examplecalculator.objectmodel;
 
-import static examplecalculator.objectmodel.Element.TypeElement.FUNCTION;
 import static examplecalculator.function.MathFunction.getFunctionValue;
+import static examplecalculator.objectmodel.Element.TypeElement.FUNCTION;
 
 public final class FunctionElement implements Element<Double> {
+
     private String element;
     private Double value;
 
@@ -18,13 +19,13 @@ public final class FunctionElement implements Element<Double> {
     }
 
     @Override
-    public String getElement() {
-        return element;
+    public void setValue(Double value) {
+        this.value = value;
     }
 
     @Override
-    public void setValue(Double value) {
-        this.value = value;
+    public String getElement() {
+        return element;
     }
 
     @Override

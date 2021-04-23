@@ -1,16 +1,17 @@
 package examplecalculator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 import static java.util.stream.Collectors.toList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Класс для валидации примера на корректность записи
  */
 final class ExampleValidation {
+
     private static final List<String> errorList = new ArrayList<>();
     private static boolean isCorrect = true;
     private final List<Character> expressionCharList;
@@ -41,8 +42,9 @@ final class ExampleValidation {
         exampleValidation.checkNoOnlyLetter();
 
         if (!isCorrect) {
-            for (String error : errorList)
+            for (String error : errorList) {
                 System.out.println(error);
+            }
 
             throw new ExampleException("Выражение некорректно");
         }
@@ -62,8 +64,9 @@ final class ExampleValidation {
 
         errorList.addAll(errors);
 
-        if (errorList.size() != 0)
+        if (errorList.size() != 0) {
             isCorrect = false;
+        }
     }
 
     /**
@@ -71,17 +74,18 @@ final class ExampleValidation {
      */
     private void checkBracketAmount() {
         long openingBracket = expressionCharList
-                .stream()
-                .filter(symbol -> symbol.equals('('))
-                .count();
+            .stream()
+            .filter(symbol -> symbol.equals('('))
+            .count();
 
         long closingBracket = expressionCharList
-                .stream()
-                .filter(symbol -> symbol.equals(')'))
-                .count();
-        
-        if (openingBracket != closingBracket)
+            .stream()
+            .filter(symbol -> symbol.equals(')'))
+            .count();
+
+        if (openingBracket != closingBracket) {
             addError("Неверное количество скобочек");
+        }
     }
 
     /**
@@ -100,8 +104,9 @@ final class ExampleValidation {
                 bracketAmount--;
             }
 
-            if (bracketAmount < 0)
+            if (bracketAmount < 0) {
                 addError("Закрывающая скобочка стоит перед открывающей (позиция " + i + ")");
+            }
         }
     }
 
@@ -110,8 +115,9 @@ final class ExampleValidation {
      */
     private void checkArgumentBracket() {
         for (int i = 1; i < length; i++) {
-            if (isDigit(expressionCharList.get(i)) && isLetter(expressionCharList.get(i - 1)))
+            if (isDigit(expressionCharList.get(i)) && isLetter(expressionCharList.get(i - 1))) {
                 addError("Отсутствует скобочка перед аргументом функции на позиции " + i);
+            }
         }
     }
 
@@ -122,8 +128,10 @@ final class ExampleValidation {
         List<Character> signList = List.of('+', '-', '*', '/', '^', '.', '(');
 
         for (int i = 1; i < length; i++) {
-            if (expressionCharList.get(i) == ')' && signList.contains(expressionCharList.get(i - 1)))
+            if (expressionCharList.get(i) == ')' && signList
+                .contains(expressionCharList.get(i - 1))) {
                 addError("Отсутствует выражение перед скобочкой на позиции " + i);
+            }
         }
     }
 
@@ -137,8 +145,10 @@ final class ExampleValidation {
             char currentSymbol = expressionCharList.get(i);
             char prevSymbol = expressionCharList.get(i - 1);
 
-            if (isLetter(currentSymbol) && ((isDigit(prevSymbol) || signList.contains(prevSymbol))))
+            if (isLetter(currentSymbol) && ((isDigit(prevSymbol) || signList
+                .contains(prevSymbol)))) {
                 addError("Некорректный символ (" + prevSymbol + ") перед функцией");
+            }
         }
     }
 
@@ -150,10 +160,11 @@ final class ExampleValidation {
 
         for (int i = 0; i < length - 1; i++) {
             char currentSymbol = expressionCharList.get(i);
-            char nextSymbol = expressionCharList.get(i+1);
+            char nextSymbol = expressionCharList.get(i + 1);
 
-            if (isLetter(currentSymbol) && signList.contains(nextSymbol))
+            if (isLetter(currentSymbol) && signList.contains(nextSymbol)) {
                 addError("Некорректный символ (" + nextSymbol + ") после имени функции");
+            }
         }
     }
 
@@ -167,8 +178,9 @@ final class ExampleValidation {
             char currentSymbol = expressionCharList.get(i);
             char nextSymbol = expressionCharList.get(i + 1);
 
-            if (signList.contains(currentSymbol) && signList.contains(nextSymbol))
+            if (signList.contains(currentSymbol) && signList.contains(nextSymbol)) {
                 addError("Несколько знаков подряд начиная с позиции " + i);
+            }
         }
     }
 
@@ -178,8 +190,9 @@ final class ExampleValidation {
     private void checkFirstSymbol() {
         List<Character> signList = List.of('+', '*', '/', '!', '^', '.');
 
-        if (signList.contains(expressionCharList.get(0)))
+        if (signList.contains(expressionCharList.get(0))) {
             addError("Некорректный первый символ выражения");
+        }
     }
 
     /**
@@ -197,8 +210,9 @@ final class ExampleValidation {
      * Проверяет наличие в выражении чисел
      */
     private void checkNoOnlyLetter() {
-        if (expressionCharList.stream().filter(Character::isDigit).count() == 0)
+        if (expressionCharList.stream().filter(Character::isDigit).count() == 0) {
             addError("В выражении отсутствуют числа");
+        }
     }
 
     private void addError(String errorMessage) {
